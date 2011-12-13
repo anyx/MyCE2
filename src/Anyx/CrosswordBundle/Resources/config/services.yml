@@ -1,0 +1,7 @@
+parameters:
+#    anyx_crossword.example.class: Anyx\CrosswordBundle\Example
+
+services:
+#    anyx_crossword.example:
+#        class: %anyx_crossword.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
