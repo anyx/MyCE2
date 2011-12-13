@@ -27,5 +27,8 @@ _configurator:
     resource: "@SensioDistributionBundle/Resources/config/routing/webconfigurator.xml"
     prefix:   /_configurator
 
+_tests:
+    pattern:  /_tests
+    defaults: { _controller: AnyxCrosswordBundle:Default:test }
 _main:
     resource: routing.yml

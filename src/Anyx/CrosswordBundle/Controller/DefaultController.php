@@ -24,9 +24,6 @@ class DefaultController extends Controller
 		$dm->flush();
 		*/
 		//var_dump( $dm );
-		
-		
-		
         return $this->render('AnyxCrosswordBundle:Default:test.html.twig', array());
 	}
 }
