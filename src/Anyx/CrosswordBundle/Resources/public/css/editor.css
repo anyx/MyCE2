@@ -1,0 +1,34 @@
+.crossword-editor {
+	position: relative;
+	width:600px;
+	height:600px;
+}
+
+.crossword-editor TABLE, .crossword-editor TD {
+	border: 1px solid #333;
+	border-collapse: collapse; 
+}
+
+.crossword-editor TD {
+	
+}
+.crossword-editor TD DIV {
+	width: 18px;
+	height: 18px;
+}
+
+/* Word */
+TABLE.word-table , .word-table TD {
+	cursor: move;
+	border: 2px solid #000;
+	border-collapse: collapse;
+	padding: 0px;
+	margin: 0px;
+	
+}
+
+.word-table TD {
+	width: 18px;
+	height: 18px;
+	text-align: center;
+}

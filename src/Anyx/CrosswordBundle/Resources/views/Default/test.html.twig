@@ -15,13 +15,18 @@
 	{% javascripts
 		'@AnyxCrosswordBundle/Resources/public/js/json2.js'
 		'@AnyxCrosswordBundle/Resources/public/js/underscore.js'
+		'@AnyxCrosswordBundle/Resources/public/js/underscore.string.js'
 		'@AnyxCrosswordBundle/Resources/public/js/backbone.js'
+		'@AnyxCrosswordBundle/Resources/public/js/backbone.validations.js'
+		
 		'@AnyxCrosswordBundle/Resources/public/jasmine/jasmine.js'
 		'@AnyxCrosswordBundle/Resources/public/jasmine/jasmine-html.js'
+		
+		'@AnyxCrosswordBundle/Resources/public/js/models/Crossword.js'
 		'@AnyxCrosswordBundle/Resources/public/js/models/Point.js'
 		'@AnyxCrosswordBundle/Resources/public/js/models/Word.js'
 		'@AnyxCrosswordBundle/Resources/public/js/models/WordsCollection.js'
-		'@AnyxCrosswordBundle/Resources/public/js/models/Crossword.js'
+
 		'@AnyxCrosswordBundle/Resources/public/js/tests/*'
 	%}
 	<script type="text/javascript" src="{{ asset_url }}"></script>

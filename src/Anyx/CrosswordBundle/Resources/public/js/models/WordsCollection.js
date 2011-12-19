@@ -1,8 +1,17 @@
 /**
+ *
+ */
+Crossword.Model = Crossword.Model || {};
+
+/**
  * 
  */
-var WordsCollection = Backbone.Collection.extend({
-	model	: Word,
+Crossword.Model.WordsCollection = Backbone.Collection.extend({
+
+	/**
+	 *
+	 */
+	model	: Crossword.Model.Word,
 	
 	/**
 	 * 
@@ -20,7 +29,7 @@ var WordsCollection = Backbone.Collection.extend({
 	/**
 	 *
 	 */
-	getWords : function() {
+	getWords	: function() {
 		return this.models;
 	},
 	
@@ -81,7 +90,7 @@ var WordsCollection = Backbone.Collection.extend({
 	getWordsInBlock	: function( words, block ) {
 		words = words || this.getWords();
 
-		block = !(block instanceof Point) ? block : block.attributes;
+		block = !(block instanceof Crossword.Model.Point) ? block : block.attributes;
 		var result = [];
 
 		for( var i = block.start.x; i <= block.end.x; i++ ) {
@@ -104,7 +113,7 @@ var WordsCollection = Backbone.Collection.extend({
 	 */
 	isWordInPoint	: function( word, point ) {
 		
-		word = !(word instanceof Point) ? word : word.attributes;
+		word = !(word instanceof Crossword.Model.Point) ? word : word.attributes;
 		var position = word.getStartPoint().attributes;
 		
 		var result = false;
@@ -134,6 +143,9 @@ var WordsCollection = Backbone.Collection.extend({
 		return words;
 	},
 	
+	/**
+	 *
+	 */
 	getWordsByEndingBlock : function( isHorizontal, words, block ) {
 
 		var foundWords = [];
@@ -237,7 +249,7 @@ var WordsCollection = Backbone.Collection.extend({
 			var tb = db / d;
 
 			if ( ( 0 <= ta ) && ( ta <= 1 ) && ( 0 <= tb ) && ( tb <= 1 ) ) {
-				result = new Point({
+				result = new Crossword.Model.Point({
 							x	: a1.x + ta * ( a2.x - a1.x ),
 							y	: a1.y + ta * ( a2.y - a1.y )
 				}); 

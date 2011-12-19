@@ -9,7 +9,7 @@ describe("Word model", function() {
 	it('Word\'s data access', function() {
 
 		var text = 'Tstword';
-		var word = new Word({
+		var word = new Crossword.Model.Word({
 			text			: text,
 			definition		: 'test word description'
 		});
@@ -26,7 +26,7 @@ describe("Word model", function() {
 	 */
 	it('Word dimensions', function(){
 
-		var word = new Word({
+		var word = new Crossword.Model.Word({
 			text		: 'word',
 			definition	: 'test definition'
 		});
@@ -34,19 +34,20 @@ describe("Word model", function() {
 		expect( word.getLength() ).toEqual(4);
 
 		word.set({
-			position	: new Point({
+			position	: new Crossword.Model.Point({
 				x	: 1,
 				y	: 2
 			}),
 			horizontal : false
-		})
+		});
+		
 		//search letters
-		var point = new Point({
+		var point = new Crossword.Model.Point({
 			x	: 1,
 			y	: 3
 		});
 		expect( word.getLetter( point ) ).toEqual( 'o' );
-
+		
 		point.set({
 			y	: 5
 		});
@@ -55,8 +56,8 @@ describe("Word model", function() {
 		point.set({
 			x	: 5
 		});
-
 		expect( word.getLetter( point ) ).toEqual( null );
+
 		//end point
 		var endPoint = word.getEndPoint();
 		point.set({

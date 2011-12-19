@@ -1,13 +1,17 @@
 /**
  * Crossword tests
  */
+
 /**
  * Word tests
  */
 describe('Words collection model', function() {
 	
+	/**
+	 *
+	 */
 	beforeEach(function() {
-		this.collection = new WordsCollection();
+		this.collection = new Crossword.Model.WordsCollection();
 	});
 	
 	/**
@@ -15,10 +19,10 @@ describe('Words collection model', function() {
 	 */
 	it( 'Adding words', function() {
 		
-		var word = new Word({
+		var word = new Crossword.Model.Word({
 			text		: 'word',
 			horizontal	: true,
-			position	: new Point({
+			position	: new Crossword.Model.Point({
 				x	: 1,
 				y	: 1
 			})
@@ -30,10 +34,10 @@ describe('Words collection model', function() {
 		expect( this.collection.getWordsByDirection( true ).length ).toEqual( 1 );
 		expect( this.collection.getWordsByDirection( false ).length ).toEqual( 0 );
 		//add vertical word
-		this.collection.addWord(new Word({
+		this.collection.addWord(new Crossword.Model.Word({
 			text		: 'word1',
 			horizontal	: false,
-			position	: new Point({
+			position	: new Crossword.Model.Point({
 				x	: 10,
 				y	: 10
 			})
@@ -47,20 +51,20 @@ describe('Words collection model', function() {
 	 */
 	it( 'Adding inresection words', function(){
 
-		var word1 = new Word({
+		var word1 = new Crossword.Model.Word({
 			text		: 'world',
 			horizontal	: true,
-			position	: new Point({
+			position	: new Crossword.Model.Point({
 				x	: 2,
 				y	: 6
 			})
 		});
 		expect( this.collection.addWord( word1 ) ).toEqual(true);
 		//некорректная позиция
-		var word2 = new Word({
+		var word2 = new Crossword.Model.Word({
 			text		: 'hello',
 			horizontal	: false,
-			position	: new Point({
+			position	: new Crossword.Model.Point({
 				x	: 5,
 				y	: 6
 			})
@@ -68,7 +72,7 @@ describe('Words collection model', function() {
 		expect( this.collection.addWord( word2 ) ).toEqual(false);
 		//корректная позиция
 		word2.set({
-			position : new Point({
+			position : new Crossword.Model.Point({
 				x	: 5,
 				y	: 3
 			})

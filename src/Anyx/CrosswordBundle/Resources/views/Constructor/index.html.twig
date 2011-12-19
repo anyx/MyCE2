@@ -1,0 +1,124 @@
+{% extends '::main.html.twig' %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+	{% javascripts
+		'@AnyxCrosswordBundle/Resources/public/js/jquery.min.js'
+		'@AnyxCrosswordBundle/Resources/public/js/jquery-ui.min.js'
+	
+		'@AnyxCrosswordBundle/Resources/public/js/json2.js'
+		'@AnyxCrosswordBundle/Resources/public/js/underscore.js'
+		'@AnyxCrosswordBundle/Resources/public/js/underscore.string.js'
+		'@AnyxCrosswordBundle/Resources/public/js/backbone.js'
+		'@AnyxCrosswordBundle/Resources/public/js/backbone.validations.js'
+		
+		'@AnyxCrosswordBundle/Resources/public/js/models/Crossword.js'
+		'@AnyxCrosswordBundle/Resources/public/js/models/Point.js'
+		'@AnyxCrosswordBundle/Resources/public/js/models/Word.js'
+		'@AnyxCrosswordBundle/Resources/public/js/models/WordsCollection.js'
+
+		'@AnyxCrosswordBundle/Resources/public/js/views/WidgetsContainer.js'
+		'@AnyxCrosswordBundle/Resources/public/js/views/Widget.js'
+		
+		'@AnyxCrosswordBundle/Resources/public/js/views/View.js'
+		'@AnyxCrosswordBundle/Resources/public/js/views/Grid.js'
+		'@AnyxCrosswordBundle/Resources/public/js/views/Word.js'
+		'@AnyxCrosswordBundle/Resources/public/js/views/DirectionChooser.js'
+		'@AnyxCrosswordBundle/Resources/public/js/views/WordForm.js'
+		
+	%}
+	<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+	
+	<script type="text/javascript">
+		$(function(){
+			
+			var crosswordGrid = new Crossword.View.Grid({
+				words	: new Crossword.Model.WordsCollection,
+				el		: $('.i-constructor'),
+				rows	: 25,
+				cols	: 25
+			});
+
+			var word = new Crossword.Model.Word({
+				text			: 'testing',
+				definition		: 'Quality analys',
+				horizontal		: false,
+				position		: new Crossword.Model.Point({
+					x	: 2,
+					y	: 4
+				})
+			});
+
+			var wordView = new Crossword.View.Word({
+				model	: word
+			});
+
+			wordView.render();
+
+			wordView.getElement().appendTo('body');
+			
+			var wordForm = new Crossword.View.WordForm({
+				el			: '.i-word-form',
+				selectors	: {
+					word				: '.i-word-text',
+					definition			: '.i-word-definition',
+					directionChooser	: '.i-direction-chooser'
+				}
+			});
+		});
+	</script>
+	
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{% stylesheets
+		'@AnyxCrosswordBundle/Resources/public/css/editor.css'
+		'@AnyxCrosswordBundle/Resources/public/css/main.css'
+	%}
+		<link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+
+<div class="columns-container">
+	<div class="left-column">
+		<div class="i-constructor crossword-editor">	
+		</div>
+	</div>
+	<div class="right-column">
+		<form class="i-word-form word-form">
+
+			<dl class="form">
+				<dt>
+					<label>Word</label>
+				</dt>
+				<dd>
+					<input type="text" class="i-word-text" />
+				</dd>
+				<dt>
+					<label>Definition</label>
+				</dt>
+				<dd>
+					<textarea class="i-word-definition"></textarea>
+				</dd>
+			</dl>
+
+			<div class="i-direction-chooser">
+				<ul class="i-direction-menu">
+					<li><a href="#" rel="vertical">Vertical</a></li>
+					<li><a href="#" rel="horizontal">Horizontal</a></li>
+				</ul>
+				<div class="i-word-preview">
+				</div>
+			</div>
+
+		</form>		
+	</div>
+</div>
+
+
+{% endblock %}
