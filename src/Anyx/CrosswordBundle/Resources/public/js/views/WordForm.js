@@ -1,12 +1,5 @@
 Crossword.View.WordForm = Crossword.View.extend({
 	
-	events	: {
-		//'change ' + options.selectors.word			: 'buildWord'
-		//'keyup '  + options.selectors.word			: 'buildWord',
-		//'change ' + options.selectors.definition	: 'buildWord',
-		//'keyup '  + options.selectors.definition	: 'buildWord'
-	},
-	
 	/**
 	 * 
 	 */
@@ -14,10 +7,13 @@ Crossword.View.WordForm = Crossword.View.extend({
 		
 		//widgets
 		this.getContainer().setWidgets({
-			wordInput			: this.$( options.selectors.word, this.el),
-			definitionInput		: this.$( options.selectors.definition, this.el ),
+			wordInput			: this.$( options.selectors.word ),
+			definitionInput		: this.$( options.selectors.definition ),
 			directionChooser	: new Crossword.View.DirectionChooser({
 				el : options.selectors.directionChooser
+			}),
+			wordPreview			: new Crossword.View.WordPreview({
+				el	: options.selectors.wordPreview
 			})
 		});
 		
@@ -35,7 +31,18 @@ Crossword.View.WordForm = Crossword.View.extend({
 				{
 					view : this
 				}
-		);
+			);
+				
+		this.$( this.getInput('directionChooser').el )
+			.on({
+					changeDirection : function( event, data ) {
+						event.data.view.buildWord();
+					}
+				},
+				{
+					view : this
+				}
+			);
 	},
 	
 	/**
@@ -55,6 +62,11 @@ Crossword.View.WordForm = Crossword.View.extend({
 			definition		: this.getInput( 'definitionInput' ).val(),
 			horizontal		: this.getInput( 'directionChooser' ).getDirection()
 		});
+		if ( word.isValid() ) {
+			this.getInput( 'wordPreview' ).showWord( word );
+		} else {
+			this.getInput( 'wordPreview' ).clear();
+		}
 	}
 });
 

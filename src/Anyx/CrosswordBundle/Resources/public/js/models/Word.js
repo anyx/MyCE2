@@ -6,7 +6,7 @@ Crossword.Model = Crossword.Model || {};
 /**
  * Word
  */
-Crossword.Model.Word = Backbone.Model.extend({
+Crossword.Model.Word = Crossword.Model.extend({
 
 	/**
 	 *
@@ -20,7 +20,10 @@ Crossword.Model.Word = Backbone.Model.extend({
 			y : 0
 		})
 	},
-
+	
+	/**
+	 *
+	 */
 	validate	: {
 		text	: {
 			required	: true,
@@ -37,44 +40,13 @@ Crossword.Model.Word = Backbone.Model.extend({
 	/**
 	 * Text to lower case
 	 */
-	set			: function( attributes, options ) {
-		if ( typeof attributes == 'object' && 'text' in attributes ) {
+	set		: function( attributes, options ) {
+		if ( typeof attributes == 'object' && 'text' in attributes && _.isString( attributes.text ) ) {
 			attributes.text = attributes.text.toLowerCase();
 		}
 		Backbone.Model.prototype.set.call(this, attributes, options);
 	},
 	
-	/**
-	 * @param object attributes
-	 */
-	/*
-	validate: function( attributes ) {
-		
-		if ( 'text' in attributes ) {
-			
-			if ( _( attributes.text ).trim().length == 0 ) {
-				throw new Error( 'Text not found' );
-			};
-	
-			if ( _( attributes.text ).trim().length < 3 ) {
-				throw new Error( 'Word is to short' );
-			};
-			
-		} else {
-			throw new Error( 'Text not found' );
-		};
-
-
-		if ( 'definition' in attributes && _( attributes.text ).trim().length == 0 ) {
-			throw new Error( 'Definition not found' );
-		};
-		
-		if ( _( attributes.text ).trim().length < 5 ) {
-			throw new Error( 'Definition is to short' );
-		};
-	},
-	*/
-   
 	/**
 	 * @return boolean
 	 */

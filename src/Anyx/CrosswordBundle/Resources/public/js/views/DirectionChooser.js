@@ -27,8 +27,13 @@ Crossword.View.DirectionChooser = Crossword.View.extend({
 	/**
 	 *
 	 */
-	changeDirection : function() {
-		this.setDirection( !this.getDirection() );
+	changeDirection : function( event ) {
+		
+		var isHorizontal = this.$( event.currentTarget ).attr('rel') == 'horizontal';
+		
+		if ( isHorizontal != this.getDirection() ) {
+			this.setDirection( !this.getDirection() );
+		}
 		return false;
 	},
 	
@@ -36,11 +41,15 @@ Crossword.View.DirectionChooser = Crossword.View.extend({
 	 *
 	 */
 	setDirection	: function( isHorizontal ) {
+		
 		var links = this.$('a');
+		
 		links
 			.removeClass( 'active' )
 			.filter('a[rel=' + (isHorizontal ? 'horizontal' : 'vertical') + ']')
 			.addClass('active');
+			
+		this.$( this.el ).trigger( 'changeDirection', {horizontal : isHorizontal} );
 	},
 	
 	/**

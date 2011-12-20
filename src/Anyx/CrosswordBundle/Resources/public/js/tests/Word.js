@@ -68,5 +68,30 @@ describe("Word model", function() {
 		expect( endPoint.isEqual( point ) ).toEqual(true);
 		
 		expect( word.getLength() ).toEqual( 4 );
-	})
+	});
+	
+	/**
+	 * 
+	 */
+	it( 'Word validation', function(){
+		
+		var word = new Crossword.Model.Word();
+		expect( word.isValid() ).toEqual( false );
+
+		var validText = 'text';
+		var validDefinition = 'test word description';
+		
+		word.set({
+			text			: validText,
+			definition		: validDefinition,
+			horizontal		: false
+		});
+		
+		word.set({
+			text	: 'tt'
+		});
+		
+		expect( word.get('text') ).toEqual( validText );
+		expect( word.get('definition') ).toEqual( validDefinition );
+	});
 });

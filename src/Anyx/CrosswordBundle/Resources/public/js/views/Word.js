@@ -24,17 +24,23 @@ Crossword.View.Word = Crossword.View.extend({
 	 *
 	 */
 	getElement		: function() {
-		
-		this.wordElement = this.wordElement || this.$( '<table />' ).addClass( 'word-table' ).append( '<tbody />' );
-		
+		this.wordElement = this.wordElement || this._createElement();
 		return this.wordElement;
+	},
+	
+	/** 
+	 *
+	 */
+	getWord			: function() {
+		return this.model;
 	},
 
 	/**
 	 *
 	 */
-	getWord			: function() {
-		return this.options.model;
+	setWord			: function( word ) {
+		this.model = word;
+		this.render();
 	},
 
 	/**
@@ -43,12 +49,14 @@ Crossword.View.Word = Crossword.View.extend({
 	inGrid			: function() {
 		return this.getElement().parent().get(0) == this.getContainer().getWidget( 'grid' ).el.get(0);
 	},
+	
 	/**
 	 * 
 	 */
 	_renderVertical		: function( word ) {
+		var tbody = this.getElement().children( 'tbody' ).empty();
 		for ( var i = 0; i < word.getLength(); i++ ) {
-			this.getElement().children( 'tbody' )
+			tbody
 				.append( '<tr><td>'+word.get('text').charAt(i)+'</td></tr>' );
 		}	
 	},
@@ -57,11 +65,11 @@ Crossword.View.Word = Crossword.View.extend({
 	 * 
 	 */
 	_renderHorizontal	: function( word ) {
-		this.getElement().children( 'tbody' ).append( $( '<tr />' ) );
+		var tbody = this.getElement().children( 'tbody' ).empty();
+		tbody.append( $( '<tr />' ) );
 		
 		for ( var i = 0; i < word.getLength(); i++ ) {
-			this.getElement().children( 'tbody' )
-				.children( 'tr' ).append( '<td>'+word.get('text').charAt(i)+'</td>' );
+			tbody.children( 'tr' ).append( '<td>'+word.get('text').charAt(i)+'</td>' );
 		}
 	},
 	
@@ -127,6 +135,13 @@ Crossword.View.Word = Crossword.View.extend({
 			   */
 			}
 		});
+	},
+	
+	/**
+	 *
+	 */
+	_createElement	: function() {
+		 return this.$( '<table />' ).addClass( 'word-table' ).append( '<tbody />' );
 	},
 	
 	/**

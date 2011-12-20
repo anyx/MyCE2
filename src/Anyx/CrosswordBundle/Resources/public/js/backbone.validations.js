@@ -34,7 +34,7 @@ var validators = {
     var isNotBeingSet = _.isUndefined(valueToSet);
     if (_.isNull(valueToSet) || valueToSet === "" || (isNotBeingSet && isNotAlreadySet)) {
       return "required";
-    } else {
+    }else {
       return false;
     }
   },
@@ -87,13 +87,13 @@ var validators = {
 
   "minlength" : function(minlength, attributeName, model, valueToSet) {
     if (_.isString(valueToSet)) {
-      if (valueToSet.length < minlength) { return "minlength"; }
+      if (valueToSet.length < minlength) {return "minlength";}
     }
   },
 
   "maxlength" : function(maxlength, attributeName, model, valueToSet) {
     if (_.isString(valueToSet)) {
-      if (valueToSet.length > maxlength) { return "maxlength"; }
+      if (valueToSet.length > maxlength) {return "maxlength";}
     }
   }
 };
@@ -101,7 +101,7 @@ var validators = {
 var customValidators = {};
 var getCustomValidator = function(name) {
   var cv = customValidators[name];
-  if (!cv) { throw "custom validator '"+name+"' could not be found."; }
+  if (!cv) {throw "custom validator '"+name+"' could not be found.";}
   return cv;
 };
 
@@ -180,9 +180,9 @@ function createValidator(attributeName, type, description) {
   }
   validator = validators[type];
 
-  if (!validator) { validator = getCustomValidator(type); }
+  if (!validator) {validator = getCustomValidator(type);}
 
-  if (!validator) { throw "Improper validation type '"+type+"'" ; }
+  if (!validator) {throw "Improper validation type '"+type+"'" ;}
 
   if (type !== "required") { // doesn't need the description
     validator = _.bind(validator, null, description, attributeName);
@@ -263,12 +263,12 @@ var inherits = function(parent, protoProps, staticProps) {
   if (protoProps && protoProps.hasOwnProperty('constructor')) {
     child = protoProps.constructor;
   } else {
-    child = function(){ return parent.apply(this, arguments); };
+    child = function(){return parent.apply(this, arguments);};
   }
   ctor.prototype = parent.prototype;
   child.prototype = new ctor();
-  if (protoProps) { _.extend(child.prototype, protoProps); }
-  if (staticProps) { _.extend(child, staticProps); }
+  if (protoProps) {_.extend(child.prototype, protoProps);}
+  if (staticProps) {_.extend(child, staticProps);}
   child.prototype.constructor = child;
   child.__super__ = parent.prototype;
   return child;

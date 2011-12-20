@@ -14,6 +14,7 @@
 		'@AnyxCrosswordBundle/Resources/public/js/backbone.validations.js'
 		
 		'@AnyxCrosswordBundle/Resources/public/js/models/Crossword.js'
+		'@AnyxCrosswordBundle/Resources/public/js/models/CrosswordModel.js'
 		'@AnyxCrosswordBundle/Resources/public/js/models/Point.js'
 		'@AnyxCrosswordBundle/Resources/public/js/models/Word.js'
 		'@AnyxCrosswordBundle/Resources/public/js/models/WordsCollection.js'
@@ -24,6 +25,7 @@
 		'@AnyxCrosswordBundle/Resources/public/js/views/View.js'
 		'@AnyxCrosswordBundle/Resources/public/js/views/Grid.js'
 		'@AnyxCrosswordBundle/Resources/public/js/views/Word.js'
+		'@AnyxCrosswordBundle/Resources/public/js/views/WordPreview.js'
 		'@AnyxCrosswordBundle/Resources/public/js/views/DirectionChooser.js'
 		'@AnyxCrosswordBundle/Resources/public/js/views/WordForm.js'
 		
@@ -64,9 +66,12 @@
 				selectors	: {
 					word				: '.i-word-text',
 					definition			: '.i-word-definition',
-					directionChooser	: '.i-direction-chooser'
+					directionChooser	: '.i-direction-chooser',
+					wordPreview			: '.i-word-preview'
 				}
 			});
+			
+			//wordForm.render();
 		});
 	</script>
 	
@@ -112,8 +117,8 @@
 					<li><a href="#" rel="vertical">Vertical</a></li>
 					<li><a href="#" rel="horizontal">Horizontal</a></li>
 				</ul>
-				<div class="i-word-preview">
-				</div>
+			</div>
+			<div class="i-word-preview">
 			</div>
 
 		</form>		
