@@ -2,6 +2,7 @@
  * 
  */
 Crossword.View.WordPreview = Crossword.View.extend({
+
 	/**
 	 * 
 	 */
@@ -11,8 +12,8 @@ Crossword.View.WordPreview = Crossword.View.extend({
 	 * 
 	 */
 	showWord		: function( word ) {
-		this._getCurrentView().setWord( word );
-		console.log( this._getCurrentView().getElement(), word.get('text') );
+		this.getCurrentView().setWord( word );
+		this.setWordPosition( this.getCurrentView() );
 	},
 	
 	/**
@@ -26,12 +27,30 @@ Crossword.View.WordPreview = Crossword.View.extend({
 	/**
 	 * 
 	 */
-	_getCurrentView	: function() {
+	getCurrentView	: function() {
 		if ( this._currentView == null ) {
 			this._currentView = new Crossword.View.Word;
 			this._currentView.getElement().appendTo( this.el );
 		}
 		
 		return this._currentView;
+	},
+	
+	/**
+	 * 
+	 */
+	setWordPosition	: function( wordView ) {
+		
+		var wordWidth = this.$( this._currentView.getElement() ).width();
+		var wordHeight = this.$( this._currentView.getElement() ).height();
+		
+		var previewBox = this.$( this.el );
+		var previewWidth = previewBox.width();
+		var previewHeight = previewBox.height();
+		
+		this._currentView.getElement().css({
+			left	: Math.floor( previewWidth - wordWidth ) / 2 + 'px',
+			top		: Math.floor( previewHeight - wordHeight ) / 2 + 'px'
+		});
 	}
 });

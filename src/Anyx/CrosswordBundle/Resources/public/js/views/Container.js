@@ -1,17 +1,7 @@
 /**
  *
  */
-var Anyx = Anyx || {};
-
-/**
- *
- */
-Anyx.View = Anyx.View || {};
-
-/**
- *
- */
-Anyx.View.WidgetsContainer = function ( options ) {
+Backbone.View.Container = function ( options ) {
 
 	/**
 	 *
@@ -67,15 +57,6 @@ Anyx.View.WidgetsContainer = function ( options ) {
 		_widgets[widgetName] = widget;
 	}
 	
-	/**
-	 *
-	 */
-	this.setWidgets = function( widgets ) {
-		for( var widget in widgets ) {
-			this.setWidget(widget, widgets[widget]);
-		}
-	}
-
 	/**
 	 *
 	 */

@@ -28,7 +28,16 @@ TABLE.word-table , .word-table TD {
 }
 
 .word-table TD {
-	width: 18px;
+	width: 19px;
+	min-width: 18px;
 	height: 18px;
+	min-height: 18px;
 	text-align: center;
+}
+.word-preview {
+	width: 250px;
+	height: 250px;
+	border: 1px solid #08C;
+	position: relative;
+	z-index: 2;
 }

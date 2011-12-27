@@ -43,13 +43,13 @@ Crossword.Model.WordsCollection = Backbone.Collection.extend({
 		
 		//параллельные блоки
 		var parrallelContainerBlock = word.getBlock();
-		
+			
 		var perpendicularCoord = word.isHorizontal() ? 'y' : 'x';
-		var directionCoord = perpendicularCoord = 'x' ? 'y' : 'x';
-		
+		var directionCoord = perpendicularCoord == 'x' ? 'y' : 'x';
+
 		parrallelContainerBlock.start[perpendicularCoord]--;
 		parrallelContainerBlock.end[perpendicularCoord]++;
-	
+
 		var foundWords = this.getWordsInBlock( parrallelWords, parrallelContainerBlock ); 
 		if ( foundWords.length > 0 ) {
 			return false;
@@ -61,11 +61,15 @@ Crossword.Model.WordsCollection = Backbone.Collection.extend({
 		var endNeighbour = word.getEndPoint();
 		endNeighbour[perpendicularCoord]++;
 		
-		for( var i = 0; i < this.length; i++ ) {
-			if ( this.isWordInPoint( this.at(i), startNeighbour ) || this.isWordInPoint( this.at(i), endNeighbour ) ) {
-				return false;
-			}
+		var wordInPoint = false;
+		_.each( this.getWords(), function( anotherWord ) {
+			wordInPoint = wordInPoint || this.isWordInPoint( anotherWord, startNeighbour ) || this.isWordInPoint( anotherWord, endNeighbour );
+		}, this);
+		
+		if ( wordInPoint ) {
+			return false;
 		}
+		
 		//окончания перпендикулярных слов в соседних блоках
 		var underBlock = word.getBlock();
 		underBlock.start[perpendicularCoord]--;
@@ -75,12 +79,16 @@ Crossword.Model.WordsCollection = Backbone.Collection.extend({
 		largerBlock.start[perpendicularCoord]++;
 		largerBlock.end[perpendicularCoord]++;
 
-		foundWords = this.getWordsByEndingBlock( word.isHorizontal(), perpendicularWords, underBlock );
-		foundWords.concat( this.getWordsByEndingBlock( word.isHorizontal(), perpendicularWords, largerBlock ) );
+		foundWords = this.getWordsInBlock( parrallelWords, underBlock );
+		foundWords = foundWords.concat( this.getWordsInBlock( parrallelWords, largerBlock ) );
+
+		foundWords = foundWords.concat( this.getWordsByBeginningBlock( perpendicularWords, largerBlock ) );
+		foundWords = foundWords.concat( this.getWordsByEndingBlock( perpendicularWords, underBlock ) );
+
 		if ( foundWords.length > 0 ) {
 			return false;
 		}
-		
+
 		return this.checkPerpendicularIntersections( word );
 	},
 	
@@ -90,19 +98,18 @@ Crossword.Model.WordsCollection = Backbone.Collection.extend({
 	getWordsInBlock	: function( words, block ) {
 		words = words || this.getWords();
 
-		block = !(block instanceof Crossword.Model.Point) ? block : block.attributes;
 		var result = [];
 
 		for( var i = block.start.x; i <= block.end.x; i++ ) {
 			for( var j = block.start.y; j <= block.end.y; j++ ) {
-				for ( var k = 0; k < words.length; k++ ) {
-					if ( this.isWordInPoint( words[k], {
+				_.each( words, function( word ) {
+					if ( this.isWordInPoint( word, {
 						x : i, 
 						y : j
-					}) && result.indexOf( words[k] ) == -1 ) {
-						result[result.length] = words[k];
+					}) && result.indexOf( word ) == -1 ) {
+						result[result.length] = word;
 					}
-				}
+				}, this);
 			}
 		}
 		return result;
@@ -113,8 +120,7 @@ Crossword.Model.WordsCollection = Backbone.Collection.extend({
 	 */
 	isWordInPoint	: function( word, point ) {
 		
-		word = !(word instanceof Crossword.Model.Point) ? word : word.attributes;
-		var position = word.getStartPoint().attributes;
+		var position = word.getStartPoint();
 		
 		var result = false;
 		
@@ -134,60 +140,61 @@ Crossword.Model.WordsCollection = Backbone.Collection.extend({
 	 */
 	getWordsByDirection : function( isHorizontal ) {
 		var words = [];
-
-		for( var i = 0; i < this.models.length; i++ ) {
-			if ( this.models[i].isHorizontal() == isHorizontal ) {
-				words[words.length] = this.models[i];
+		_.each( this.models, function( word ) {
+			if ( word.isHorizontal() == isHorizontal ) {
+				words[words.length] = word;
 			}
-		}
+		}, this );
 		return words;
 	},
-	
+
 	/**
 	 *
 	 */
-	getWordsByEndingBlock : function( isHorizontal, words, block ) {
+	getWordsByBeginningBlock	: function( words, block ) {
+		return this.getWordsByEdgeInBlock( words, block, 1 );
+	},
 
-		var foundWords = [];
-
-		var perpendicularCoord = isHorizontal ? 'y' : 'x';
-		var directionCoord = perpendicularCoord = 'x' ? 'y' : 'x';
-
-		for (var i = 0; i < words.length; i++ ) {
-			
-			if ( words[i].isHorizontal() != isHorizontal ) {
-				continue;
-			}
-			
-			var position = words[i].getEndPoint();
-			if ( position[directionCoord] >= block.start[directionCoord] && position[directionCoord] <= block.end[directionCoord] && position[perpendicularCoord] == block.start[perpendicularCoord] ) {
-				foundWords[foundWords.length] = words[i];
-			}
-		}
-		return foundWords;
+	/**
+	 *
+	 */
+	getWordsByEndingBlock	: function( words, block ) {
+		return this.getWordsByEdgeInBlock( words, block, -1 );
 	},
 	
 	/**
 	 *
 	 */
-	getWordsByBeginningBlock : function( isHorizontal, words, block ) {
+	getWordsByEdgeInBlock : function( words, block, mode ) {
+
+		var mode	= mode || 0;
+		var isHorizontal = block.start.y == block.end.y;
 		
 		var foundWords = [];
 
-		var perpendicularCoord = isHorizontal ? 'y' : 'x';
-		var directionCoord = perpendicularCoord = 'x' ? 'y' : 'x';
+		var directionCoord = isHorizontal ? 'x' : 'y';
+		var perpendicularCoord = directionCoord == 'x' ? 'y' : 'x';
 
-		for (var i = 0; i < words.length; i++ ) {
-			
-			if ( words[i].isHorizontal() != isHorizontal ) {
-				continue;
+		_.each( words, function( word ) {
+
+			var points = [];
+			switch( mode ) {
+				case 1	: points = [ word.getStartPoint() ]; break;
+				case -1 : points = [ word.getEndPoint() ]; break;
+				case 0	: points = [ word.getStartPoint(), word.getEndPoint() ]; break;	
 			}
+
+			_.each(points, function( position ) {
+				if ( position[directionCoord] >= block.start[directionCoord] &&
+					position[directionCoord] <= block.end[directionCoord] &&
+					position[perpendicularCoord] == block.start[perpendicularCoord]
+				) {
+					foundWords[foundWords.length] = word;
+				}
+			});
 			
-			var position = words[i].getStartPoint();
-			if ( position[directionCoord] >= block.start[directionCoord] && position[directionCoord] <= block.end[directionCoord] && position[perpendicularCoord] == block.start[perpendicularCoord] ) {
-				foundWords[foundWords.length] = words[i];
-			}
-		}
+		}, this );
+
 		return foundWords;
 	},
 	
@@ -203,18 +210,18 @@ Crossword.Model.WordsCollection = Backbone.Collection.extend({
 		for( var i = 0; i < perpendicularWords.length; i++ ) {
 
 			var intersection = this._getLinesIntersection(
-				block.start.attributes,
-				block.end.attributes,
-				perpendicularWords[i].getStartPoint().attributes,
-				perpendicularWords[i].getEndPoint().attributes
+				block.start,
+				block.end,
+				perpendicularWords[i].getStartPoint(),
+				perpendicularWords[i].getEndPoint()
 			);
 
 			if ( intersection != null ) {
 				var wordLetter = word.getLetter( intersection );
 				
 				var intersectedWords = this.getWordsInBlock( perpendicularWords, {
-					start	: intersection.attributes,
-					end		: intersection.attributes
+					start	: intersection,
+					end		: intersection
 				});
 
 				if ( intersectedWords.length == 1 ) {
@@ -249,10 +256,10 @@ Crossword.Model.WordsCollection = Backbone.Collection.extend({
 			var tb = db / d;
 
 			if ( ( 0 <= ta ) && ( ta <= 1 ) && ( 0 <= tb ) && ( tb <= 1 ) ) {
-				result = new Crossword.Model.Point({
-							x	: a1.x + ta * ( a2.x - a1.x ),
-							y	: a1.y + ta * ( a2.y - a1.y )
-				}); 
+				result = {
+					x	: a1.x + ta * ( a2.x - a1.x ),
+					y	: a1.y + ta * ( a2.y - a1.y )
+				}; 
 			}
 		}
 

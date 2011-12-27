@@ -34,38 +34,34 @@ describe("Word model", function() {
 		expect( word.getLength() ).toEqual(4);
 
 		word.set({
-			position	: new Crossword.Model.Point({
+			position	: {
 				x	: 1,
 				y	: 2
-			}),
+			},
 			horizontal : false
 		});
 		
 		//search letters
-		var point = new Crossword.Model.Point({
+		var point = {
 			x	: 1,
 			y	: 3
-		});
+		};
 		expect( word.getLetter( point ) ).toEqual( 'o' );
 		
-		point.set({
-			y	: 5
-		});
+		point.y	= 5;
 		expect( word.getLetter( point ) ).toEqual( 'd' );
 
-		point.set({
-			x	: 5
-		});
+		point.x	= 5;
 		expect( word.getLetter( point ) ).toEqual( null );
 
 		//end point
 		var endPoint = word.getEndPoint();
-		point.set({
+		point = {
 			x	: 1,
 			y	: 5
-		});
+		};
 		
-		expect( endPoint.isEqual( point ) ).toEqual(true);
+		expect( endPoint.x == point.x && endPoint.y == point.y ).toEqual(true);
 		
 		expect( word.getLength() ).toEqual( 4 );
 	});

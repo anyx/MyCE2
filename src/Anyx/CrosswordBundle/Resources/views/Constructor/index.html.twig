@@ -15,63 +15,39 @@
 		
 		'@AnyxCrosswordBundle/Resources/public/js/models/Crossword.js'
 		'@AnyxCrosswordBundle/Resources/public/js/models/CrosswordModel.js'
-		'@AnyxCrosswordBundle/Resources/public/js/models/Point.js'
 		'@AnyxCrosswordBundle/Resources/public/js/models/Word.js'
 		'@AnyxCrosswordBundle/Resources/public/js/models/WordsCollection.js'
 
-		'@AnyxCrosswordBundle/Resources/public/js/views/WidgetsContainer.js'
-		'@AnyxCrosswordBundle/Resources/public/js/views/Widget.js'
+		'@AnyxCrosswordBundle/Resources/public/js/views/Container.js'
 		
 		'@AnyxCrosswordBundle/Resources/public/js/views/View.js'
+		'@AnyxCrosswordBundle/Resources/public/js/presenters/Presenter.js'
+		
 		'@AnyxCrosswordBundle/Resources/public/js/views/Grid.js'
 		'@AnyxCrosswordBundle/Resources/public/js/views/Word.js'
 		'@AnyxCrosswordBundle/Resources/public/js/views/WordPreview.js'
 		'@AnyxCrosswordBundle/Resources/public/js/views/DirectionChooser.js'
-		'@AnyxCrosswordBundle/Resources/public/js/views/WordForm.js'
-		
+		'@AnyxCrosswordBundle/Resources/public/js/presenters/WordForm.js'
+		'@AnyxCrosswordBundle/Resources/public/js/presenters/Editor.js'
 	%}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
 	
 	<script type="text/javascript">
 		$(function(){
-			
-			var crosswordGrid = new Crossword.View.Grid({
-				words	: new Crossword.Model.WordsCollection,
-				el		: $('.i-constructor'),
-				rows	: 25,
-				cols	: 25
-			});
-
-			var word = new Crossword.Model.Word({
-				text			: 'testing',
-				definition		: 'Quality analys',
-				horizontal		: false,
-				position		: new Crossword.Model.Point({
-					x	: 2,
-					y	: 4
-				})
-			});
-
-			var wordView = new Crossword.View.Word({
-				model	: word
-			});
-
-			wordView.render();
-
-			wordView.getElement().appendTo('body');
-			
-			var wordForm = new Crossword.View.WordForm({
-				el			: '.i-word-form',
+			var editor = new Crossword.Presenter.Editor({
 				selectors	: {
+					grid				: '.i-grid',
+					form				: '.i-word-form',
 					word				: '.i-word-text',
 					definition			: '.i-word-definition',
 					directionChooser	: '.i-direction-chooser',
-					wordPreview			: '.i-word-preview'
+					wordPreview			: '.i-word-preview',
+				},
+				classes		: {
+					wordTable	: 'word-table'
 				}
 			});
-			
-			//wordForm.render();
 		});
 	</script>
 	
@@ -91,7 +67,7 @@
 
 <div class="columns-container">
 	<div class="left-column">
-		<div class="i-constructor crossword-editor">	
+		<div class="i-grid crossword-editor">	
 		</div>
 	</div>
 	<div class="right-column">
@@ -100,15 +76,16 @@
 			<dl class="form">
 				<dt>
 					<label>Word</label>
+					<span id="status"></span>
 				</dt>
 				<dd>
-					<input type="text" class="i-word-text" />
+					<input type="text" class="i-word-text" autocomplete="off" />
 				</dd>
 				<dt>
 					<label>Definition</label>
 				</dt>
 				<dd>
-					<textarea class="i-word-definition"></textarea>
+					<textarea class="i-word-definition" autocomplete="off"></textarea>
 				</dd>
 			</dl>
 
@@ -118,7 +95,7 @@
 					<li><a href="#" rel="horizontal">Horizontal</a></li>
 				</ul>
 			</div>
-			<div class="i-word-preview">
+			<div class="i-word-preview word-preview">
 			</div>
 
 		</form>		

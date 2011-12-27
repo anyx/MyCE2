@@ -15,10 +15,10 @@ Crossword.Model.Word = Crossword.Model.extend({
 		text			: null,
 		definition		: null,
 		horizontal		: true,
-		position		: new Crossword.Model.Point({
+		position		: {
 			x : 0,
 			y : 0
-		})
+		}
 	},
 	
 	/**
@@ -65,7 +65,7 @@ Crossword.Model.Word = Crossword.Model.extend({
 	 * @return {Point}
 	 */
 	getStartPoint	: function() {
-		return this.get('position');
+		return _.clone( this.get('position') );
 	},
 	
 	/**
@@ -76,15 +76,15 @@ Crossword.Model.Word = Crossword.Model.extend({
 		var position = this.get('position');
 
 		if ( this.isHorizontal() ) {
-			return new Crossword.Model.Point({
-						x	: position.get('x') + parseInt( this.getLength() - 1 ),
-						y	: position.get('y')
-				});
+			return {
+				x	: position.x + parseInt( this.getLength() - 1 ),
+				y	: position.y
+			};
 		} else {
-			return new Crossword.Model.Point({
-						x	: position.get('x'),
-						y	: position.get('y') + parseInt( this.getLength() - 1 )
-				});
+			return {
+				x	: position.x,
+				y	: position.y + parseInt( this.getLength() - 1 )
+			};
 		}
 	},
 	
@@ -107,8 +107,8 @@ Crossword.Model.Word = Crossword.Model.extend({
 		var actualCoord = this.isHorizontal() ? 'x' : 'y';
 		var otherCoord = actualCoord == 'x' ? 'y' : 'x';
 
-		if ( position.get( otherCoord ) == point.get( otherCoord ) ) {
-			return this.get('text')[point.get( actualCoord ) - position.get( actualCoord )]; 
+		if ( position[otherCoord] == point[otherCoord]) {
+			return this.get('text')[point[actualCoord] - position[actualCoord]]; 
 		}
 		
 		return null;

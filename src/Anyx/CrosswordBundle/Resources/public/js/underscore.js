@@ -46,7 +46,7 @@
     nativeBind         = FuncProto.bind;
 
   // Create a safe reference to the Underscore object for use below.
-  var _ = function(obj) { return new wrapper(obj); };
+  var _ = function(obj) {return new wrapper(obj);};
 
   // Export the Underscore object for **Node.js** and **"CommonJS"**, with
   // backwards-compatibility for the old `require()` API. If we're not in
@@ -221,7 +221,7 @@
 
   // Convenience version of a common use case of `map`: fetching a property.
   _.pluck = function(obj, key) {
-    return _.map(obj, function(value){ return value[key]; });
+    return _.map(obj, function(value){return value[key];});
   };
 
   // Return the maximum element or (element-based computation).
@@ -280,7 +280,7 @@
   // to group by, or a function that returns the criterion.
   _.groupBy = function(obj, val) {
     var result = {};
-    var iterator = _.isFunction(val) ? val : function(obj) { return obj[val]; };
+    var iterator = _.isFunction(val) ? val : function(obj) {return obj[val];};
     each(obj, function(value, index) {
       var key = iterator(value, index);
       (result[key] || (result[key] = [])).push(value);
@@ -348,7 +348,7 @@
 
   // Trim out all falsy values from an array.
   _.compact = function(array) {
-    return _.filter(array, function(value){ return !!value; });
+    return _.filter(array, function(value){return !!value;});
   };
 
   // Return a completely flattened version of an array.
@@ -401,7 +401,7 @@
   // Take the difference between one array and another.
   // Only the elements present in just the first array will remain.
   _.difference = function(array, other) {
-    return _.filter(array, function(value){ return !_.include(other, value); });
+    return _.filter(array, function(value){return !_.include(other, value);});
   };
 
   // Zip together multiple lists into a single array -- elements that share
@@ -493,7 +493,7 @@
   _.bindAll = function(obj) {
     var funcs = slice.call(arguments, 1);
     if (funcs.length == 0) funcs = _.functions(obj);
-    each(funcs, function(f) { obj[f] = _.bind(obj[f], obj); });
+    each(funcs, function(f) {obj[f] = _.bind(obj[f], obj);});
     return obj;
   };
 
@@ -511,7 +511,7 @@
   // it with the arguments supplied.
   _.delay = function(func, wait) {
     var args = slice.call(arguments, 2);
-    return setTimeout(function(){ return func.apply(func, args); }, wait);
+    return setTimeout(function(){return func.apply(func, args);}, wait);
   };
 
   // Defers a function, scheduling it to run after the current call stack has
@@ -524,9 +524,9 @@
   // during a given window of time.
   _.throttle = function(func, wait) {
     var timeout, context, args, throttling, finishThrottle;
-    finishThrottle = _.debounce(function(){ throttling = false; }, wait);
+    finishThrottle = _.debounce(function(){throttling = false;}, wait);
     return function() {
-      context = this; args = arguments;
+      context = this;args = arguments;
       var throttler = function() {
         timeout = null;
         func.apply(context, args);
@@ -592,7 +592,7 @@
   // Returns a function that will only be executed after being called N times.
   _.after = function(times, func) {
     return function() {
-      if (--times < 1) { return func.apply(this, arguments); }
+      if (--times < 1) {return func.apply(this, arguments);}
     };
   };
 
@@ -905,7 +905,7 @@
   // If Underscore is called as a function, it returns a wrapped object that
   // can be used OO-style. This wrapper holds altered versions of all the
   // underscore functions. Wrapped objects may be chained.
-  var wrapper = function(obj) { this._wrapped = obj; };
+  var wrapper = function(obj) {this._wrapped = obj;};
 
   // Expose `wrapper.prototype` as `_.prototype`
   _.prototype = wrapper.prototype;

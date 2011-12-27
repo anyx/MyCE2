@@ -16,8 +16,7 @@ Crossword.View.Word = Crossword.View.extend({
 		}
 		
 		this.$( this.getElement() ).data('view', this);
-		
-		this._initDraggable();
+		//this._initDraggable();
 	},
 
 	/**
@@ -44,13 +43,6 @@ Crossword.View.Word = Crossword.View.extend({
 	},
 
 	/**
-	 *
-	 */
-	inGrid			: function() {
-		return this.getElement().parent().get(0) == this.getContainer().getWidget( 'grid' ).el.get(0);
-	},
-	
-	/**
 	 * 
 	 */
 	_renderVertical		: function( word ) {
@@ -74,80 +66,28 @@ Crossword.View.Word = Crossword.View.extend({
 	},
 	
 	/**
-	 * 
-	 */
-	_initDraggable		: function() {
-		
-		var _this = this;
-		
-		var grid = this.getContainer().getWidget( 'grid' );
-	   
-		var crosswordStartPoint = this.$( grid.el ).offset();
-	   
-		var cellSize = grid.getCellSize(); 
-		
-		var left, top;
-		
-		this.$( this.getElement() ).draggable({
-			cursor: 'move',
-			zIndex: 10,
-			appendTo: grid.el,
-			revert: 'invalid',
-			start: function( event, ui ) {
-				
-				if ( _this.inGrid() ) {
-					grid.getWords().remove( _this.getWord() );
-				}
-				
-				ui.helper.appendTo( grid.el ).css( 'position', 'absolute' );
-			},
-			drag: function( event, ui ) {
-				
-				var x = Math.ceil( ( event.originalEvent.pageX - crosswordStartPoint.left ) / cellSize ) - 1;
-				var y = Math.ceil( ( event.originalEvent.pageY - crosswordStartPoint.top ) / cellSize ) - 1; 
-			   
-				_this.model.set({
-					'point' : new Crossword.Model.Point({
-						x : x,
-						y : y	   
-					})}
-				);
-
-				if ( !grid.getWords().canAddWord( _this.model ) ) {
-					_this.setBorderColor( '#c00' );
-				} else {
-					_this.setBorderColor( '#000' );
-				}
-
-				if ( _this.inGrid() ) {
-					
-					left = x * cellSize;
-					top = y * cellSize;
-					
-					ui.position.left = left;
-					ui.position.top = top;
-				} 
-				/*
-				else {
-					left = - ( context.word_preview_point.left - ( x * cellSize + crosswordStartPoint.left ) );
-					top = y * cellSize;
-				}
-			   */
-			}
-		});
-	},
-	
-	/**
 	 *
 	 */
 	_createElement	: function() {
-		 return this.$( '<table />' ).addClass( 'word-table' ).append( '<tbody />' );
+		 return this.$( '<table />' ).addClass( this.getClass() ).append( '<tbody />' );
 	},
 	
 	/**
 	 * 
 	 */
 	setBorderColor	: function( color ) {
-		this.$( this.el ).find( 'td' ).css( 'color', color );
+		this.getElement().find( 'td' ).css( 'border-color', color );
+	},
+	
+	getClass		: function() {
+		if ( _.isUndefined( Crossword.View.Word._class ) ) {
+			Crossword.View.Word._class = 'word';
+		}
+
+		return Crossword.View.Word._class;
 	}
 });
+
+Crossword.View.Word.setClass = function( className ) {
+		Crossword.View.Word._class = className;
+};
