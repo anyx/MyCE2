@@ -13,6 +13,10 @@ Crossword.View.WordForm = Backbone.Presenter.extend({
 			}),
 			wordPreview			: new Crossword.View.WordPreview({
 				el	: options.selectors.wordPreview
+			}),
+			statusBar			: new Crossword.View.StatusBar({
+				el			: options.selectors.statusBar,
+				template	: 't-status-bar'
 			})
 		});
 		
@@ -58,9 +62,11 @@ Crossword.View.WordForm = Backbone.Presenter.extend({
 		if ( word.isValid() ) {
 			this.getWidget( 'wordPreview' ).showWord( word );
 			this.trigger( 'create', this.getWidget( 'wordPreview' ).getCurrentView() );
+			this.getWidget( 'statusBar').showMessage( 'Valid' );
 			
 		} else {
 			this.getWidget( 'wordPreview' ).clear();
+			this.getWidget( 'statusBar').showError( 'Invalid' );
 		}
 	},
 	

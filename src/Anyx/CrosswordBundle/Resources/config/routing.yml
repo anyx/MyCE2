@@ -1,3 +1,24 @@
 constructor:
-    pattern:  /constructor
-    defaults: { _controller: AnyxCrosswordBundle:Constructor:index }
+#    pattern:  /constructor/{id}
+#    defaults: { _controller: AnyxCrosswordBundle:Constructor:index }
+#    parameters:
+#      id: { type: doctrine.mongodb.document, class: Anyx\CrosswordBundle\Document\Crossword, parameter: crossword }    
+    resource: "@AnyxCrosswordBundle/Controller/ConstructorController.php"
+    type:     annotation
+
+#words_save:
+#    pattern:  /constructor/{id}/save
+#    defaults: { _controller: AnyxCrosswordBundle:Constructor:save }
+
+crossword_new:
+    pattern:  /crossword/new
+    defaults: { _controller: AnyxCrosswordBundle:Crossword:new }    
+
+crossword_edit:
+    pattern:  /crossword/edit/{id}
+    defaults: { _controller: AnyxCrosswordBundle:Crossword:edit }    
+
+#rest
+crosswords_rest:
+    type:     rest
+    resource: Anyx\CrosswordBundle\Controller\CrosswordRestController

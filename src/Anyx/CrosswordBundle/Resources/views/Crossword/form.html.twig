@@ -1,0 +1,10 @@
+{% if form.vars.value.getId() == null %}
+	{% set action = path('crossword_new') %}
+{% else %}
+	{% set action = path('crossword_edit', {'id' : form.vars.value.getId() }) %}
+{% endif %}
+
+<form action="{{action}}" method="POST" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <input type="submit" />
+</form>

@@ -79,7 +79,7 @@ foreach ($deps as $name => $dep) {
     } else {
         $rev = isset($dep['version']) ? $dep['version'] : 'origin/HEAD';
     }
-
+	
     // install dir
     $installDir = isset($dep['target']) ? $vendorDir.'/'.$dep['target'] : $vendorDir.'/'.$name;
     if (in_array('--reinstall', $argv)) {

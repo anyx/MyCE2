@@ -1,0 +1,8 @@
+parameters:
+  sensio_framework_extra.converter.doctrine-odm.class: Anyx\CrosswordBundle\Request\ParamConverter\DoctrineMongoDBParamConverter
+services:
+  sensio_framework_extra.converter.doctrine.odm:
+    class: %sensio_framework_extra.converter.doctrine-odm.class%
+    tags  : 
+      - { name: "request.param_converter" }
+    arguments: ["@doctrine.odm.mongodb.document_manager"]

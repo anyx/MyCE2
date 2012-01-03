@@ -41,3 +41,11 @@ TABLE.word-table , .word-table TD {
 	position: relative;
 	z-index: 2;
 }
+/* Status Bar */
+.info .status-text {
+	color: #08C;
+}
+
+.error .status-text {
+	color: #f00;
+}

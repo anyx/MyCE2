@@ -1,0 +1,11 @@
+{% extends '::main.html.twig' %}
+
+{% set title = 'New Crossword' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block page_title %}{{title}}{% endblock %}
+
+{% block body %}
+{% include "AnyxCrosswordBundle:Crossword:form.html.twig" with {'form': form} %}
+{% endblock %}

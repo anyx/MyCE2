@@ -24,15 +24,13 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 		//
 		this.registerWidget( 'wordForm', new Crossword.View.WordForm({
 				el			: $( options.selectors.form ),
-				selectors	: {
-					word				: options.selectors.word,
-					definition			: options.selectors.definition,
-					directionChooser	: options.selectors.directionChooser,
-					wordPreview			: options.selectors.wordPreview
-				}
+				selectors	: options.selectors.formSelectors
 		}));
 		
-		this.getWidget( 'wordForm').bind('create', this.initWordDraggable, this );
+		//
+		this.registerWidget( 'saveButton', options.selectors.saveButton );
+
+		this.getWidget( 'wordForm').bind( 'create', this.initWordDraggable, this );
 		
 		Crossword.View.Word.setClass( this.options.classes.wordTable );
 		
@@ -46,6 +44,7 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 		this.initGridDroppable();
 		this.initPreviewDroppable();
 		this.initBodyDroppable();
+		this.initSaveButton();
 	},
 	
 	/**
@@ -111,6 +110,15 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 		});		
 	},
 	
+	
+	initSaveButton	: function() {
+		$( this.getWidget('saveButton').el ).click( this.saveWords );
+	},
+	
+	saveWords		: function() {
+		console.log( 'click' );
+	},
+	
 	/**
 	 * 
 	 */
@@ -129,8 +137,6 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 	
 				var x = Math.ceil( ( event.originalEvent.pageX - crosswordStartPoint.left ) / gridView.getCellSize() ) - 1;
 				var y = Math.ceil( ( event.originalEvent.pageY - crosswordStartPoint.top )  / gridView.getCellSize() ) - 1;
-				
-				console.log( 'drop', x, y );
 				
 				var wordModel = wordView.getWord();
 				
@@ -189,5 +195,12 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 				wordElement.remove();
 			}
 		});
+	},
+	
+	/**
+	 * 
+	 */
+	saveCrossword		: function() {
+		
 	}
 });

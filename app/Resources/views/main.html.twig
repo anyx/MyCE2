@@ -3,7 +3,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>{% block title %}Tests{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+
+		{% block stylesheets %}
+			{% stylesheets
+				'@AnyxCrosswordBundle/Resources/public/css/main.css'
+			%}
+				<link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
+			{% endstylesheets %}
+		{% endblock %}		
+		
         {% block javascripts %}{% endblock %}
     </head>
     <body>
@@ -13,6 +21,15 @@
 
 		<div class="main-container">	
 			<div class="body-container">
+				
+				<h3 class="page-title">{% block page_title %}{% endblock %}</h3>
+				
+				{% for key, flash in app.session.getFlashes() %}
+					<div class="{{key}}">
+						{{ flash }}
+					</div>
+				{% endfor %}
+				
 				{% block body %}{% endblock %}
 			</div>
 

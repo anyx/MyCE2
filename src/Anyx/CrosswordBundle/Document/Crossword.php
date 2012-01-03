@@ -1,28 +1,49 @@
 <?php
-
+/**
+ * 
+ */
 namespace Anyx\CrosswordBundle\Document;
 
+/**
+ * 
+ */
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
+ * 
  * @MongoDB\Document(repositoryClass="Anyx\CrosswordBundle\Repository\CrosswordRepository")
  */
 class Crossword {
 
     /**
+	 * 
      * @MongoDB\Id
      */
 	protected $id;
 	
 	/**
+	 * 
 	 * @MongoDB\String
 	 */
 	protected $title;
 
 	/**
+	 * 
 	 * @MongoDB\String
 	 */
 	protected $description;
+
+	/**
+	 * 
+	 * @MongoDB\EmbedMany(targetDocument="Word") 
+	 */
+	protected $words;
+	
+	/**
+	 *
+	 * @MongoDB\Boolean
+	 */
+	protected $public;
 
     /**
      * Get id
@@ -73,4 +94,34 @@ class Crossword {
     {
         return $this->description;
     }
+
+	/**
+	 *
+	 * @return bool
+	 */
+	public function isPublic() {
+		return $this->public;
+	}
+
+	/**
+	 *
+	 * @param bool $public 
+	 */
+	public function setPublic($public) {
+		$this->public = $public;
+	}
+	
+	/**
+	 *
+	 */
+	public function getWords() {
+		return $this->words;
+	}
+
+	/**
+	 *
+	 */
+	public function setWords($words) {
+		$this->words = $words;
+	}
 }

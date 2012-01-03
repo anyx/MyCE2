@@ -58,3 +58,45 @@ swiftmailer:
 jms_security_extra:
     secure_controllers:  true
     secure_all_services: false
+
+sensio_framework_extra:
+    router:  { annotations: true }
+    request: { converters: true }
+    view:    { annotations: true }
+    cache:   { annotations: true }
+
+#
+doctrine_mongodb:
+    connections:
+        default:
+            server: mongodb://127.0.0.1:27017
+            options:
+                connect: true
+    default_database: test_database
+    document_managers:
+        default:
+            auto_mapping: true
+
+#
+fos_rest:
+    routing_loader:
+        default_format: json
+    format_listener:
+        default_priorities: ['json', html, '*/*']
+        fallback_format: json
+        prefer_extension: true
+    view:
+        view_response_listener: force
+        formats:
+            rss: false
+            xml: true
+            json: true
+        templating_formats:
+            html: true
+        force_redirects:
+            html: true
+        failed_validation: HTTP_BAD_REQUEST
+        
+#aliases
+services:
+    dm: "@doctrine.odm.mongodb.document_manager"

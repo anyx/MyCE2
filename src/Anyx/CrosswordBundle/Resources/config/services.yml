@@ -1,7 +1,12 @@
 parameters:
-#    anyx_crossword.example.class: Anyx\CrosswordBundle\Example
-
+    anyx.document.factory.class: Anyx\CrosswordBundle\Document\Factory
+    anyx.document.aliases:
+        Crossword: Anyx\CrosswordBundle\Document\Crossword
+        Word: Anyx\CrosswordBundle\Document\Word
+        
 services:
-#    anyx_crossword.example:
-#        class: %anyx_crossword.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    anyx.document.factory:
+        class: %anyx.document.factory.class%
+        arguments: [%anyx.document.aliases%]
+        call:
+          method: setAlias

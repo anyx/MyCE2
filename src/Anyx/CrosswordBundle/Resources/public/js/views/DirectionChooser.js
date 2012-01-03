@@ -15,7 +15,7 @@ Crossword.View.DirectionChooser = Crossword.View.extend({
 	 */
 	initialize	: function( options ) {
 	
-		var horizontal = false;
+		var horizontal = true;
 		
 		if ( 'horizontal' in options ) {
 			horizontal = options.horizontal;
