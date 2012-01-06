@@ -25,20 +25,10 @@ class ConstructorController extends Controller {
 
 	/**
 	 * 
-	 * @Route("/{id}", name="constructor")
+	 * @Route("/{id}", name="constructor", options={"expose" = true})
 	 * @ParamConverter("crossword", class="Anyx\CrosswordBundle\Document\Crossword")
 	 */
 	public function indexAction( Document\Crossword $crossword ) {
-
-		$crossword = $this->get( 'anyx.document.factory')->create(
-				'Crossword',
-				array(
-					'title'	=> 'tit'
-				)
-		);
-
-		var_dump( $crossword );
-		
 		return $this->render('AnyxCrosswordBundle:Constructor:index.html.twig', array(
 			'crossword'	=> $crossword
 		));
@@ -46,11 +36,18 @@ class ConstructorController extends Controller {
 	
 	/**
 	 *
-	 * @Route("/{id}/save", name="constructor_save")
+	 * @Route("/{id}/save", name="constructor_save", options={"expose" = true})
 	 * @ParamConverter("crossword", class="Anyx\CrosswordBundle\Document\Crossword")
 	 * @Method({"POST"})
 	 */
-	public function saveAction( Document\Crossword $crossword, $words ) {
+	public function saveAction( Document\Crossword $crossword ) {
 		
+		$words = $this->get('request')->get('words');
+		
+		$wordsDocuments = $this->get('anyx.document.factory')->createCollection( 'Word', $words );
+		
+		$crossword->setWords($wordsDocuments);
+		
+		$this->get('anyx.dm')->flush();
 	}
 }

@@ -13,6 +13,8 @@
 		'@AnyxCrosswordBundle/Resources/public/js/backbone.js'
 		'@AnyxCrosswordBundle/Resources/public/js/backbone.validations.js'
 		
+		'@FOSJsRoutingBundle/Resources/public/js/router.js'
+		
 		'@AnyxCrosswordBundle/Resources/public/js/models/Crossword.js'
 		'@AnyxCrosswordBundle/Resources/public/js/models/CrosswordModel.js'
 		'@AnyxCrosswordBundle/Resources/public/js/models/Word.js'
@@ -38,6 +40,7 @@
 	<script type="text/javascript">
 		$(function(){
 			var editor = new Crossword.Presenter.Editor({
+				id			: '{{crossword.getId()}}',
 				selectors	: {
 					grid				: '.i-grid',
 					form				: '.i-word-form',
@@ -56,6 +59,8 @@
 			});
 		});
 	</script>
+	
+	<script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback" : "fos.Router.setData"}) }}"></script>
 	
 {% endblock %}
 

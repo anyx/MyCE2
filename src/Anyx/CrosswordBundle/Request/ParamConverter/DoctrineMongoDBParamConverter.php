@@ -7,8 +7,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
-use Doctrine\ORM\Mapping\MappingException;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\MongoDBException;
 
 /*
  * This file is part of the Symfony framework.
@@ -94,7 +94,7 @@ class DoctrineMongoDBParamConverter implements ParamConverterInterface
             $this->documentManager->getClassMetadata($configuration->getClass());
             
             return true;
-        } catch (MappingException $e) {
+        } catch (MongoDBException $e) {
             return false;
         } catch (\ErrorException $e) {
             return false;

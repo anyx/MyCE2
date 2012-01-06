@@ -34,6 +34,19 @@ Crossword.Model.WordsCollection = Backbone.Collection.extend({
 	},
 	
 	/**
+	 *
+	 */
+	getData		: function() {
+		var data = [];
+	
+		this.each(function( word ){
+			data[data.length] = word.attributes;
+		});
+		
+		return data;
+	},
+	
+	/**
 	 * @param word
 	 */
 	canAddWord	: function( word ) {

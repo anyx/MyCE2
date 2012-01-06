@@ -7,6 +7,4 @@ parameters:
 services:
     anyx.document.factory:
         class: %anyx.document.factory.class%
-        arguments: [%anyx.document.aliases%]
-        call:
-          method: setAlias
+        arguments: [ "@doctrine.odm.mongodb.document_manager", %anyx.document.aliases%]

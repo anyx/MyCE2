@@ -12,23 +12,23 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 	/**
 	 * 
 	 */
-	initialize		: function( options ) {
+	initialize		: function() {
 		//
 		this.registerWidget( 'grid', new Crossword.View.Grid({
 				words	: new Crossword.Model.WordsCollection,
-				el		: $( options.selectors.grid ),
+				el		: $( this.options.selectors.grid ),
 				rows	: 25,
 				cols	: 25
 		}));
 		
 		//
 		this.registerWidget( 'wordForm', new Crossword.View.WordForm({
-				el			: $( options.selectors.form ),
-				selectors	: options.selectors.formSelectors
+				el			: $( this.options.selectors.form ),
+				selectors	: this.options.selectors.formSelectors
 		}));
 		
 		//
-		this.registerWidget( 'saveButton', options.selectors.saveButton );
+		this.registerWidget( 'saveButton', this.options.selectors.saveButton );
 
 		this.getWidget( 'wordForm').bind( 'create', this.initWordDraggable, this );
 		
@@ -50,7 +50,7 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 	/**
 	 *
 	 */
-	inGrid				: function( wordView ) {
+	inGrid		: function( wordView ) {
 		return wordView.getElement().parent().get(0) == this.getWidget( 'grid' ).el.get(0);	
 	},
 	
@@ -110,13 +110,45 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 		});		
 	},
 	
-	
+	/**
+	 *
+	 */
 	initSaveButton	: function() {
-		$( this.getWidget('saveButton').el ).click( this.saveWords );
+		
+		var _this = this;
+		
+		$( this.getWidget('saveButton').el ).on(
+			'click',
+			function( event ) {
+				_this.saveWords();
+			}
+		);
 	},
 	
+	/**
+	 *
+	 */
 	saveWords		: function() {
-		console.log( 'click' );
+		
+		var savePath = Routing.generate(
+							'constructor_save',
+							{
+								id : this.options.id
+							}
+		);
+		
+		$.ajax(
+			savePath,
+			{
+				type : 'POST',
+				data : {
+					words : this.getWidget('grid').getWords().getData()
+				},
+				success: function( data ) {
+					console.log( 'success', data );
+				}
+			}
+		);
 	},
 	
 	/**

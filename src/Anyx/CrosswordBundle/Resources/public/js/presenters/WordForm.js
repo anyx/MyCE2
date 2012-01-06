@@ -6,16 +6,18 @@ Crossword.View.WordForm = Backbone.Presenter.extend({
 	initialize	: function( options ) {
 		//widgets
 		this.registerWidgets({
-			wordInput			: options.selectors.word,
-			definitionInput		: options.selectors.definition,
+			wordInput			: this.options.selectors.word,
+			definitionInput		: this.options.selectors.definition,
 			directionChooser	: new Crossword.View.DirectionChooser({
-				el : options.selectors.directionChooser
+				el : this.options.selectors.directionChooser
 			}),
+			
 			wordPreview			: new Crossword.View.WordPreview({
-				el	: options.selectors.wordPreview
+				el	: this.options.selectors.wordPreview
 			}),
+			
 			statusBar			: new Crossword.View.StatusBar({
-				el			: options.selectors.statusBar,
+				el			: this.options.selectors.statusBar,
 				template	: 't-status-bar'
 			})
 		});

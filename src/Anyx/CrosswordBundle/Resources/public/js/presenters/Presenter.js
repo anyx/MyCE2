@@ -3,8 +3,8 @@
  *
  */
 Backbone.Presenter = function( options ) {
-	this._configure(options || {});
-	this.initialize( options);
+	this._configure( options );
+	this.initialize();
 };
 
 _.extend(Backbone.Presenter.prototype, Backbone.Events, {
@@ -12,7 +12,7 @@ _.extend(Backbone.Presenter.prototype, Backbone.Events, {
 	/**
 	 *
 	 */
-	initialize		: function() {},
+	initialize		: function( options ) {},
 
 	/**
 	 *

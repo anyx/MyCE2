@@ -14,6 +14,12 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  * @MongoDB\Document
  */
 class Word {
+
+    /**
+	 * 
+     * @MongoDB\Id
+     */
+	protected $id;
 	
 	/**
 	 * @MongoDB\String
@@ -40,6 +46,15 @@ class Word {
 	 */
 	protected $y;
 
+    /**
+     * Get id
+     *
+     * @return id $id
+     */
+    public function getId() {
+        return $this->id;
+    }
+	
 	/**
 	 *
 	 */
@@ -108,5 +123,13 @@ class Word {
 	 */
 	public function setY($y) {
 		$this->y = $y;
+	}
+	
+	/**
+	 *
+	 */
+	public function setPosition( array $position ) {
+		$this->setX( $position['x'] );
+		$this->setY( $position['y'] );
 	}
 }

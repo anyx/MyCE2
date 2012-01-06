@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Anyx\CrosswordBundle\AnyxCrosswordBundle(),
 			new JMS\SerializerBundle\JMSSerializerBundle($this),
 			new FOS\RestBundle\FOSRestBundle(),
+			new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

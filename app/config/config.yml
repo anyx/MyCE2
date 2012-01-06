@@ -99,4 +99,4 @@ fos_rest:
         
 #aliases
 services:
-    dm: "@doctrine.odm.mongodb.document_manager"
+    anyx.dm: "@doctrine.odm.mongodb.document_manager"
