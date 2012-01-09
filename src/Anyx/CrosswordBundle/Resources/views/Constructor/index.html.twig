@@ -41,6 +41,7 @@
 		$(function(){
 			var editor = new Crossword.Presenter.Editor({
 				id			: '{{crossword.getId()}}',
+				words		: {{crossword.words | serialize | raw}},
 				selectors	: {
 					grid				: '.i-grid',
 					form				: '.i-word-form',
@@ -50,7 +51,8 @@
 						definition			: '.i-word-definition',
 						directionChooser	: '.i-direction-chooser',
 						wordPreview			: '.i-word-preview',
-						statusBar			: '.i-status-bar'
+						statusBar			: '.i-status-bar',
+						statusText			: '.i-status-text'
 					}
 				},
 				classes		: {
@@ -74,7 +76,10 @@
 	{% endstylesheets %}
 {% endblock %}
 
+{% block page_title %} Construct crossword &laquo;{{crossword.title}}&raquo; {% endblock %}
+
 {% block body %}
+<span id="status" class="i-status-bar"></span>
 
 <div class="columns-container">
 	<div class="left-column">
@@ -83,13 +88,11 @@
 	</div>
 	<div class="right-column">
 		
-		<div class="i-status-bar"></div>
 		
 		<form class="i-word-form word-form">
 			<dl class="form">
 				<dt>
 					<label>Word</label>
-					<span id="status"></span>
 				</dt>
 				<dd>
 					<input type="text" class="i-word-text" autocomplete="off" />

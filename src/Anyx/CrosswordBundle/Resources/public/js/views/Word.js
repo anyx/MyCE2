@@ -1,12 +1,16 @@
 Crossword.View.Word = Crossword.View.extend({
 
+	initialize	: function() {
+		this.render();
+	},
+
 	/**
 	 * 
 	 */
 	render	: function() {
 		
 		if ( !(this.model instanceof Crossword.Model.Word) ) {
-			throw new Error( 'Model object is incorrect' );
+			return false;
 		}
 		
 		if ( this.model.isHorizontal() ) {
@@ -16,7 +20,6 @@ Crossword.View.Word = Crossword.View.extend({
 		}
 		
 		this.$( this.getElement() ).data('view', this);
-		//this._initDraggable();
 	},
 
 	/**

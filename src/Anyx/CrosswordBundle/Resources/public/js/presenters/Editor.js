@@ -14,12 +14,24 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 	 */
 	initialize		: function() {
 		//
+		var collection = new Crossword.Model.WordsCollection;
+		
+		Crossword.View.Word.setClass( this.options.classes.wordTable );
+		
+		if( !_.isEmpty( this.options.words ) ) {
+			_.forEach(this.options.words, function( word ){
+				collection.add(new Crossword.Model.Word( word ));
+			})
+		}
+		
 		this.registerWidget( 'grid', new Crossword.View.Grid({
-				words	: new Crossword.Model.WordsCollection,
+				words	: collection,
 				el		: $( this.options.selectors.grid ),
 				rows	: 25,
 				cols	: 25
 		}));
+		
+		this.renderWords( collection );
 		
 		//
 		this.registerWidget( 'wordForm', new Crossword.View.WordForm({
@@ -32,7 +44,6 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 
 		this.getWidget( 'wordForm').bind( 'create', this.initWordDraggable, this );
 		
-		Crossword.View.Word.setClass( this.options.classes.wordTable );
 		
 		this.initEvents();
 	},
@@ -229,6 +240,55 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 		});
 	},
 	
+	
+	/**
+	 *
+	 */
+	renderWord : function( wordView ) {
+
+		var cellSize = this.getWidget('grid').getCellSize(); 
+
+		if ( !this.inGrid( wordView ) ) {
+			$( this.getWidget('grid').el ).append( wordView.getElement() );
+			this.initWordDraggable( wordView );
+		}
+
+		var position = wordView.model.get('position');
+		$( wordView.getElement() ).css({
+			left	: position.x * cellSize,
+			top		: position.y * cellSize
+		});
+	},
+	
+	/**
+	 * 
+	 */
+	renderWords : function( wordsCollection ) {
+		
+		if ( _.isEmpty( this.options.words ) ) {
+			return;
+		}
+
+		this.clearWordViews();
+
+		wordsCollection.each( function( wordModel ) {
+			var wordView = new Crossword.View.Word({
+				model	: wordModel
+			});
+			this.initWordDraggable( wordView );
+			this.renderWord( wordView );
+		}, this);
+	},
+	
+	/**
+	 *
+	 */
+	clearWordViews	: function() {
+		
+		$( this.getWidget( 'grid' ).el ).find( '.' + this.options.classes.wordTable );
+		console.log(  );
+		
+	},	
 	/**
 	 * 
 	 */

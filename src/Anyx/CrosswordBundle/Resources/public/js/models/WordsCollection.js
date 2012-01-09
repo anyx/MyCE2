@@ -29,6 +29,13 @@ Crossword.Model.WordsCollection = Backbone.Collection.extend({
 	/**
 	 *
 	 */
+	hasWord		: function( word ) {
+		return !_.isEmpty( this.getByCid( word.cid ) );
+	},
+	
+	/**
+	 *
+	 */
 	getWords	: function() {
 		return this.models;
 	},

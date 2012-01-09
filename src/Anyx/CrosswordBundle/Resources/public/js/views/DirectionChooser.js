@@ -48,8 +48,8 @@ Crossword.View.DirectionChooser = Crossword.View.extend({
 			.removeClass( 'active' )
 			.filter('a[rel=' + (isHorizontal ? 'horizontal' : 'vertical') + ']')
 			.addClass('active');
-			
-		this.$( this.el ).trigger( 'changeDirection', {horizontal : isHorizontal} );
+		
+		this.trigger( 'changeDirection', {horizontal : isHorizontal} );
 	},
 	
 	/**

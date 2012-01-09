@@ -37,16 +37,11 @@ class Word {
 	protected $horizontal;
 	
 	/**
-	 * @MongoDB\int
+	 * @MongoDB\Field(type="point")
 	 */
-	protected $x;
-
+	protected $position;
+	
 	/**
-	 * @MongoDB\int
-	 */
-	protected $y;
-
-    /**
      * Get id
      *
      * @return id $id
@@ -55,6 +50,14 @@ class Word {
         return $this->id;
     }
 	
+	/**
+	 *
+	 * @param string $id 
+	 */
+	public function setId( $id ) {
+		$this->id = $id;
+	}
+
 	/**
 	 *
 	 */
@@ -100,36 +103,18 @@ class Word {
 	/**
 	 *
 	 */
-	public function getX() {
-		return $this->x;
-	}
-
-	/**
-	 *
-	 */
-	public function setX($x) {
-		$this->x = $x;
-	}
-
-	/**
-	 *
-	 */
-	public function getY() {
-		return $this->y;
-	}
-
-	/**
-	 *
-	 */
-	public function setY($y) {
-		$this->y = $y;
+	public function setPosition( $position ) {
+		if ( !array_key_exists('x', $position) || !array_key_exists('y', $position) ) {
+			throw new \InvalidArgumentException( 'Position must be array with keys x and y' );
+		}
+		
+		$this->position = $position;
 	}
 	
 	/**
-	 *
+	 * 
 	 */
-	public function setPosition( array $position ) {
-		$this->setX( $position['x'] );
-		$this->setY( $position['y'] );
+	public function getPosition() {
+		return $this->position;
 	}
 }

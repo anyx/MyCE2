@@ -3,6 +3,10 @@
  */
 Crossword.View.StatusBar = Crossword.View.extend({
 
+	events		: {
+		'mouseover .icon'	: 'showHint'
+	},
+
 	/**
 	 *
 	 */
@@ -38,14 +42,22 @@ Crossword.View.StatusBar = Crossword.View.extend({
 		clearTimeout( this._timer );
 	},
 	
+	showHint	: function() {
+		
+		var hintElement = this.$( this.options.hintElement );
+		
+		hintElement.show();
+		
+		clearInterval( this._timer );
+		
+		this._timer = setInterval( function(){
+			hintElement.fadeOut();
+		}, this.options.timeout )
+	},
+	
 	_showMessage	: function( text, type ) {
 		this.clear();
 		this.render({text: text, status: type});
-		/*
-		this._timer = setInterval( function(){
-			this.$( '.i-status-text' ).fadeOut();
-		}, this.options.timeout )
-		*/
 	},
 	
 	_timer		: 0

@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * 
+ */
 namespace Anyx\CrosswordBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;

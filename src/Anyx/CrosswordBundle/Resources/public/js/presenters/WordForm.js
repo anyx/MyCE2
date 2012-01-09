@@ -18,6 +18,7 @@ Crossword.View.WordForm = Backbone.Presenter.extend({
 			
 			statusBar			: new Crossword.View.StatusBar({
 				el			: this.options.selectors.statusBar,
+				hintElement	: this.options.selectors.statusText,
 				template	: 't-status-bar'
 			})
 		});
@@ -38,16 +39,10 @@ Crossword.View.WordForm = Backbone.Presenter.extend({
 				}
 			);
 				
-		$( this.getWidget('directionChooser').el )
-			.on({
-					changeDirection : function( event, data ) {
-						event.data.view.buildWord();
-					}
-				},
-				{
-					view : this
-				}
-			);
+		this.getWidget('directionChooser')
+			.bind('changeDirection', function( event, data ) {
+					this.buildWord();
+			}, this);
 	},
 	
 	/**

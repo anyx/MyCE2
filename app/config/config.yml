@@ -43,11 +43,13 @@ doctrine:
         user:     %database_user%
         password: %database_password%
         charset:  UTF8
+        types:
+            point: Anyx\CrosswordBundle\Doctrine\Type\Point1
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
-
+          
 # Swiftmailer Configuration
 swiftmailer:
     transport: %mailer_transport%
@@ -75,7 +77,9 @@ doctrine_mongodb:
     default_database: test_database
     document_managers:
         default:
-            auto_mapping: true
+            mappings:
+                AnyxCrosswordBundle: ~
+    auto_generate_hydrator_classes: false
 
 #
 fos_rest:
