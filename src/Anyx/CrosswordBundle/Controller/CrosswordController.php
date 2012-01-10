@@ -45,7 +45,7 @@ class CrosswordController extends Controller {
 	 */
 	public function editAction( $id ) {
 		
-		$dm = $this->get( 'dm' );
+		$dm = $this->get( 'anyx.dm' );
 		$crossword = $dm->find( 'Anyx\CrosswordBundle\Document\Crossword', $id );
 		
 		$form = $this->createCrosswordForm( $crossword );
@@ -65,12 +65,19 @@ class CrosswordController extends Controller {
 	 * @param Document\Crossword $crossword 
 	 */
 	protected function createCrosswordForm( Document\Crossword $crossword ) {
-		return $this->createFormBuilder( $crossword )
-							->add('id', 'hidden')
-							->add('title', 'text')
-							->add('description', 'textarea')
-							->getForm()
-							;
+
+		$formBuilder = $this->createFormBuilder( $crossword )
+							->add( 'id', 'hidden' )
+							->add( 'title', 'text' )
+							->add( 'description', 'textarea' )
+							
+		;
+		
+		if ( $crossword->hasWords() ) {
+			$formBuilder->add('public', 'checkbox');
+		}
+		
+		return $formBuilder->getForm();
 	}
 	
 	/**
@@ -80,17 +87,15 @@ class CrosswordController extends Controller {
 	 */
 	protected function saveCrossword( $form ) {
 		
-		$dm = $this->get( 'dm' );
-		
 		$request = $this->getRequest();
 		if ( $request->getMethod() == 'POST' ) {
 			$form->bindRequest($request);
 
 			if ( $form->isValid() ) {
-				$dm = $this->get('dm');
+				$dm = $this->get( 'anyx.dm' );
 				$dm->persist( $form->getData() );
 				$dm->flush();
-				$this->get('session')->setFlash('message',"Save succesful");
+				$this->get('session')->setFlash('message', 'Save succesfull');
 				return true;
 			}
 		}

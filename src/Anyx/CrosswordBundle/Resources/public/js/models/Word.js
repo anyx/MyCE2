@@ -28,7 +28,7 @@ Crossword.Model.Word = Crossword.Model.extend({
 		text	: {
 			required	: true,
 			minlength	: 3,
-			maxlength	: 25
+			maxlength	: 12
 		},
 		definition	: {
 			required	: true,
@@ -41,9 +41,22 @@ Crossword.Model.Word = Crossword.Model.extend({
 	 * Text to lower case
 	 */
 	set		: function( attributes, options ) {
-		if ( typeof attributes == 'object' && 'text' in attributes && _.isString( attributes.text ) ) {
-			attributes.text = attributes.text.toLowerCase();
-		}
+		if ( _.isObject( attributes ) ) {
+			
+			if( 'text' in attributes && _.isString( attributes.text ) ) {
+				attributes.text = attributes.text.toLowerCase();
+			}
+			
+			if ( 'position' in attributes ) {
+				attributes.position.x = parseInt( attributes.position.x );
+				attributes.position.y = parseInt( attributes.position.y );
+			}
+			
+			if( 'horizontal' in attributes ) {
+				attributes.horizontal = !!attributes.horizontal;
+			}
+		} 
+		
 		Backbone.Model.prototype.set.call(this, attributes, options);
 	},
 	

@@ -124,4 +124,12 @@ class Crossword {
 	public function setWords($words) {
 		$this->words = $words;
 	}
+	
+	/**
+	 * 
+	 */
+	public function hasWords() {
+		return count( $this->words ) > 0;
+	}
+	
 }

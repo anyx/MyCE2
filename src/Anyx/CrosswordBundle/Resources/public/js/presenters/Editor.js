@@ -80,6 +80,8 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 		
 		var left, top;
 		
+		var activeCell = 0;
+		
 		wordView.getElement().draggable({
 			cursor		: 'move',
 			zIndex		: 10,
@@ -91,16 +93,35 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 					grid.getWords().remove( wordView.getWord() );
 				}
 				
+				//calc word cell position
+				var wordPosition = wordView.getElement().offset();
+				var cellPosition = 0;
+				
+				if ( wordView.model.isHorizontal() ) {
+					cellPosition = ( event.originalEvent.pageX - wordPosition.left );
+				} else {
+					cellPosition = ( event.originalEvent.pageY - wordPosition.top );
+				}
+				 
+				activeCell = Math.floor( cellPosition / cellSize );
+				
 				ui.helper.appendTo( grid.el ).css( 'position', 'absolute' );
 			},
 			drag		: function( event, ui ) {
 				
 				var x = Math.ceil( ( event.originalEvent.pageX - crosswordStartPoint.left ) / cellSize ) - 1;
-				var y = Math.ceil( ( event.originalEvent.pageY - crosswordStartPoint.top ) / cellSize ) - 1; 
+				var y = Math.ceil( ( event.originalEvent.pageY - crosswordStartPoint.top ) / cellSize ) - 1;
+				
+				if ( wordView.model.isHorizontal() ) {
+					x -= activeCell;
+				} else {
+					y -= activeCell;
+				}
+				
 				wordView.model.set({
 					'position' : {
 						x : x,
-						y : y	   
+						y : y
 				}});
 
 				if ( !grid.getWords().canAddWord( wordView.model ) ) {
@@ -118,48 +139,7 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 					ui.position.top = top;
 				}
 			}
-		});		
-	},
-	
-	/**
-	 *
-	 */
-	initSaveButton	: function() {
-		
-		var _this = this;
-		
-		$( this.getWidget('saveButton').el ).on(
-			'click',
-			function( event ) {
-				_this.saveWords();
-			}
-		);
-	},
-	
-	/**
-	 *
-	 */
-	saveWords		: function() {
-		
-		var savePath = Routing.generate(
-							'constructor_save',
-							{
-								id : this.options.id
-							}
-		);
-		
-		$.ajax(
-			savePath,
-			{
-				type : 'POST',
-				data : {
-					words : this.getWidget('grid').getWords().getData()
-				},
-				success: function( data ) {
-					console.log( 'success', data );
-				}
-			}
-		);
+		});
 	},
 	
 	/**
@@ -239,7 +219,49 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 			}
 		});
 	},
+
+	/**
+	 *
+	 */
+	initSaveButton	: function() {
+		
+		var _this = this;
+		
+		$( this.getWidget('saveButton').el ).on(
+			'click',
+			function( event ) {
+				_this.saveWords();
+			}
+		);
+	},
 	
+	/**
+	 *
+	 */
+	saveWords		: function() {
+		
+		var _this = this;
+		
+		var savePath = Routing.generate(
+							'constructor_save',
+							{
+								id : this.options.id
+							}
+		);
+		
+		$.ajax(
+			savePath,
+			{
+				type : 'POST',
+				data : {
+					words : this.getWidget('grid').getWords().getData()
+				},
+				success: function( data ) {
+					_this.getWidget('statusBar').showMessage( 'Save successfully', true );
+				}
+			}
+		);
+	},
 	
 	/**
 	 *

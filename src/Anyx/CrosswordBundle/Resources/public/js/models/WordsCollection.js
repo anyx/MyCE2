@@ -199,9 +199,9 @@ Crossword.Model.WordsCollection = Backbone.Collection.extend({
 
 			var points = [];
 			switch( mode ) {
-				case 1	: points = [ word.getStartPoint() ]; break;
-				case -1 : points = [ word.getEndPoint() ]; break;
-				case 0	: points = [ word.getStartPoint(), word.getEndPoint() ]; break;	
+				case 1	:points = [ word.getStartPoint() ];break;
+				case -1 :points = [ word.getEndPoint() ];break;
+				case 0	:points = [ word.getStartPoint(), word.getEndPoint() ];break;	
 			}
 
 			_.each(points, function( position ) {

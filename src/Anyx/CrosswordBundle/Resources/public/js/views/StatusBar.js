@@ -17,15 +17,15 @@ Crossword.View.StatusBar = Crossword.View.extend({
 	/**
 	 * 
 	 */
-	showMessage	: function( text ) {
-		return this._showMessage( text, 'info' );
+	showMessage	: function( text, forceShowHint ) {
+		return this._showMessage( text, 'info', forceShowHint );
 	},
 
 	/**
 	 * 
 	 */
-	showError	: function( text ) {
-		return this._showMessage( text, 'error' );
+	showError	: function( text, forceShowHint ) {
+		return this._showMessage( text, 'error', forceShowHint );
 	},
 	
 	/**
@@ -41,7 +41,10 @@ Crossword.View.StatusBar = Crossword.View.extend({
 	clear		: function() {
 		clearTimeout( this._timer );
 	},
-	
+
+	/**
+	 * 
+	 */
 	showHint	: function() {
 		
 		var hintElement = this.$( this.options.hintElement );
@@ -55,9 +58,19 @@ Crossword.View.StatusBar = Crossword.View.extend({
 		}, this.options.timeout )
 	},
 	
-	_showMessage	: function( text, type ) {
+	/**
+	 * 
+	 */
+	_showMessage	: function( text, type, forceShowHint ) {
+		var forceShowHint = forceShowHint || false;
+		
 		this.clear();
+		
 		this.render({text: text, status: type});
+		
+		if ( forceShowHint ) {
+			this.showHint();
+		}
 	},
 	
 	_timer		: 0

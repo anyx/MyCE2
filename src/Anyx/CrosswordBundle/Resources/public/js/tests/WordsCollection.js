@@ -201,4 +201,32 @@ describe('Words collection model', function() {
 		});
 		expect( this.collection.addWord( word7 ) ).toEqual( true, 'angle point' );
 	});
+	
+	/**
+	 * 
+	 */
+	it( 'Words blocks', function(){
+		var word1 = new Crossword.Model.Word({
+			text		: 'hello',
+			definition	: 'hello, bro',
+			horizontal	: true,
+			position	: {
+				x	: 1,
+				y	: 1
+			}
+		});
+		expect( this.collection.addWord( word1 ) ).toEqual( true );
+
+		var word2 = new Crossword.Model.Word({
+			text		: 'asd',
+			definition	: 'asd',
+			horizontal	: true,
+			position	: {
+				x	: 6,
+				y	: 2
+			}
+		});
+		expect( this.collection.addWord( word2 ) ).toEqual( true, 'Non-crossin\'g word is not added' );
+
+	});
 });

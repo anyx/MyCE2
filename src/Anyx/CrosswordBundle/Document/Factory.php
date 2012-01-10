@@ -78,7 +78,6 @@ class Factory {
 		}
 		
 		$document = new $class;
-		$reflectionClass = new \ReflectionClass( $document );
 		
 		foreach ( $data as $field => $value ) {
 			$method = 'set' . Inflector::classify($field);

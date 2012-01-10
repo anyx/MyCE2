@@ -46,6 +46,8 @@ class ConstructorController extends Controller {
 		
 		$wordsDocuments = $this->get('anyx.document.factory')->createCollection( 'Word', $words );
 		
+		var_dump( $wordsDocuments );
+		
 		$crossword->setWords($wordsDocuments);
 		
 		$this->get('anyx.dm')->flush();

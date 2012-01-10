@@ -97,6 +97,9 @@ class Word {
 	 *
 	 */
 	public function setHorizontal($horizontal) {
+		if ( $horizontal == 'false' ) {
+			$horizontal = false;
+		}
 		$this->horizontal = $horizontal;
 	}
 

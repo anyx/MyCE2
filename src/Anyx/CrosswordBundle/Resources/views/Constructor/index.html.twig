@@ -79,6 +79,10 @@
 {% block page_title %} Construct crossword &laquo;{{crossword.title}}&raquo; {% endblock %}
 
 {% block body %}
+<a href="{{ path('crossword_edit', {'id'	: crossword.id} )}}">Edit</a>
+
+
+
 <span id="status" class="i-status-bar"></span>
 
 <div class="columns-container">
