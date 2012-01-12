@@ -1,0 +1,42 @@
+BODY {
+	position: relative;
+	margin: 0px;
+	padding: 0px;
+	background-color: #08C;
+}
+.main-container {
+	background-color: #fff;
+	position: relative;
+	width: 900px;
+	margin: 0px auto;
+	padding: 15px;
+	border-radius: 5px;
+}
+.columns-container {
+	position: relative;
+}
+.columns-container .left-column {
+	width: 600px;
+	float: left;
+}
+.columns-container .right-column {
+	float: right;
+}
+.header {
+	height: 100px;
+}
+
+/* FORMS */
+DL.form DD, DL.form DT {
+	margin: 0px;
+	padding: 0px;
+}
+DL.form input[type=text], DL.form TEXTAREA {
+	border: 1px solid #555;
+	border-radius: 3px;
+	width: 200px;
+	padding: 2px;
+}
+DL.form TEXTAREA {
+	height: 100px;
+}

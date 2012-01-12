@@ -21,7 +21,7 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
-
+    
 # Assetic Configuration
 assetic:
     debug:          %kernel.debug%
@@ -84,24 +84,24 @@ doctrine_mongodb:
     auto_generate_hydrator_classes: false
 
 #
-fos_rest:
-    routing_loader:
-        default_format: json
-    format_listener:
-        default_priorities: ['json', html, '*/*']
-        fallback_format: json
-        prefer_extension: true
-    view:
-        view_response_listener: force
-        formats:
-            rss: false
-            xml: true
-            json: true
-        templating_formats:
-            html: true
-        force_redirects:
-            html: true
-        failed_validation: HTTP_BAD_REQUEST
+#fos_rest:
+#    routing_loader:
+#        default_format: json
+#    format_listener:
+#        default_priorities: ['json', html, '*/*']
+#        fallback_format: json
+#        prefer_extension: true
+#    view:
+#        view_response_listener: force
+#        formats:
+#            rss: false
+#            xml: true
+#            json: true
+#        templating_formats:
+#            html: true
+#        force_redirects:
+#            html: true
+#        failed_validation: HTTP_BAD_REQUEST
 
 fos_user:
     db_driver: mongodb
@@ -111,3 +111,6 @@ fos_user:
 #aliases
 services:
     anyx.dm: "@doctrine.odm.mongodb.document_manager"
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags: [{ name: 'twig.extension' }]

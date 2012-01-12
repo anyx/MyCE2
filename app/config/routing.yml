@@ -1,7 +1,6 @@
 AnyxUserBundle:
     resource: "@AnyxUserBundle/Controller/"
     type:     annotation
-    prefix:   /
 
 crosswords:
     resource: "@AnyxCrosswordBundle/Resources/config/routing/common.yml"
@@ -9,3 +8,6 @@ fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 fos_user:
     resource: "@AnyxCrosswordBundle/Resources/config/routing/fos_user.yml"
+#crosswords_rest:
+#    type:     rest
+#    resource: Anyx\CrosswordBundle\Controller\CrosswordRestController

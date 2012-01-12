@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Anyx\CrosswordBundle\AnyxCrosswordBundle(),
 			new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
 			new JMS\SerializerBundle\JMSSerializerBundle($this),
+			
 			new FOS\RestBundle\FOSRestBundle(),
 			new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
 			new FOS\UserBundle\FOSUserBundle(),

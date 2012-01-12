@@ -1,1 +1,23 @@
-Hello {{ name }}!
+{% extends '::main.html.twig' %}
+
+{% block page_title %}Welcome!{% endblock %}
+
+
+{% block body %}
+
+{% if crosswords.popular | length > 0 %}
+<div class="content-block">
+<h4>Popular crosswords</h4>
+	<ul class="main-crosswords-list">
+	{% for crossword in crosswords.popular %}
+		<li>
+			<a href="{{ path( 'crossword_solve', { 'id' : crossword.id })}}">{{ crossword.title }}</a>
+			<span class="description">{{crossword.description | truncate(20)}}</span>
+		</li>
+	{% endfor %}
+	</ul>
+
+</div>
+{% endif %}
+
+{% endblock %}

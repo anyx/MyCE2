@@ -9,6 +9,7 @@ namespace Anyx\CrosswordBundle\Document;
  */
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use JMS\SerializerBundle\Annotation\Accessor;
+
 /**
  * 
  * @MongoDB\Document(repositoryClass="Anyx\CrosswordBundle\Repository\CrosswordRepository")
@@ -45,6 +46,21 @@ class Crossword {
 	 */
 	protected $public;
 
+	/**
+	 * @MongoDB\Int
+	 */
+	protected $countSolving = 0;
+	
+	/**
+	 * @MongoDB\Date
+	 */
+	protected $createdAt;
+
+	/**
+	 * @MongoDB\Date
+	 */
+	protected $updatedAt;
+	
     /**
      * Get id
      *
@@ -119,6 +135,32 @@ class Crossword {
 	}
 
 	/**
+	 * 
+	 */
+	public function getWordsForSolving() {
+		
+		$result = array();
+		$words = $this->getWords()->toArray();
+		
+		if ( empty($words) ) {
+			return array();
+		}
+		
+		foreach ( $words as $key => $word ) {
+			$result[] = array(
+				'id'			=> $word->getId(),
+				'number'		=> $key,
+				'length'		=> strlen( $word->getText() ),
+				'horizontal'	=> $word->getHorizontal(),
+				'definition'	=> $word->getDefinition(),
+				'position'		=> $word->getPosition()
+			);
+		}
+		
+		return $result;
+	}
+	
+	/**
 	 *
 	 */
 	public function setWords($words) {
@@ -166,6 +208,20 @@ class Crossword {
 	}
 	
 	/**
+	 *
+	 */
+	public function getCountSolving() {
+		return $this->countSolving;
+	}
+
+	/**
+	 *
+	 */
+	public function incCountSolving() {
+		return $this->countSolving++;
+	}
+	
+	/**
 	 * 
 	 */
 	private function getWordById( $id ) {
@@ -193,7 +249,7 @@ class Crossword {
 	/**
 	 *
 	 */
-	protected function updateWord( $index,  $word ) {
+	private function updateWord( $index,  $word ) {
 		$existWord = $this->words[$index];
 		$existWord->setText( $word->getText() );
 		$existWord->setDefinition( $word->getDefinition() );
@@ -202,4 +258,63 @@ class Crossword {
 		
 		$this->words[$index] = $existWord;
 	}
+	
+	/**
+	 * Events
+	 */
+
+	/**
+	 *
+	 * @MongoDB\PostLoad
+	 */
+	public function sortWords() {
+		$words = $this->getWords();
+
+		if ( empty( $words ) ) {
+			return false;
+		}
+		
+		$cmpFunction = function( $word1, $word2 ) {
+			$position1 = $word1->getPosition();
+			$position2 = $word1->getPosition();
+
+			if ( $position1['y'] > $position2['y'] ) {
+				return -1;
+			} elseif( $position1['y'] == $position2['y'] ) {
+				return $position1['x'] > $position2['x'] ? -1 : 1; 
+			} else {
+				return 1;
+			}
+		};
+		
+		if (is_object( $words ) ) {
+			
+			$wordsArray = $words->toArray();
+
+			usort($wordsArray, $cmpFunction );
+			
+			foreach ( $wordsArray as $key => $word ) {
+				$words[$key] = $word;
+			}
+		} else {
+			usort($words, $cmpFunction );
+		}
+		
+		$this->setWords( $words );
+	}
+	
+	/**
+	 * @MongoDB\PreUpdate
+	 */
+	public function setUpdatedAt() {
+		$this->updatedAt = new \DateTime();
+	}
+
+	/**
+	 * @MongoDB\PrePersist
+	 */
+	public function setCreatedAt() {
+		$this->createdAt = $this->updatedAt = new \DateTime();
+	}
+	
 }

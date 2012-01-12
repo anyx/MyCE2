@@ -1,0 +1,128 @@
+.crossword-editor {
+	position: relative;
+	width:600px;
+	height:600px;
+}
+
+.crossword-editor TABLE, .crossword-editor TD {
+	border: 1px solid #333;
+	border-collapse: collapse; 
+}
+
+.crossword-editor TD {
+	
+}
+.crossword-editor TD DIV {
+	width: 18px;
+	height: 18px;
+}
+
+/* Word */
+TABLE.word-table, .word-table TD {
+	cursor: move;
+	border: 2px solid #000;
+	border-collapse: collapse;
+	padding: 0px;
+	margin: 0px;
+}
+TABLE.word-table {
+	position: absolute;
+}
+.word-table TD {
+	width: 19px;
+	min-width: 18px;
+	height: 18px;
+	min-height: 18px;
+	text-align: center;
+}
+.word-preview {
+	width: 250px;
+	height: 250px;
+	border: 1px solid #08C;
+	position: relative;
+	z-index: 2;
+}
+/* Status Bar */
+.status-text {
+	display: none;
+	padding: 5px;
+	position: absolute;
+	background-color: #fff;
+    right: 20px;
+    top: 20px;	
+}
+
+.info .status-text {
+	color: #08C;
+	border: 1px solid #08C;
+}
+.error .status-text {
+	color: #f00;
+	border: 1px solid #c00;
+}
+.editor-status .icon {
+	width: 60px;
+	height: 60px;
+	position: absolute;
+	right: -35px;
+	bottom:30px;
+	border-radius: 25px;
+	cursor: help;
+}
+.info .icon {
+	background-color: #08C;
+}
+.error .icon {
+	background-color: #c00;
+}
+#status {
+	position: absolute;
+	width: 200px;
+	height: 60px;
+	right: 1px;
+	top: 1px;
+	border-radius: 5px;
+	overflow: hidden;
+}
+BODY {
+	position: relative;
+	margin: 0px;
+	padding: 0px;
+	background-color: #08C;
+}
+.main-container {
+	background-color: #fff;
+	position: relative;
+	width: 900px;
+	margin: 0px auto;
+	padding: 15px;
+	border-radius: 5px;
+}
+.columns-container {
+	position: relative;
+}
+.columns-container .left-column {
+	width: 600px;
+	float: left;
+}
+.columns-container .right-column {
+	float: right;
+}
+.header {
+	height: 100px;
+}
+
+/* FORMS */
+DL.form DD, DL.form DT {
+	margin: 0px;
+	padding: 0px;
+}
+DL.form input[type=text], DL.form TEXTAREA {
+	border: 1px solid #555;
+	border-radius: 3px;
+	width: 200px;
+	padding: 2px;
+}
+DL.form TEXTAREA {
+	height: 100px;
+}

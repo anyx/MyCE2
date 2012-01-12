@@ -29,6 +29,11 @@ class ConstructorController extends Controller {
 	 * @ParamConverter("crossword", class="Anyx\CrosswordBundle\Document\Crossword")
 	 */
 	public function indexAction( Document\Crossword $crossword ) {
+		$dm = $this->get('anyx.dm');
+		$crossword->setTitle('asd!');
+		$dm->persist( $crossword );
+		$dm->flush();
+
 		return $this->render('AnyxCrosswordBundle:Constructor:index.html.twig', array(
 			'crossword'	=> $crossword
 		));
@@ -47,6 +52,7 @@ class ConstructorController extends Controller {
 		$wordsDocuments = $this->get('anyx.document.factory')->createCollection( 'Word', $words, false );
 		
 		$crossword->updateWords( $wordsDocuments );
+
 		$dm = $this->get('anyx.dm');
 		
 		$dm->persist( $crossword );

@@ -17,8 +17,37 @@ class CrosswordRepository extends DocumentRepository {
 	 * @return Doctrine\ODM\MongoDB\LoggableCursor
 	 */
 	public function getPublicCrosswords() {
-		return $this->findBy(array(
-			'public'	=> true
-		));
+		return $this->getPublicCrosswordsQueryBuilder()->getQuery()->execute();
+	}
+	
+	/**
+	 * 
+	 */
+	public function getPopular( $limit = 10 ) {
+		return $this->getPublicCrosswordsQueryBuilder()
+			->sort( 'countSolving', 'desc' )
+			->limit( $limit )
+			->getQuery()
+			->execute();
+	}
+
+	/**
+	 *
+	 */
+	public function getNew( $limit = 10 ) {
+		return $this->getPublicCrosswordsQueryBuilder()
+			->sort( 'createdAt', 'desc' )
+			->limit( $limit )
+			->getQuery()
+			->execute();
+	}
+
+	/**
+	 *
+	 */
+	protected function getPublicCrosswordsQueryBuilder() {
+		return $this->createQueryBuilder()
+					->field('public')->equals(true)
+		;
 	}
 }
