@@ -126,10 +126,80 @@ class Crossword {
 	}
 	
 	/**
+	 *
+	 */
+	public function addWord( $word ) {
+		$this->words[] = $word;
+	}
+
+	/**
+	 *
+	 * @param array $words 
+	 */
+	public function updateWords( $words ) {
+		
+		$findWord = function( $id, $words = array() ) {
+			foreach ( $words as $word ) {
+				if ( $word->getId() == $id ) {
+					return $word;
+				}
+			}
+			return null;
+		};
+		
+		foreach ( $this->getWords() as $wordIndex => $existWord ) {
+			$existWord = $findWord( $existWord->getId(), $words );
+			if ( empty( $existWord ) ) {
+				$this->removeWord( $existWord );
+				continue;
+			}
+			
+			$this->updateWord( $wordIndex, $existWord );
+		}
+	}
+
+	/**
 	 * 
 	 */
 	public function hasWords() {
 		return count( $this->words ) > 0;
 	}
 	
+	/**
+	 * 
+	 */
+	private function getWordById( $id ) {
+		foreach ( $this->getWords() as $word ) {
+			if ( $word->getId() == $id ) {
+				return $word;
+			}
+		}
+		return null;		
+	}
+	
+	/**
+	 *
+	 */
+	private function removeWord( $word ) {
+		foreach ( $this->words as $key => $word ) {
+			if ( $word->getId() == $id ) {
+				unset( $this->words[$key] );
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 *
+	 */
+	protected function updateWord( $index,  $word ) {
+		$existWord = $this->words[$index];
+		$existWord->setText( $word->getText() );
+		$existWord->setDefinition( $word->getDefinition() );
+		$existWord->setHorizontal( $word->getHorizontal() );
+		$existWord->setPosition( $word->getPosition() );
+		
+		$this->words[$index] = $existWord;
+	}
 }

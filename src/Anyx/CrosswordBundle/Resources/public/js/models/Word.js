@@ -3,6 +3,9 @@
  */
 Crossword.Model = Crossword.Model || {};
 
+var x = 'false';
+console.log( 'wtf', !!x );
+
 /**
  * Word
  */
@@ -50,10 +53,6 @@ Crossword.Model.Word = Crossword.Model.extend({
 			if ( 'position' in attributes ) {
 				attributes.position.x = parseInt( attributes.position.x );
 				attributes.position.y = parseInt( attributes.position.y );
-			}
-			
-			if( 'horizontal' in attributes ) {
-				attributes.horizontal = !!attributes.horizontal;
 			}
 		} 
 		

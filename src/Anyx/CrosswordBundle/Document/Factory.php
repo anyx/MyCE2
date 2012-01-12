@@ -71,7 +71,7 @@ class Factory {
 	 * @param string $class
 	 * @param array $data
 	 */
-	public function create( $class, array $data ) {
+	public function create( $class, array $data, $persist = true ) {
 		
 		if ( array_key_exists( $class, $this->aliases ) ) {
 			$class = $this->aliases[$class];
@@ -88,7 +88,9 @@ class Factory {
 			$document->$method( $value );
 		}
 		
-		$this->getDocumentManager()->persist($document);
+		if ( $persist ) {
+			$this->getDocumentManager()->persist($document);
+		}
 		
 		return $document;
 	}
@@ -99,12 +101,12 @@ class Factory {
 	 * @param type $data
 	 * @return \ArrayObject 
 	 */
-	public function createCollection( $class, $data ) {
+	public function createCollection( $class, $data, $persist = true ) {
 		
 		$collection = array();
 		
 		foreach ( $data as $objectData ) {
-			$collection[] = $this->create( $class, $objectData );
+			$collection[] = $this->create( $class, $objectData, false );
 		}
 		
 		return $collection;

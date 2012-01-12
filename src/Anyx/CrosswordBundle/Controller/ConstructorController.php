@@ -44,12 +44,12 @@ class ConstructorController extends Controller {
 		
 		$words = $this->get('request')->get('words');
 		
-		$wordsDocuments = $this->get('anyx.document.factory')->createCollection( 'Word', $words );
+		$wordsDocuments = $this->get('anyx.document.factory')->createCollection( 'Word', $words, false );
 		
-		var_dump( $wordsDocuments );
+		$crossword->updateWords( $wordsDocuments );
+		$dm = $this->get('anyx.dm');
 		
-		$crossword->setWords($wordsDocuments);
-		
-		$this->get('anyx.dm')->flush();
+		$dm->persist( $crossword );
+		$dm->flush();
 	}
 }

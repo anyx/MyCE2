@@ -5,6 +5,7 @@ imports:
 framework:
     #esi:             ~
     #translator:      { fallback: %locale% }
+    translator: ~
     secret:          %secret%
     charset:         UTF-8
     router:          { resource: "%kernel.root_dir%/config/routing.yml" }
@@ -79,6 +80,7 @@ doctrine_mongodb:
         default:
             mappings:
                 AnyxCrosswordBundle: ~
+                FOSUserBundle: ~
     auto_generate_hydrator_classes: false
 
 #
@@ -100,6 +102,11 @@ fos_rest:
         force_redirects:
             html: true
         failed_validation: HTTP_BAD_REQUEST
+
+fos_user:
+    db_driver: mongodb
+    firewall_name: main
+    user_class: Anyx\CrosswordBundle\Document\User
         
 #aliases
 services:
