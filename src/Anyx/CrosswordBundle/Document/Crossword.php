@@ -150,7 +150,7 @@ class Crossword {
 			$result[] = array(
 				'id'			=> $word->getId(),
 				'number'		=> $key,
-				'length'		=> strlen( $word->getText() ),
+				'length'		=> mb_strlen( $word->getText() ),
 				'horizontal'	=> $word->getHorizontal(),
 				'definition'	=> $word->getDefinition(),
 				'position'		=> $word->getPosition()
@@ -180,23 +180,27 @@ class Crossword {
 	 */
 	public function updateWords( $words ) {
 		
-		$findWord = function( $id, $words = array() ) {
-			foreach ( $words as $word ) {
-				if ( $word->getId() == $id ) {
-					return $word;
+		foreach ( $this->getWords() as $wordIndex => $existWord ) {
+			$foundWord = null;
+			foreach ( $words as $key => $word ) {
+				if ( $word->getId() == $existWord->getId() ) {
+					$foundWord = $word;
+					unset($words[$key]);
 				}
 			}
-			return null;
-		};
-		
-		foreach ( $this->getWords() as $wordIndex => $existWord ) {
-			$existWord = $findWord( $existWord->getId(), $words );
-			if ( empty( $existWord ) ) {
+			
+			if ( empty( $foundWord ) ) {
 				$this->removeWord( $existWord );
 				continue;
 			}
-			
-			$this->updateWord( $wordIndex, $existWord );
+
+			$this->updateWord( $wordIndex, $foundWord );
+		}
+		
+		if ( count( $words ) > 0 ) {
+			foreach ( $words as $word ) {
+				$this->addWord($word);
+			}
 		}
 	}
 
@@ -236,9 +240,9 @@ class Crossword {
 	/**
 	 *
 	 */
-	private function removeWord( $word ) {
+	private function removeWord( $wordToRemove ) {
 		foreach ( $this->words as $key => $word ) {
-			if ( $word->getId() == $id ) {
+			if ( $wordToRemove->getId() == $word->getId() ) {
 				unset( $this->words[$key] );
 				return true;
 			}

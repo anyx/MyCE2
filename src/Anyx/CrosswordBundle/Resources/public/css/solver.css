@@ -5,22 +5,22 @@
 }
 /* Word */
 TABLE.solver-word-table, .solver-word-table TD {
-	cursor: move;
 	border: 1px solid #000;
 	border-collapse: collapse;
 	padding: 0px;
 	margin: 0px;
 }
-TABLE.solver-word-table {
-	position: absolute;
-}
 .solver-word-table TD {
-	width: 19px;
-	min-width: 18px;
-	height: 18px;
-	min-height: 18px;
 	text-align: center;
 }
 .crossword-solver .word-container {
 	position: absolute
+}
+.solver-word-table INPUT {
+	border: none;
+	display: block;
+	width: 18px;
+	height: 18px;
+	text-align: center;
+	padding: 0px;
 }

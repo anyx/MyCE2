@@ -9,9 +9,8 @@
 	
 		'@AnyxCrosswordBundle/Resources/public/js/json2.js'
 		'@AnyxCrosswordBundle/Resources/public/js/underscore.js'
-		'@AnyxCrosswordBundle/Resources/public/js/underscore.string.js'
 		'@AnyxCrosswordBundle/Resources/public/js/backbone.js'
-		'@AnyxCrosswordBundle/Resources/public/js/backbone.validations.js'
+		'@AnyxCrosswordBundle/Resources/public/js/backbone.actAs/locatable.js'
 		
 		'@FOSJsRoutingBundle/Resources/public/js/router.js'
 
@@ -31,8 +30,14 @@
 				el			: $('.i-crossword'),
 				cellSize	: 19,
 				words		: {{ crossword.wordsForSolving | serialize | raw }},
+				selectors	: {
+					verticalPanel	: '.i-vertical-container',
+					horizontalPanel : '.i-horizontal-container',
+					word			: '.word-container'
+				},
 				templates	: {
-					word	: 't-solver-word'
+					word	: 't-solver-word',
+					definition	: 't-solver-word-definition'
 				}
 			});
 		});	
@@ -60,22 +65,35 @@
 		</div>
 	</div>
 	<div class="right-column">
+		<h4>Horizontal</h4>
+		<ul class="i-horizontal-container">
+		</ul>
+		<h4>Vertical</h4>
+		<ul class="i-vertical-container">
+		</ul>
 	</div>
 </div>
 
 <script type="text/template" id="t-solver-word">
-<table class="solver-word-table">
-	<% if ( word.horizontal ) { %>
-		<tr>
-		<% for( var i = 0; i < word.length; i++ ) { %>
-			<td rel="<%= i %>"></td>
-		<% } %>
-		</tr>
-	<% } else { %>
-		<% for( var i = 0; i < word.length; i++ ) { %>
-			<tr><td rel="<%= i %>"></td></tr>
-		<% } %>
-	<%} %>
-</table>
+<div class="word-container">
+	<table class="solver-word-table">
+		<% if ( word.horizontal ) { %>
+			<tr>
+			<% for( var i = 0; i < word.length; i++ ) { %>
+			<td rel="<%= i %>"><input maxlength="1" /></td>
+			<% } %>
+			</tr>
+		<% } else { %>
+			<% for( var i = 0; i < word.length; i++ ) { %>
+				<tr><td rel="<%= i %>"><input maxlength="1" /></td></tr>
+			<% } %>
+		<%} %>
+	</table>
+</div>	
+</script>
+
+
+<script type="text/template" id="t-solver-word-definition">
+	<li><%=number+1%>. <%=definition%>.</li>
 </script>
 {% endblock %}

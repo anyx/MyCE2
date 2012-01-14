@@ -8,11 +8,14 @@ namespace Anyx\CrosswordBundle\Controller;
  * 
  */
 use Symfony\Bundle\FrameworkBundle\Controller\Controller,
+	Symfony\Component\HttpFoundation\Response,
 	Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
 	Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
 	Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
 	Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,
 
+	FOS\RestBundle\Controller\Annotations\View,
+		
 	//
 	Anyx\CrosswordBundle\Document
 ;
@@ -27,6 +30,7 @@ class ConstructorController extends Controller {
 	 * 
 	 * @Route("/{id}", name="constructor", options={"expose" = true})
 	 * @ParamConverter("crossword", class="Anyx\CrosswordBundle\Document\Crossword")
+	 * @View
 	 */
 	public function indexAction( Document\Crossword $crossword ) {
 		$dm = $this->get('anyx.dm');
@@ -34,9 +38,9 @@ class ConstructorController extends Controller {
 		$dm->persist( $crossword );
 		$dm->flush();
 
-		return $this->render('AnyxCrosswordBundle:Constructor:index.html.twig', array(
+		return array(
 			'crossword'	=> $crossword
-		));
+		);
 	}
 	
 	/**
@@ -56,6 +60,9 @@ class ConstructorController extends Controller {
 		$dm = $this->get('anyx.dm');
 		
 		$dm->persist( $crossword );
+		
 		$dm->flush();
+		
+		return new Response(json_encode(array('success' => true)));
 	}
 }

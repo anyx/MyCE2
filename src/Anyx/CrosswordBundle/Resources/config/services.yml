@@ -4,8 +4,6 @@ parameters:
         Crossword: Anyx\CrosswordBundle\Document\Crossword
         Word: Anyx\CrosswordBundle\Document\Word
         
-    doctrine.mapping.abstract.type.class: \Doctrine\ODM\MongoDB\Mapping\Types\Type
-    doctrine.mapping.confugurator.class:  Anyx\CrosswordBundle\Doctrine\Mapping\Configurator
     anyx.mapping.types:
           Point: Anyx\CrosswordBundle\Doctrine\Type\Point
     
@@ -13,7 +11,3 @@ services:
     anyx.document.factory:
         class: %anyx.document.factory.class%
         arguments: [ "@doctrine.odm.mongodb.document_manager", %anyx.document.aliases%]
-#    anyx.doctrine.mapping.listener:
-#        class:  %doctrine.mapping.confugurator.class%
-#        tags:
-#            - { name: kernel.event_listener, event: kernel.request, method: registerAdditionalTypes }
