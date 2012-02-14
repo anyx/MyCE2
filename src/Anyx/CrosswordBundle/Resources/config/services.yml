@@ -3,6 +3,8 @@ parameters:
     anyx.document.aliases:
         Crossword: Anyx\CrosswordBundle\Document\Crossword
         Word: Anyx\CrosswordBundle\Document\Word
+        Solution: Anyx\CrosswordBundle\Document\Solution
+        Answer: Anyx\CrosswordBundle\Document\Answer
         
     anyx.mapping.types:
           Point: Anyx\CrosswordBundle\Doctrine\Type\Point

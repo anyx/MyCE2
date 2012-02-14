@@ -33,12 +33,19 @@
 				selectors	: {
 					verticalPanel	: '.i-vertical-container',
 					horizontalPanel : '.i-horizontal-container',
-					word			: '.word-container'
+					word			: '.word-container',
+                    saveButton      : '.i-save-button'
 				},
 				templates	: {
 					word	: 't-solver-word',
 					definition	: 't-solver-word-definition'
-				}
+				},
+                savePath    : Routing.generate(
+                                    'crossword_save_solution',
+                                    {
+                                        id : '{{ crossword.id }}'
+                                    }
+                )
 			});
 		});	
 	</script>
@@ -96,4 +103,7 @@
 <script type="text/template" id="t-solver-word-definition">
 	<li><%=number+1%>. <%=definition%>.</li>
 </script>
+
+<input type="button" class="i-save-button" value="save" />
+
 {% endblock %}

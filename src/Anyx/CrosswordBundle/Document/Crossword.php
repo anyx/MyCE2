@@ -8,7 +8,7 @@ namespace Anyx\CrosswordBundle\Document;
  * 
  */
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use JMS\SerializerBundle\Annotation\Accessor;
+//use JMS\SerializerBundle\Annotation\Accessor;
 
 /**
  * 
@@ -17,31 +17,26 @@ use JMS\SerializerBundle\Annotation\Accessor;
 class Crossword {
 
     /**
-	 * 
      * @MongoDB\Id
      */
 	protected $id;
 	
 	/**
-	 * 
 	 * @MongoDB\String
 	 */
 	protected $title;
 
 	/**
-	 * 
 	 * @MongoDB\String
 	 */
 	protected $description;
 
 	/**
-	 * 
 	 * @MongoDB\EmbedMany(targetDocument="Word")
 	 */
 	protected $words;
 	
 	/**
-	 *
 	 * @MongoDB\Boolean
 	 */
 	protected $public;
@@ -320,5 +315,4 @@ class Crossword {
 	public function setCreatedAt() {
 		$this->createdAt = $this->updatedAt = new \DateTime();
 	}
-	
 }
