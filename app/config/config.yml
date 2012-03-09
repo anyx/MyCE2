@@ -64,33 +64,33 @@ doctrine_mongodb:
             mappings:
                 AnyxCrosswordBundle: ~
                 FOSUserBundle: ~
-    auto_generate_hydrator_classes: false
+                AnyxSocialBundle:
+                  prefix: Anyx\SocialBundle\User
 
-#
-#fos_rest:
-#    routing_loader:
-#        default_format: json
-#    format_listener:
-#        default_priorities: ['json', html, '*/*']
-#        fallback_format: json
-#        prefer_extension: true
-#    view:
-#        view_response_listener: force
-#        formats:
-#            rss: false
-#            xml: true
-#            json: true
-#        templating_formats:
-#            html: true
-#        force_redirects:
-#            html: true
-#        failed_validation: HTTP_BAD_REQUEST
+    auto_generate_hydrator_classes: false
 
 fos_user:
     db_driver: mongodb
+    service:
+        user_manager: anyx_social.user.manager
     firewall_name: main
     user_class: Anyx\CrosswordBundle\Document\User
-        
+
+anyx_social:
+  auth_route: social_auth
+  services:
+    facebook:
+      client_id:         114949468588006
+      secret:            15266750e6ae656f3fab05a807c405f5
+      scope:             email,user_about_me
+  accounts:
+    map:
+      facebook: 
+        accountId: id
+        userName: name
+  fos_user:
+    db_driver: mongodb
+    
 #aliases
 services:
     anyx.dm: "@doctrine.odm.mongodb.document_manager"
