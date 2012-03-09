@@ -19,14 +19,20 @@ class AppKernel extends Kernel
 			new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
 			//
-            new Anyx\CrosswordBundle\AnyxCrosswordBundle(),
 			new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
 			new JMS\SerializerBundle\JMSSerializerBundle($this),
-			
-			new FOS\RestBundle\FOSRestBundle(),
+			//
+			//new FOS\RestBundle\FOSRestBundle(),
 			new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+			//
 			new FOS\UserBundle\FOSUserBundle(),
+			//
+			new Knp\Bundle\OAuthBundle\KnpOAuthBundle(),
+			new Sensio\Bundle\BuzzBundle\SensioBuzzBundle(),
+			//
+			new Anyx\CrosswordBundle\AnyxCrosswordBundle(),
             new Anyx\UserBundle\AnyxUserBundle(),
+            new Anyx\SocialBundle\AnyxSocialBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

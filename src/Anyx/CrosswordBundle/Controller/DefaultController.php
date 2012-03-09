@@ -5,7 +5,6 @@ namespace Anyx\CrosswordBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller,
 	Symfony\Component\HttpFoundation\Response,
 	Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
-	FOS\RestBundle\Controller\Annotations\View,
 	Anyx\CrosswordBundle\Document,
 		
 	Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
@@ -21,7 +20,7 @@ class DefaultController extends Controller {
 
 	/**
 	 * @Route("/", name="homepage")
-	 * @View
+	 * @Template
 	 */
     public function indexAction() {
 		
@@ -36,12 +35,8 @@ class DefaultController extends Controller {
 	}
 	
 	/**
-	 * @fix @Template & @View conflict
-	 */
-	
-	/**
 	 * 
-	 * @View("AnyxCrosswordBundle:Crossword:list.html.twig")
+	 * @Template("AnyxCrosswordBundle:Crossword:list.html.twig")
 	 */
 	
 	public function testAction() {
