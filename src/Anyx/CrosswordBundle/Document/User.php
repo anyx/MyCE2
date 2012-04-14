@@ -2,7 +2,7 @@
 
 namespace Anyx\CrosswordBundle\Document;
 
-use Anyx\SocialBundle\Document\User as BaseUser;
+use Anyx\SocialUserBundle\Document\User as BaseUser;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**

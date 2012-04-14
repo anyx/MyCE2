@@ -42,4 +42,28 @@ class DefaultController extends Controller {
 	public function testAction() {
         return $this->render('AnyxCrosswordBundle:Default:test.html.twig', array());
 	}
+	
+	/**
+	 * @Template
+	 */
+	public function listAuthServicesAction() {
+		
+		$servicesCodes = $this->get('anyx_social.provider.factory')->getServices();
+		$services = array();
+		
+		$router = $this->get('router');
+		
+		foreach( $servicesCodes as $service ) {
+			$services[$service] = $router->generate(
+									'anyx_social_auth',
+									array(
+										'service' => $service
+									)
+			);
+		}
+		
+		return array(
+			'services' => $services
+		);
+	}	
 }

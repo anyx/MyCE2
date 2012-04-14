@@ -60,8 +60,8 @@ class Configuration implements ConfigurationInterface
 							->end()
 				->end();
 
-		$this->buildAccountsMap($rootNode->children()->arrayNode('accounts'));
-		$this->buildFOSUserIntegration($rootNode->children()->arrayNode('fos_user'));
+		//$this->buildAccountsMap($rootNode->children()->arrayNode('accounts'));
+		//$this->buildFOSUserIntegration($rootNode->children()->arrayNode('fos_user'));
 
         return $treeBuilder;
     }

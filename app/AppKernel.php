@@ -33,6 +33,7 @@ class AppKernel extends Kernel
 			new Anyx\CrosswordBundle\AnyxCrosswordBundle(),
             new Anyx\UserBundle\AnyxUserBundle(),
             new Anyx\SocialBundle\AnyxSocialBundle(),
+            new Anyx\SocialUserBundle\AnyxSocialUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

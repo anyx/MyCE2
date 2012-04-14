@@ -59,4 +59,4 @@ Swift::registerAutoload(__DIR__.'/../vendor/swiftmailer/lib/swift_init.php');
  * 
  * @todo find better place for this
  */
-\Doctrine\ODM\MongoDB\Mapping\Types\Type::addType('point', 'Anyx\CrosswordBundle\Doctrine\Type\Point');
+\Doctrine\ODM\MongoDB\Mapping\Types\Type::addType('point', 'Anyx\CrosswordUserBundle\Doctrine\Type\Point');

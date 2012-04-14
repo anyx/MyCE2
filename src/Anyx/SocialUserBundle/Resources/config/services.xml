@@ -5,26 +5,27 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="anyx_social.authentication.manager.class">Anyx\SocialBundle\Authentication\Manager</parameter>
-        <parameter key="anyx_social.provider.factory.class">Anyx\SocialBundle\Provider\Factory</parameter>
-        <parameter key="anyx_social.provider.facebook.class">Anyx\SocialBundle\Provider\FacebookProvider</parameter>
-        <parameter key="anyx_social.provider.twitter.class">Anyx\SocialBundle\Provider\TwitterProvider</parameter>
-
+		<!-- o -->
+		<parameter key="anyx_social.account.factory.class">Anyx\SocialUserBundle\User\AccountFactory</parameter>
+		
+		<!-- User managers -->
+		<parameter key="anyx_social_user.user.manager.mongodb.class">Anyx\SocialUserBundle\Document\UserManager</parameter>
 		<!-- Controllers -->
 		<parameter key="anyx_social.controller.login.class">Anyx\SocialBundle\Controller\LoginController</parameter>
 
 	</parameters>
 
     <services>
-        <service id="anyx_social.provider.factory" class="%anyx_social.provider.factory.class%">
-             <argument type="service" id="buzz"/>
-        </service>
-
-		<service id="anyx_social.authentication.manager" class="%anyx_social.authentication.manager.class%">
-             <argument type="service" id="anyx_social.provider.factory"/>
-        </service>
-
 		<service id="anyx_social.account.factory" class="%anyx_social.account.factory.class%">
+		</service>
+
+		<!-- User managers -->
+		<service id="anyx_social_user.user.manager.mongodb" class="%anyx_social_user.user.manager.mongodb.class%">
+            <argument type="service" id="security.encoder_factory" />
+            <argument type="service" id="fos_user.util.username_canonicalizer" />
+            <argument type="service" id="fos_user.util.email_canonicalizer" />
+            <argument type="service" id="fos_user.document_manager" />
+            <argument>%fos_user.model.user.class%</argument>
 		</service>
 
 		<!-- Controllers -->

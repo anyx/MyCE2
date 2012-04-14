@@ -64,15 +64,15 @@ doctrine_mongodb:
             mappings:
                 AnyxCrosswordBundle: ~
                 FOSUserBundle: ~
-                AnyxSocialBundle:
-                  prefix: Anyx\SocialBundle\User
+                AnyxSocialUserBundle:
+                  prefix: Anyx\SocialUserBundle\User
 
     auto_generate_hydrator_classes: false
 
 fos_user:
     db_driver: mongodb
     service:
-        user_manager: anyx_social.user.manager
+        user_manager: anyx_social_user.user.manager
     firewall_name: main
     user_class: Anyx\CrosswordBundle\Document\User
 
@@ -83,13 +83,17 @@ anyx_social:
       client_id:         114949468588006
       secret:            15266750e6ae656f3fab05a807c405f5
       scope:             email,user_about_me
-  accounts:
-    map:
-      facebook: 
-        accountId: id
-        userName: name
-  fos_user:
-    db_driver: mongodb
+    twitter:
+      client_id:         7EpGiK7VCRTnLzEoELme2w
+      secret:            rM3NuRHI2v8I9AKKOgIZnMTxwsYck4VyhmlLe7ip8
+      scope:             email,user_about_me
+#  accounts:
+#    map:
+#      facebook: 
+#        accountId: id
+#        userName: name
+#  fos_user:
+#    db_driver: mongodb
     
 #aliases
 services:

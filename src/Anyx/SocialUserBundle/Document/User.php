@@ -1,8 +1,8 @@
 <?php
 
-namespace Anyx\SocialBundle\Document;
+namespace Anyx\SocialUserBundle\Document;
 
-use Anyx\SocialBundle\User\SocialAccount;
+use Anyx\SocialUserBundle\User\SocialAccount;
 use FOS\UserBundle\Document\User as BaseUser;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 

@@ -1,0 +1,4 @@
+anyx_social_login:
+#  pattern: /social/auth/:service
+  resource: anyx_social.controller.login
+  type: annotation

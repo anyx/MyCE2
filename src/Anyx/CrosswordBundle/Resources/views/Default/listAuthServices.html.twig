@@ -1,0 +1,7 @@
+{% if services %}
+<ul>
+	{% for code,url in services %}
+		<li><a href="{{ url }}">{{ code }}</a></li>
+	{% endfor %}
+<ul>
+{% endif %}

@@ -31,7 +31,6 @@ class OAuthProvider
      */
     public function __construct( Browser $browser, array $options )
     {
-
 		$this->browser = $browser;
 		
 		$this->options = array_merge($this->options, $options);
@@ -99,7 +98,7 @@ class OAuthProvider
     /**
      * {@inheritDoc}
      */
-    public function getUserData($accessToken)
+    public function getUserData(  Authentication\AccessToken $accessToken )
     {
 
 		if ($this->getOption('infos_url') === null) {
@@ -118,30 +117,15 @@ class OAuthProvider
     /**
      * {@inheritDoc}
      */
-    public function getAuthorizationUrl( Request $request, array $extraParameters = array())
+    public function getAccessToken(Request $request )
     {
-        $parameters = array_merge($extraParameters, array(
-            'response_type' => 'code',
-            'client_id'     => $this->getOption('client_id'),
-            'scope'         => $this->getOption('scope'),
-            'redirect_uri'  => $this->getRedirectUri()
-        ));
-
-        return $this->getOption('authorization_url').'?'.http_build_query($parameters);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAccessToken(Request $request, array $extraParameters = array())
-    {
-		$parameters = array_merge( array(
+		$parameters = array(
             'code'          => $request->get('code'),
             'grant_type'    => 'authorization_code',
             'client_id'     => $this->getOption('client_id'),
             'client_secret' => $this->getOption('secret'),
             'redirect_uri'  => $this->getRedirectUri(),
-        ), $extraParameters);
+        );
 
 		$url = $this->getOption('access_token_url');
 
@@ -151,7 +135,7 @@ class OAuthProvider
 		parse_str( $response->getContent(), $content );
 		
 		if ( !is_array( $content ) || !array_key_exists('access_token', $content ) ) {
-			throw new Authentication\Exception( 'Access token not present on response' );
+			throw new Authentication\Exception( 'Access token not present in response' );
 		}
 		
 		return $content['access_token'];

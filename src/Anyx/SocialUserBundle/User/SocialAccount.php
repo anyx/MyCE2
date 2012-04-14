@@ -1,6 +1,6 @@
 <?php
 
-namespace Anyx\SocialBundle\User;
+namespace Anyx\SocialUserBundle\User;
 
 /**
  * 
