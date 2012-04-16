@@ -18,7 +18,7 @@ class User extends BaseUser
     protected $id;
 	
 	/**
-	 * @MongoDB\EmbedMany(targetDocument="Anyx\SocialBundle\User\SocialAccount")
+	 * @MongoDB\EmbedMany(targetDocument="Anyx\SocialUserBundle\User\SocialAccount")
 	 */
 	protected $socialAccounts;
 

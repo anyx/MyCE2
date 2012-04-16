@@ -13,7 +13,7 @@ use Buzz\Browser;
  * OAuthProvider
  *
  */
-class OAuthProvider
+abstract class OAuthProvider
 {
     /**
      * @var array
@@ -26,6 +26,18 @@ class OAuthProvider
     protected $browser;
 
     /**
+	 * 
+	 * @param Request $request
+     */
+    abstract public function getAccessToken( Request $request );
+
+	/**
+	 * 
+	 * @param Authentication\AccessToken $accessToken
+	 */
+	abstract public function getUserData( Authentication\AccessToken $accessToken );
+
+	/**
      * @param Buzz\Client\ClientInterface $httpClient
      * @param array                       $options
      */
@@ -34,16 +46,6 @@ class OAuthProvider
 		$this->browser = $browser;
 		
 		$this->options = array_merge($this->options, $options);
-
-		$this->configure();
-    }
-
-    /**
-     * Gives a chance for extending providers to customize stuff
-     */
-    public function configure()
-    {
-
     }
 
     /**
@@ -94,50 +96,4 @@ class OAuthProvider
 	public function getBrowser() {
 		return $this->browser;
 	}
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getUserData(  Authentication\AccessToken $accessToken )
-    {
-
-		if ($this->getOption('infos_url') === null) {
-            return $accessToken;
-        }
-
-        $url = $this->getOption('infos_url').'?'.http_build_query(array(
-            'access_token' => $accessToken
-        ));
-
-        $content = $this->getBrowser()->call($url, 'GET')->getContent();
-
-		return json_decode( $content, true );
-    }
-	
-    /**
-     * {@inheritDoc}
-     */
-    public function getAccessToken(Request $request )
-    {
-		$parameters = array(
-            'code'          => $request->get('code'),
-            'grant_type'    => 'authorization_code',
-            'client_id'     => $this->getOption('client_id'),
-            'client_secret' => $this->getOption('secret'),
-            'redirect_uri'  => $this->getRedirectUri(),
-        );
-
-		$url = $this->getOption('access_token_url');
-
-		$response = $this->getBrowser()->call( $url . '?' . http_build_query($parameters), 'GET' );
-
-		$content = array();
-		parse_str( $response->getContent(), $content );
-		
-		if ( !is_array( $content ) || !array_key_exists('access_token', $content ) ) {
-			throw new Authentication\Exception( 'Access token not present in response' );
-		}
-		
-		return $content['access_token'];
-    }
 }

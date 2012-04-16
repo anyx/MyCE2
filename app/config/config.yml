@@ -64,9 +64,9 @@ doctrine_mongodb:
             mappings:
                 AnyxCrosswordBundle: ~
                 FOSUserBundle: ~
-                AnyxSocialUserBundle:
+                AnyxSocialUserBundle: 
                   prefix: Anyx\SocialUserBundle\User
-
+                  
     auto_generate_hydrator_classes: false
 
 fos_user:
@@ -76,8 +76,19 @@ fos_user:
     firewall_name: main
     user_class: Anyx\CrosswordBundle\Document\User
 
+anyx_social_user:
+  fos_user:
+    db_driver: mongodb
+  accounts:
+    map:
+      facebook: 
+        accountId: id
+        userName: name
+      twitter:
+        accountId: id
+        userName: name
+        
 anyx_social:
-  auth_route: social_auth
   services:
     facebook:
       client_id:         114949468588006
@@ -87,14 +98,7 @@ anyx_social:
       client_id:         7EpGiK7VCRTnLzEoELme2w
       secret:            rM3NuRHI2v8I9AKKOgIZnMTxwsYck4VyhmlLe7ip8
       scope:             email,user_about_me
-#  accounts:
-#    map:
-#      facebook: 
-#        accountId: id
-#        userName: name
-#  fos_user:
-#    db_driver: mongodb
-    
+      
 #aliases
 services:
     anyx.dm: "@doctrine.odm.mongodb.document_manager"

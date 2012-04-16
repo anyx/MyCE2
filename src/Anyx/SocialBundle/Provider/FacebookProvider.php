@@ -5,6 +5,8 @@ namespace Anyx\SocialBundle\Provider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+use Anyx\SocialBundle\Authentication;
+
 class FacebookProvider extends OAuthProvider {
 
     /**
@@ -13,24 +15,9 @@ class FacebookProvider extends OAuthProvider {
     protected $options = array(
         'authorization_url' => 'https://www.facebook.com/dialog/oauth',
         'access_token_url'  => 'https://graph.facebook.com/oauth/access_token',
-        'infos_url'         => 'https://graph.facebook.com/me',
+        'user_data_url'         => 'https://graph.facebook.com/me',
 	);
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getAuthorizationUrl()
-    {
-        $parameters = array(
-            'response_type' => 'code',
-            'client_id'     => $this->getOption('client_id'),
-            'scope'         => $this->getOption('scope'),
-            'redirect_uri'  => $this->getRedirectUri()
-        );
-
-        return $this->getOption('authorization_url').'?'.http_build_query($parameters);
-    }	
-	
     /**
      * {@inheritDoc}
      */
@@ -61,6 +48,39 @@ class FacebookProvider extends OAuthProvider {
 			throw new Authentication\Exception( 'Access token not present in response' );
 		}
 		
-		return $content['access_token'];
-    }	
+		return new Authentication\AccessToken( $content['access_token'] );
+    }
+	
+    /**
+     * {@inheritDoc}
+     */
+    public function getUserData( Authentication\AccessToken $accessToken )
+    {
+		if ($this->getOption('user_data_url') === null) {
+            return $accessToken;
+        }
+
+        $url = $this->getOption('user_data_url').'?'.http_build_query(array(
+            'access_token' => $accessToken->getToken()
+        ));
+
+        $content = $this->getBrowser()->call($url, 'GET')->getContent();
+
+		return json_decode( $content, true );
+    }
+	
+    /**
+     * {@inheritDoc}
+     */
+    private function getAuthorizationUrl()
+    {
+        $parameters = array(
+            'response_type' => 'code',
+            'client_id'     => $this->getOption('client_id'),
+            'scope'         => $this->getOption('scope'),
+            'redirect_uri'  => $this->getRedirectUri()
+        );
+
+        return $this->getOption('authorization_url').'?'.http_build_query($parameters);
+    }
 }

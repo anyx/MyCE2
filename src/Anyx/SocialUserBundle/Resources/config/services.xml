@@ -6,17 +6,17 @@
 
     <parameters>
 		<!-- o -->
-		<parameter key="anyx_social.account.factory.class">Anyx\SocialUserBundle\User\AccountFactory</parameter>
+		<parameter key="anyx_social_user.account.factory.class">Anyx\SocialUserBundle\User\AccountFactory</parameter>
 		
 		<!-- User managers -->
 		<parameter key="anyx_social_user.user.manager.mongodb.class">Anyx\SocialUserBundle\Document\UserManager</parameter>
 		<!-- Controllers -->
-		<parameter key="anyx_social.controller.login.class">Anyx\SocialBundle\Controller\LoginController</parameter>
+		<parameter key="anyx_social_user.controller.login.class">Anyx\SocialUserBundle\Controller\LoginController</parameter>
 
 	</parameters>
 
     <services>
-		<service id="anyx_social.account.factory" class="%anyx_social.account.factory.class%">
+		<service id="anyx_social_user.account.factory" class="%anyx_social_user.account.factory.class%">
 		</service>
 
 		<!-- User managers -->
@@ -27,15 +27,14 @@
             <argument type="service" id="fos_user.document_manager" />
             <argument>%fos_user.model.user.class%</argument>
 		</service>
-
+		
 		<!-- Controllers -->
-		<service id="anyx_social.controller.login" class="%anyx_social.controller.login.class%">
+		<service id="anyx_social_user.controller.login" class="%anyx_social_user.controller.login.class%">
 			<argument type="service" id="anyx_social.authentication.manager" />
-			<argument type="service" id="anyx_social.account.factory" />
+			<argument type="service" id="anyx_social_user.account.factory" />
 			<argument type="service" id="fos_user.user_manager" />
 			<argument type="service" id="security.context" />
-		</service>
-
+		</service>		
 	</services>
 
 </container>

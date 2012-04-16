@@ -63,7 +63,7 @@ class AccessToken {
 	 */
 	public function getParam( $name ) {
 		
-		if ( $this->hasParam($name) ) {
+		if ( !$this->hasParam($name) ) {
 			throw new \InvalidArgumentException( "Param '$name' not present in access token" );
 		}
 		

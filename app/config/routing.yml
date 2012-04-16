@@ -3,11 +3,6 @@ AnyxSocialUserBundle:
     type:     annotation
     prefix:   /
 
-AnyxSocialBundle:
-    resource: "@AnyxSocialBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 AnyxUserBundle:
     resource: "@AnyxUserBundle/Controller/"
     type:     annotation

@@ -57,7 +57,9 @@ class Factory {
 	/**
 	 *
 	 * @param string $service
-	 * @throws InvalidArgumentException 
+	 * @throws InvalidArgumentException
+	 * 
+	 * @return Anyx\SocialBundle\Provider\OAuthProvider
 	 */
 	public function getProvider( $name ) {
 		if ( !array_key_exists($name, $this->servicesConfig ) ) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Anyx\SocialBundle\Controller;
+namespace Anyx\SocialUserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -19,7 +19,7 @@ use Anyx\SocialUserBundle\User\AccountFactory;
 use FOS\UserBundle\Document\UserManager as UserManager;
 
 /**
- * @Route("",service="anyx_social.controller.login") 
+ * @Route("",service="anyx_social_user.controller.login") 
  */
 class LoginController extends Controller
 {
@@ -125,19 +125,17 @@ class LoginController extends Controller
 		
 		$accessToken = $manager->getAccessToken( $service, $request );
 
-		$userData = $manager->getUserData( $service, $accessToken );
-
-		$accountFactory = $this->getAccountFactory();
+		$userData = $manager->getProviderFactory()->getProvider( $service )->getUserData( $accessToken );
 		
-		$account = $accountFactory->createAccount( $service, $userData );
-
+		$account = $this->getAccountFactory()->createAccount( $service, $userData );
+		
 		$userManager = $this->getUserManager();
-
+		
 		if ( $this->getSecurityContext()->isGranted('ROLE_USER') ) {
 			//link account
 			$accountOwner = $this->getSecurityContext()->getToken()->getUser();
-			$accountOwner->addAccount( $account );
-			
+			$accountOwner->addSocialAccount( $account );
+
 		} else {
 			
 			$accountOwner = $userManager->getAccountOwner( $account );
@@ -159,6 +157,8 @@ class LoginController extends Controller
 		}
 		
 		return new RedirectResponse( $request->getBaseUrl() . $backurl );
+
+		
 	}
 	
 	/**

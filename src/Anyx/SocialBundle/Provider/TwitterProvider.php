@@ -22,7 +22,7 @@ class TwitterProvider extends OAuthProvider {
 		'request_token_url'	=> 'https://api.twitter.com/oauth/request_token',
         'authorization_url' => 'https://api.twitter.com/oauth/authorize',
         'access_token_url'  => 'https://api.twitter.com/oauth/access_token',
-        'infos_url'         => 'https://api.twitter.com/1/account/verify_credentials.json',
+        'user_data_url'		=> 'http://api.twitter.com/1/users/show.json',
 	);
 
     /**
@@ -30,11 +30,15 @@ class TwitterProvider extends OAuthProvider {
      */
     public function getUserData( Authentication\AccessToken $accessToken)
     {
-
-		var_dump($accessToken);
-		die();
+		$response = $this->getBrowser()->get(
+						$this->getOption('user_data_url') . '?screen_name=' . $accessToken->getParam('screen_name')
+		);
 		
-		return json_decode( $content, true );
+		if ( $response->getStatusCode() !== 200 ) {
+			throw new Authentication\Exception( 'Error retrieving user data' );	
+		}
+		
+		return json_decode( $response->getContent(), true );
     }
 	
 	/**
@@ -42,7 +46,6 @@ class TwitterProvider extends OAuthProvider {
      */
     public function getAccessToken( Request $request  )
     {
-
 		$oauthToken = $request->get('oauth_token');
 		
 		if ( !empty( $oauthToken ) ) {
@@ -55,6 +58,9 @@ class TwitterProvider extends OAuthProvider {
 			$result = array();
 			parse_str( $response->getContent(), $result );			
 
+			if ( !array_key_exists( 'oauth_token_secret', $result ) ) {
+				throw new Authentication\Exception( 'Access token not present in response' );
+			}
 			$token = $result['oauth_token_secret'];
 			unset($result['oauth_token_secret'] );
 

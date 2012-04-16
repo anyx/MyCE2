@@ -9,10 +9,6 @@
         <parameter key="anyx_social.provider.factory.class">Anyx\SocialBundle\Provider\Factory</parameter>
         <parameter key="anyx_social.provider.facebook.class">Anyx\SocialBundle\Provider\FacebookProvider</parameter>
         <parameter key="anyx_social.provider.twitter.class">Anyx\SocialBundle\Provider\TwitterProvider</parameter>
-
-		<!-- Controllers -->
-		<parameter key="anyx_social.controller.login.class">Anyx\SocialBundle\Controller\LoginController</parameter>
-
 	</parameters>
 
     <services>
@@ -23,18 +19,6 @@
 		<service id="anyx_social.authentication.manager" class="%anyx_social.authentication.manager.class%">
              <argument type="service" id="anyx_social.provider.factory"/>
         </service>
-
-		<service id="anyx_social.account.factory" class="%anyx_social.account.factory.class%">
-		</service>
-
-		<!-- Controllers -->
-		<service id="anyx_social.controller.login" class="%anyx_social.controller.login.class%">
-			<argument type="service" id="anyx_social.authentication.manager" />
-			<argument type="service" id="anyx_social.account.factory" />
-			<argument type="service" id="fos_user.user_manager" />
-			<argument type="service" id="security.context" />
-		</service>
-
 	</services>
 
 </container>

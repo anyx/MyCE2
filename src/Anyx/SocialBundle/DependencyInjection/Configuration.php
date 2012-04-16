@@ -24,8 +24,6 @@ class Configuration implements ConfigurationInterface
 
 		$rootNode
 			->children()
-				->scalarNode('auth_route')
-					->end()
 				->arrayNode('services')
 					->useAttributeAsKey('services')
 					->prototype('array')
@@ -60,40 +58,6 @@ class Configuration implements ConfigurationInterface
 							->end()
 				->end();
 
-		//$this->buildAccountsMap($rootNode->children()->arrayNode('accounts'));
-		//$this->buildFOSUserIntegration($rootNode->children()->arrayNode('fos_user'));
-
         return $treeBuilder;
     }
-	
-	/**
-	 *
-	 */
-	public function buildAccountsMap( ArrayNodeDefinition $rootNode ) {
-	
-		$rootNode
-			->children()
-			->arrayNode('map')
-				->useAttributeAsKey('services')
-					->prototype('array')
-						->children()
-							->scalarNode('accountId')
-							->end()	
-							->scalarNode('userName')
-							->end()
-		;
-	}
-	
-	/**
-	 * @todo false by default
-	 * @param ArrayNodeDefinition $rootNode 
-	 */
-	public function buildFOSUserIntegration( ArrayNodeDefinition $rootNode ) {
-		$rootNode
-			->children()
-				->scalarNode('db_driver')
-				->end()
-		;		
-	}
-			
 }

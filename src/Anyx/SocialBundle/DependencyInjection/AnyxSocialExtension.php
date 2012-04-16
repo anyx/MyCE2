@@ -37,16 +37,5 @@ class AnyxSocialExtension extends Extension
 		$container->setParameter('anyx_social.providers.config',  $config['services']);
 		$container->getDefinition('anyx_social.provider.factory')
 				->addArgument('%anyx_social.providers.config%');
-		
-		//Accounts
-		/*
-		$container->setParameter('anyx_social.acconts.map',  $config['accounts']['map']);
-		$container->getDefinition('anyx_social.account.factory')
-				->addArgument('%anyx_social.acconts.map%');
-		
-		if ( array_key_exists( 'fos_user', $config ) ) {
-			$this->configureFOSUserIntegration($config, $container);
-		}
-		*/
 	}
 }

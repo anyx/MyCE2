@@ -24,17 +24,37 @@ class AnyxSocialUserExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+		
+		$this->configureFOSUserIntegration( $config, $container );
+
+		$this->configureAccountFactory( $config, $container );
+		
+		if ( array_key_exists( 'fos_user', $config ) ) {
+			$this->configureFOSUserIntegration($config, $container);
+		}
     }
+
+	/**
+	 *
+	 * @param array $config
+	 * @param ContainerBuilder $container 
+	 */
+	private function configureAccountFactory( array $config, ContainerBuilder $container ) {
+
+		$container->setParameter('anyx_social_user.acconts.map',  $config['accounts']['map']);
+		$container->getDefinition('anyx_social_user.account.factory')
+				->addArgument('%anyx_social_user.acconts.map%');
+	}
 	
 	/**
 	 * 
 	 */
-	protected function configureFOSUserIntegration( array $config, ContainerBuilder $container ) {
+	private function configureFOSUserIntegration( array $config, ContainerBuilder $container ) {
 		
 		$dbDriver = $config['fos_user']['db_driver'];
 		
-		$userManager = 'anyx_social.user.manager.' . $dbDriver;
+		$userManager = 'anyx_social_user.user.manager.' . $dbDriver;
 		
-		$container->addAliases(array('anyx_social.user.manager' => $userManager));
+		$container->addAliases(array('anyx_social_user.user.manager' => $userManager));
 	}	
 }

@@ -5,6 +5,8 @@ namespace Anyx\SocialUserBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+
 /**
  * This is the class that validates and merges configuration from your app/config files
  *
@@ -20,10 +22,40 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('anyx_social_user');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+		$this->buildFOSUserIntegration($rootNode->children()->arrayNode('fos_user'));
 
-        return $treeBuilder;
+		$this->buildAccountsMap($rootNode->children()->arrayNode('accounts'));
+		
+		return $treeBuilder;
     }
+	
+	/**
+	 * @todo false by default
+	 * @param ArrayNodeDefinition $rootNode 
+	 */
+	private function buildFOSUserIntegration( ArrayNodeDefinition $rootNode ) {
+		$rootNode
+			->children()
+				->scalarNode('db_driver')
+				->end()
+		;		
+	}
+	
+	/**
+	 *
+	 */
+	private function buildAccountsMap( ArrayNodeDefinition $rootNode ) {
+	
+		$rootNode
+			->children()
+			->arrayNode('map')
+				->useAttributeAsKey('services')
+					->prototype('array')
+						->children()
+							->scalarNode('accountId')
+							->end()	
+							->scalarNode('userName')
+							->end()
+		;
+	}	
 }

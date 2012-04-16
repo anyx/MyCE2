@@ -30,7 +30,7 @@ class AccountFactory {
 
 	/**
 	 *
-	 * @return Anyx\SocialBundle\User\SocialAccount
+	 * @return Anyx\SocialUserBundle\User\SocialAccount
 	 */
 	public function getAccountClass() {
 		return $this->accountClass;
@@ -55,7 +55,7 @@ class AccountFactory {
 		
 		$account->setAccountId( $this->findFieldValue( 'accountId', $service, $userData ) );
 		$account->setServiceName( $service );
-		$account->setAccountData( $userData );
+		$account->setAccountData( json_encode( $userData ) );
 		$account->setUserName( $this->findFieldValue( 'userName', $service, $userData ) );
 		
 		return $account;
@@ -76,9 +76,9 @@ class AccountFactory {
 			
 			$userData = $userData[$key];
 		}
-		
-		if ( !is_string( $userData ) ) {
-			throw new \RuntimeException( "Value must be string" );
+
+		if ( !is_string( $userData ) && !is_numeric( $userData ) ) {
+			throw new \RuntimeException( "Value must be scalar" );
 		}
 		
 		return $userData;
