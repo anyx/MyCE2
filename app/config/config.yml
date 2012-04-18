@@ -87,6 +87,9 @@ anyx_social_user:
       twitter:
         accountId: id
         userName: name
+      vkontakte:
+        accountId: response.0.uid
+        userName: response.0.first_name
         
 anyx_social:
   services:
@@ -98,6 +101,11 @@ anyx_social:
       client_id:         7EpGiK7VCRTnLzEoELme2w
       secret:            rM3NuRHI2v8I9AKKOgIZnMTxwsYck4VyhmlLe7ip8
       scope:             email,user_about_me
+    vkontakte:
+      client_id:         2399701
+      secret:            jpIAY6YiK2JnIxIbSbTH
+      scope:             notify,offline
+      user_fields:            uid, first_name, last_name, nickname, screen_name, sex, bdate (birthdate), city, country, timezone, photo, photo_medium, photo_big, has_mobile, rate, contacts, education, online, counters
       
 #aliases
 services:
