@@ -1,3 +1,0 @@
-anyx_social_login:
-  resource: anyx_social.controller.login
-  type: annotation
