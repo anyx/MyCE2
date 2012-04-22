@@ -1,0 +1,40 @@
+{% extends '::main.html.twig' %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+	{% javascripts
+		'@AnyxCrosswordBundle/Resources/public/js/jquery.min.js'
+		'@AnyxCrosswordBundle/Resources/public/js/jquery-ui.min.js'
+	
+		'@AnyxCrosswordBundle/Resources/public/js/json2.js'
+		'@AnyxCrosswordBundle/Resources/public/js/underscore.js'
+		'@AnyxCrosswordBundle/Resources/public/js/backbone.js'
+		
+		'@AnyxCrosswordBundle/Resources/public/js/views/View.js'
+
+		'@AnyxUserBundle/Resources/public/js/ProfileWorkspace.js'
+
+		'@AnyxUserBundle/Resources/public/js/views/Profile.js'
+
+	%}
+	<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+	
+	<script type="text/javascript">
+		$(function(){
+			var workspace = new Anyx.Profile.Workspace({});
+		});
+	</script>			
+	
+{% endblock %}	
+
+{% block page_title %}
+	{%trans%}User profile{%endtrans%}
+{% endblock %}
+	
+{% block body %}
+	<h4>{% trans %}Created crosswords{%endtrans%}</h4>
+	<h4>{% trans %}Solved crosswords{%endtrans%}</h4>
+{% endblock body %}
+	

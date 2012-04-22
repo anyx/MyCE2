@@ -29,7 +29,8 @@ class DefaultController extends Controller {
 		
 		return array(
 			'crosswords' => array(
-				'popular' => $crosswordsRepository->getPopular()
+				'popular'	=> $crosswordsRepository->getPopular(),
+				'new'		=> $crosswordsRepository->getNew()
 			) 
 		);
 	}

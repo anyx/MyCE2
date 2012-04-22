@@ -62,24 +62,25 @@
 	{% endstylesheets %}
 {% endblock %}
 
-{% block page_title %} Solving crossword &laquo;{{crossword.title}}&raquo; {% endblock %}
+{% block page_title %}{%trans%}Solving crossword{%endtrans%} &laquo;{{crossword.title}}&raquo; {% endblock %}
 
 {% block body %}
 
-<div class="columns-container">
-	<div class="left-column">
-		<div class="i-crossword crossword-solver">
-		</div>
+<div class="row">
+	<div class="span9">
+		<div class="i-crossword crossword-solver"></div>
 	</div>
-	<div class="right-column">
-		<h4>Horizontal</h4>
+	<div class="span2">
+		<h4>{%trans%}Horizontal{%endtrans%}</h4>
 		<ul class="i-horizontal-container">
 		</ul>
-		<h4>Vertical</h4>
+		<h4>{%trans%}Vertical{%endtrans%}</h4>
 		<ul class="i-vertical-container">
 		</ul>
-	</div>
-</div>
+		
+		<input type="button" class="btn btn-primary i-save-button" value="save" />	
+	</div>	
+</div>	
 
 <script type="text/template" id="t-solver-word">
 <div class="word-container">
@@ -103,7 +104,5 @@
 <script type="text/template" id="t-solver-word-definition">
 	<li><%=number+1%>. <%=definition%>.</li>
 </script>
-
-<input type="button" class="i-save-button" value="save" />
 
 {% endblock %}

@@ -1,23 +1,52 @@
 {% extends '::main.html.twig' %}
 
-{% block page_title %}Welcome!{% endblock %}
+{% block hero_block %}
+<div class="hero-unit">
+<h2>{% trans %}Welcome{% endtrans %}</h2>
 
+<p>{% trans %}This is another service for solving and creating crosswords{% endtrans %}</p>
+<p>
+	<a class="btn btn-primary btn-large">{% trans %}Learn more{% endtrans %} &raquo;</a>
+</p>
+</div>
+{% endblock hero_block %}
 
 {% block body %}
 
-{% if crosswords.popular | length > 0 %}
-<div class="content-block">
-<h4>Popular crosswords</h4>
-	<ul class="main-crosswords-list">
-	{% for crossword in crosswords.popular %}
-		<li>
-			<a href="{{ path( 'crossword_solve', { 'id' : crossword.id })}}">{{ crossword.title }}</a>
-			<span class="description">{{crossword.description | truncate(20)}}</span>
-		</li>
-	{% endfor %}
-	</ul>
+<div class="row">
+	{% if crosswords.popular | length > 0 %}
+	<div class="span3">
+	<h4>{% trans %}Popular crosswords{% endtrans %}</h4>
+		<ul>
+		{% for crossword in crosswords.popular %}
+			<li>
+				<a href="{{ path( 'crossword_solve', { 'id' : crossword.id })}}">{{ crossword.title }}</a>
+				<p class="description">{{crossword.description | truncate(20)}}</p>
+			</li>
+		{% endfor %}
+		</ul>
 
+	</div>
+	{% endif %}
+
+	{% if crosswords.new | length > 0 %}
+	<div class="span3">
+	<h4>{% trans %}Last crosswords{% endtrans %}</h4>
+		<ul>
+		{% for crossword in crosswords.new%}
+			<li>
+				<a href="{{ path( 'crossword_solve', { 'id' : crossword.id })}}">{{ crossword.title }}</a>
+				<p class="description">{{crossword.description | truncate(20)}}</p>
+			</li>
+		{% endfor %}
+		</ul>
+	</div>
+	{% endif %}
+		
+	<div class="span4">
+		<h4>{% trans %}Twitter{% endtrans %}</h4>
+	</div>
+	
 </div>
-{% endif %}
 
 {% endblock %}

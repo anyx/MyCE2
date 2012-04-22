@@ -6,43 +6,60 @@
 
 		{% block stylesheets %}
 			{% stylesheets
+				'@AnyxCrosswordBundle/Resources/public/css/bootstrap.min.css'
+				'@AnyxCrosswordBundle/Resources/public/css/bootstrap-responsive.min.css'
 				'@AnyxCrosswordBundle/Resources/public/css/main.css'
+
 			%}
 				<link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
 			{% endstylesheets %}
 		{% endblock %}		
-		
+
         {% block javascripts %}{% endblock %}
+
+		<style type="text/css">
+		body {
+			padding-top: 40px;
+			padding-bottom: 40px;
+		}
+		</style>
+				
     </head>
     <body>
 
-		<div class="top-menu">
-			<a href="{{path('fos_user_security_login')}}">login</a>
-		</div>
+		<div class="container">
 
-
-		<div class="header">
-			<div class="logo-container"></div>
-		</div>		
-
-		<div class="main-container">	
-			<div class="body-container">
-				
-				<h3 class="page-title">{% block page_title %}{% endblock %}</h3>
-				
-				{% for key, flash in app.session.getFlashes() %}
-					<div class="{{key}}">
-						{{ flash }}
+			<div class="container-fluid">
+				<div class="row-fluid">
+					<div class="login-block">
+						{% if app.user %}
+						<a href="{{path('user_profile')}}">{{app.user.username}}</a>
+						{% else %}
+						<a href="{{path('fos_user_security_login')}}">{% trans %}Login{%endtrans%}</a>
+						{% endif %}
+					<!--Body content-->
 					</div>
-				{% endfor %}
-				
-				{% block body %}{% endblock %}
+				</div>
 			</div>
+			
+			{% block hero_block %}{% endblock %}
+
+			{% for key, flash in app.session.getFlashes() %}
+				<div class="alert {{key}}">
+					{{ flash }}
+				</div>
+			{% endfor %}				
+			
+			<div class="main-content">
+			<h3 class="page-title">{% block page_title %}{% endblock %}</h3>
+			
+			{% block body %}{% endblock %}
 
 			<a href="{{path('_tests')}}">Tests</a>
-			<div style="clear: both"></div>
-		</div>	
-
-		<div class="footer"></div>
+			</div>
+			<footer>
+				<p>&copy; Company 2012</p>
+			</footer>
+		</div>
     </body>
 </html>

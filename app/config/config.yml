@@ -4,8 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: %locale% }
-    translator: ~
+    translator:      { fallback: %locale% }
     secret:          %secret%
     charset:         UTF-8
     router:          { resource: "%kernel.root_dir%/config/routing.yml" }
@@ -65,7 +64,7 @@ doctrine_mongodb:
                 AnyxCrosswordBundle: ~
                 FOSUserBundle: ~
                 AnyxSocialUserBundle: 
-                  prefix: Anyx\SocialUserBundle\User
+                  prefix: Anyx\SocialUserBundle\Model
                   
     auto_generate_hydrator_classes: false
 
@@ -113,3 +112,8 @@ services:
     twig.extension.text:
         class: Twig_Extensions_Extension_Text
         tags: [{ name: 'twig.extension' }]
+    user.listener:
+      class: Anyx\CrosswordBundle\Listener\UserListener
+      tags:
+        - { name: kernel.event_listener, event: users.merge, method: onMergeUsers}
+        
