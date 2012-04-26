@@ -5,18 +5,35 @@ Anyx.Profile = Anyx.Profile || {};
 
 Anyx.Profile.Workspace = Backbone.Router.extend({
 
-	routes: {
-		'solved'	: 'solved',
-		'created'	: 'created',
-		'settings'	: 'settings'
+	document : null,
+	
+	routes	: {
+		solved		: 'solved',
+		created		: 'created',
+		settings	: 'settings'
+	},
+	
+	initialize	: function( options ) {
+		this.document = options.document;
 	},
 
-	solved: function() {
-		console.log( 'sol' );
+	defaultRoute: function( actions ){
+		alert(actions);
+	},
+
+	solved: function( skip ) {
+		var skip = skip || 0;
+		
+		var collection = new Anyx.Collection.Crossword({
+			url : this.document.location.pathname + '/solved-crosswords/' + skip
+		});
+		
+		collection.fetch();
+		
+		//console.log( collection );
 	},
 
 	created: function() {
-		console.log( 'created' );
 	},
 
 	settings: function() {

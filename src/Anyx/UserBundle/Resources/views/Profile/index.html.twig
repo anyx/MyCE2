@@ -13,6 +13,11 @@
 		
 		'@AnyxCrosswordBundle/Resources/public/js/views/View.js'
 
+		'@AnyxCrosswordBundle/Resources/public/js/models/Crossword.js'
+		'@AnyxUserBundle/Resources/public/js/models/Crossword.js'
+		'@AnyxUserBundle/Resources/public/js/models/CrosswordCollection.js'
+
+
 		'@AnyxUserBundle/Resources/public/js/ProfileWorkspace.js'
 
 		'@AnyxUserBundle/Resources/public/js/views/Profile.js'
@@ -22,8 +27,23 @@
 	{% endjavascripts %}
 	
 	<script type="text/javascript">
-		$(function(){
-			var workspace = new Anyx.Profile.Workspace({});
+		$(function() {
+			
+			var workspace = new Anyx.Profile.Workspace({
+				document	: window.document
+			});
+
+			var profileView = new Anyx.View.Profile({
+				el			: $('#i-profile-menu'),
+				template	: 't-profile-menu'
+			});
+			
+			profileView.render({
+				links		: workspace.routes,
+				translation	: []
+			});
+
+			Backbone.history.start();
 		});
 	</script>			
 	
@@ -36,5 +56,16 @@
 {% block body %}
 	<h4>{% trans %}Created crosswords{%endtrans%}</h4>
 	<h4>{% trans %}Solved crosswords{%endtrans%}</h4>
+	
+	<div id="i-profile-menu"></div>
+	
+	<script type="text/template" id="t-profile-menu">
+		<ul>
+			<% _.each(links, function( name, link ) { %>
+			<li><a href="#<%=link%>"><%=name%></a></li>
+			<% }); %>
+		</ul>	
+	</script>
+	
 {% endblock body %}
 	

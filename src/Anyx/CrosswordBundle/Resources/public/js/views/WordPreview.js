@@ -1,7 +1,7 @@
 /**
  * 
  */
-Crossword.View.WordPreview = Crossword.View.extend({
+Crossword.View.WordPreview = Anyx.View.extend({
 
 	/**
 	 * 

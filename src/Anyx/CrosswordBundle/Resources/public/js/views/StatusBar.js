@@ -1,7 +1,7 @@
 /**
  * 
  */
-Crossword.View.StatusBar = Crossword.View.extend({
+Crossword.View.StatusBar = Anyx.View.extend({
 
 	events		: {
 		'mouseover .icon'	: 'showHint'

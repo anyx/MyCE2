@@ -1,7 +1,12 @@
 /**
  * 
  */
-Crossword.Model = Backbone.Model.extend({
+Anyx.Model = Anyx.Model || {};
+
+/**
+ * 
+ */
+Anyx.Model.Crossword = Backbone.Model.extend({
 	/**
 	 *
 	 */

@@ -1,7 +1,7 @@
 /**
  *
  */
-Crossword.View.Grid = Crossword.View.extend({
+Crossword.View.Grid = Anyx.View.extend({
 
 	/**
 	 *

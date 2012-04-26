@@ -1,7 +1,7 @@
 /**
  * 
  */
-Crossword.View.DirectionChooser = Crossword.View.extend({
+Crossword.View.DirectionChooser = Anyx.View.extend({
 
 	/**
 	 *

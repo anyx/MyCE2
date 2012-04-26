@@ -9,9 +9,11 @@ namespace Anyx\CrosswordBundle\Document;
  */
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
+use JMS\SerializerBundle\Annotation as Serializer;
+
 /**
- *
  * @MongoDB\Document(repositoryClass="Anyx\CrosswordBundle\Repository\SolutionRepository")
+ * 
  */
 class Solution {
 
@@ -22,6 +24,8 @@ class Solution {
 
 	/**
 	 * @MongoDB\ReferenceOne(targetDocument="User")
+	 * 
+	 * @Serializer\Exclude
 	 */
 	protected $user;
 
@@ -42,9 +46,16 @@ class Solution {
 
 	/**
 	 * @MongoDB\EmbedMany(targetDocument="Answer")
+	 * 
+	 * @Serializer\Exclude
 	 */
 	protected $answers;
 
+	/**
+	 * @todo '@Virtual' annotation
+	 */
+	protected $isCorrect;
+	
 	/**
 	 * Events
 	 */
@@ -107,5 +118,20 @@ class Solution {
 	 */
 	public function getAnswers() {
 		return $this->answers;
+	}
+	
+	/**
+	 * 
+	 */
+	public function isCorrect() {
+	
+		return false;
+	}
+	
+	/**
+	 * @Serializer\PreSerialize
+	 */
+	public function preSerialize() {
+		$this->isCorrect = $this->isCorrect();
 	}
 }

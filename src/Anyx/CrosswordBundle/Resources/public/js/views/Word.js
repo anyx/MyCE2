@@ -1,4 +1,4 @@
-Crossword.View.Word = Crossword.View.extend({
+Crossword.View.Word = Anyx.View.extend({
 
 	initialize	: function() {
 		this.render();

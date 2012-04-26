@@ -8,7 +8,8 @@ namespace Anyx\CrosswordBundle\Document;
  * 
  */
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-//use JMS\SerializerBundle\Annotation\Accessor;
+
+use JMS\SerializerBundle\Annotation as Serializer;
 
 /**
  * 
@@ -33,6 +34,7 @@ class Crossword {
 
 	/**
 	 * @MongoDB\EmbedMany(targetDocument="Word")
+	 * @Serializer\Exclude
 	 */
 	protected $words;
 	

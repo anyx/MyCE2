@@ -1,8 +1,8 @@
 
-var Crossword = Crossword || {};
+var Anyx = Anyx || {};
 
 
-Crossword.View = Backbone.View.extend({
+Anyx.View = Backbone.View.extend({
 	
 	/**
 	 * 

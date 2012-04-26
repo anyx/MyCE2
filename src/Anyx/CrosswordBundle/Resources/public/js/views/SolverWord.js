@@ -1,5 +1,5 @@
 
-Crossword.View.SolverWord = Crossword.View.extend({
+Crossword.View.SolverWord = Anyx.View.extend({
 
 	/**
 	 * 

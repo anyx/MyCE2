@@ -1,7 +1,7 @@
 /**
  * 
  */
-Crossword.View.WordDefinition = Crossword.View.extend({
+Crossword.View.WordDefinition = Anyx.View.extend({
 
 	initialize	: function() {
 		this.render({

@@ -3,6 +3,8 @@
 namespace Anyx\CrosswordBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use Anyx\CrosswordBundle\Document\User;
+
 
 /**
  * CrosswordRepository
