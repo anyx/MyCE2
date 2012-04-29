@@ -10,6 +10,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Anyx\UserBundle\Virtual;
+
 class ProfileController extends Controller {
 
     /**
@@ -18,6 +20,14 @@ class ProfileController extends Controller {
      */
     public function indexAction()
     {
+		/*
+		$obj = new \JMS\SerializerBundle\Tests\Fixtures\ObjectWithVirtualProperty;
+		$format = 'json';
+		
+		$s = $this->get('serializer')->serialize($obj, $format );
+		
+		var_dump( $obj, $s, $this->get('serializer')->deserialize( $s, get_class($obj), $format ) );
+		*/
         return array();
     }
 
@@ -26,9 +36,9 @@ class ProfileController extends Controller {
 	}
 
 	/**
-     * @Route("/profile/solved-crosswords/{skip}", name="solved_crosswords", defaults={"skip" = 0})
+     * @Route("/profile/solved-crosswords/", name="solved_crosswords", defaults={"skip" = 0})
      */
-	public function solvedAction( $skip = 0) {
+	public function solvedAction( $skip = 0 ) {
 
 		$securityContext = $this->get('security.context');
 		
@@ -42,6 +52,6 @@ class ProfileController extends Controller {
 		
 		$solutions = $crosswordRepository->getUserSolutions( $currentUser, $skip );
 		
-		return new Response( $this->get('serializer')->serialize( $solutions->toArray(), 'json' ) );
+		return new Response( $this->get('serializer')->serialize( array_values( $solutions->toArray() ), 'json' ) );
 	}
 }

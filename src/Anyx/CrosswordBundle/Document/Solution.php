@@ -52,11 +52,6 @@ class Solution {
 	protected $answers;
 
 	/**
-	 * @todo '@Virtual' annotation
-	 */
-	protected $isCorrect;
-	
-	/**
 	 * Events
 	 */
 
@@ -121,17 +116,9 @@ class Solution {
 	}
 	
 	/**
-	 * 
+	 * @Serializer\Virtual(field="is_correct")
 	 */
 	public function isCorrect() {
-	
 		return false;
-	}
-	
-	/**
-	 * @Serializer\PreSerialize
-	 */
-	public function preSerialize() {
-		$this->isCorrect = $this->isCorrect();
 	}
 }

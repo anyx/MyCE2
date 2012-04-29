@@ -27,7 +27,6 @@ class AppKernel extends Kernel
 			//
 			new FOS\UserBundle\FOSUserBundle(),
 			//
-			new Knp\Bundle\OAuthBundle\KnpOAuthBundle(),
 			new Sensio\Bundle\BuzzBundle\SensioBuzzBundle(),
 			//
 			new Anyx\CrosswordBundle\AnyxCrosswordBundle(),

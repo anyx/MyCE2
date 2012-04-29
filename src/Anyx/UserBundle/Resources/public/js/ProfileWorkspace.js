@@ -7,6 +7,8 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
 
 	document : null,
 	
+	views	: {},
+	
 	routes	: {
 		solved		: 'solved',
 		created		: 'created',
@@ -15,6 +17,7 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
 	
 	initialize	: function( options ) {
 		this.document = options.document;
+		this.views = options.views;
 	},
 
 	defaultRoute: function( actions ){
@@ -22,15 +25,24 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
 	},
 
 	solved: function( skip ) {
-		var skip = skip || 0;
 		
-		var collection = new Anyx.Collection.Crossword({
-			url : this.document.location.pathname + '/solved-crosswords/' + skip
+		var skip = skip || 0;
+		var _this = this;
+		var solutions = new Anyx.Collection.Solution([], {
+			url : this.document.location.pathname + '/solved-crosswords/'
 		});
 		
-		collection.fetch();
+		solutions.fetch({
+			data: {
+				page : skip
+			},
+			success: function( solutions ) {
+				_this.views.solved.render({
+					solutions	: solutions.models
+				});
+			}
+		});
 		
-		//console.log( collection );
 	},
 
 	created: function() {
