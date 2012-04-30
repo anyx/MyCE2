@@ -4,6 +4,7 @@ namespace Anyx\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -20,15 +21,19 @@ class ProfileController extends Controller {
      */
     public function indexAction()
     {
-		/*
-		$obj = new \JMS\SerializerBundle\Tests\Fixtures\ObjectWithVirtualProperty;
+        /*
+		$obj = new \JMS\SerializerBundle\Tests\Fixtures\ObjectWithVirtualProperties;
 		$format = 'json';
 		
-		$s = $this->get('serializer')->serialize($obj, $format );
+        $serializer = $this->get('serializer');
+        //$serializer->setGroups(array('xml-value'));
+		//$s = $serializer->serialize($obj, $format );
 		
-		var_dump( $obj, $s, $this->get('serializer')->deserialize( $s, get_class($obj), $format ) );
-		*/
-        return array();
+		//var_dump( $obj, $s, $this->get('serializer')->deserialize( $s, get_class($obj), $format ) );
+		var_dump( '|', $serializer->serialize( $obj, $format ) );
+        */
+		return array();
+		
     }
 
 	public function createdAction() {
@@ -36,10 +41,12 @@ class ProfileController extends Controller {
 	}
 
 	/**
-     * @Route("/profile/solved-crosswords/", name="solved_crosswords", defaults={"skip" = 0})
+     * @Route("/profile/solved-crosswords/")
      */
-	public function solvedAction( $skip = 0 ) {
+	public function solvedAction( Request $request ) {
 
+        $skip = (int) $request->get('skip', 0);
+        
 		$securityContext = $this->get('security.context');
 		
 		if ( !$securityContext->isGranted('ROLE_USER') ) {
@@ -48,9 +55,9 @@ class ProfileController extends Controller {
 		
 		$currentUser = $securityContext->getToken()->getUser();
 		
-		$crosswordRepository =$this->get('anyx.dm')->getRepository('Anyx\CrosswordBundle\Document\Solution');
+		$solutionsRepository = $this->get('anyx.dm')->getRepository('Anyx\CrosswordBundle\Document\Solution');
 		
-		$solutions = $crosswordRepository->getUserSolutions( $currentUser, $skip );
+		$solutions = $solutionsRepository->getUserSolutions( $currentUser, $skip );
 		
 		return new Response( $this->get('serializer')->serialize( array_values( $solutions->toArray() ), 'json' ) );
 	}

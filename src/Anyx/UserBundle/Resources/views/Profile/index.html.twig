@@ -47,7 +47,7 @@
 			});
 			
 			profileView.render({
-				links		: workspace.routes,
+				links		: workspace.getAvailableRoutes(),
 				translation	: []
 			});
 
@@ -75,19 +75,28 @@
 	
 	<script type="text/template" id="t-profile-menu">
 		<ul>
-			<% _.each(links, function( name, link ) { %>
-			<li><a href="#<%=link%>"><%=name%></a></li>
+			<% _.each(links, function( name ) { %>
+			<li><a href="#/<%=name%>/"><%=name%></a></li>
 			<% }); %>
 		</ul>	
 	</script>
 
 	<script type="text/template" id="t-solutions">
-		<table>
+		<table class="table">
 		<thead>
 			<th>{%trans%}Crossword{%endtrans%}</th>
 			<th>{%trans%}Solution date{%endtrans%}</th>
 			<th>{%trans%}Correct{%endtrans%}</th>
 		</thead>
+		<tfoot>
+			<tr>
+				<td colspan="3">
+					<div class="">
+						<a href="#/solved/<%=solutions.length%>">{%trans%}More{%endtrans%}</a>
+					</div>
+				</td>
+			</tr>
+		</tfoot>
 		<tbody>
 		<% if ( !_.isEmpty( solutions ) ) { %>
 			<% _.each(solutions, function( solution ) { %>
