@@ -7,6 +7,7 @@
 {% block page_title %}{{title}}{% endblock %}
 
 {% block body %}
+
 <a href="{{ path('constructor', {'id' : form.vars.value.id}) }}">Go to constructor</a>
 
 {% include "AnyxCrosswordBundle:Crossword:form.html.twig" with {'form': form} %}

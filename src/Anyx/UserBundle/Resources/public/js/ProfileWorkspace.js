@@ -7,55 +7,87 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
 
 	document : null,
 	
-    solutions: null,
+    menu    : null,
     
 	defaultAction : 'solved',
-	
-	actions	: {
 
-		solved	: function( params, view ) {
-			var skip = skip || 0;
-            
-            this.solutions = this.solutions || new Anyx.Collection.Solution([], {
-				url : this.document.location.pathname + '/solved-crosswords/'
-			});
+    collections : {},
 
-			this.solutions.fetch({
-                add     : true,
-				data	: {
-					skip : this.solutions.length
-				},
-				success	: function( solutions ) {
-					view.render({
-						solutions	: solutions.models
-					});
-				},
-				error	: function() {
-				}
-			});
-		},
-        
-        moresolved  : function( params, view ) {
-            
-        },
-        created : function( params, view ) {
-            
+	initialize	: function( options ) {
+		this.document = options.document;
+
+        if ( options.views ) {
+            for( var action in options.views ) {
+                this.registerView( action, options.views[action] );
+            }
         }
+        
+        this.menu = options.menuView;
+        this.menu.setLinks( this.getAvailableRoutes() );
+        this.menu.show();
 	},
-	
-	views	: {},
+
+    views	: {},
 	
 	routes	: {
 		"/*action/:param": "defaultRoute"
 	},
-	
-	getAvailableRoutes	: function() {
-		return ['solved', 'created', 'settings']
+
+	actions	: {
+		solved	: function( params, view ) {
+            this._showCollection(
+                'Solution',
+                this.document.location.pathname + 'solved-crosswords/',
+                view
+            );
+		},
+        
+        created : function( params, view ) {
+            this._showCollection(
+                'Crossword',
+                this.document.location.pathname + 'created-crosswords/',
+                view
+            );
+        },
+        
+        settings : function( params, view ) {
+            
+        }
 	},
-	
-	initialize	: function( options ) {
-		this.document = options.document;
-		this.views = options.views;
+
+    _showCollection : function( type, url, view ) {
+        var collection = new Anyx.Collection[type]([], {
+            url     : url,
+            success : function( collection, response ) {
+
+                if ( response.length == 0 ) {
+                    collection.setIsAll( true );
+                }
+
+                view.render({
+                    collection	: collection
+                });
+            },
+            error   : function( error ) {
+                alert( error );
+            }
+        });
+
+        view.model = collection;
+
+        collection.load();
+    },
+
+    registerView    : function( code, view ) {
+        this.views[code] = view;
+    },
+
+	getAvailableRoutes	: function() {
+		return {
+            'solved'    : 'solved',
+            'created'   : 'created',
+            'settings'  : 'settings'
+        }
 	},
 	
 	/**
@@ -63,7 +95,7 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
 	 */
 	getActionView	: function( action ) {
 		if ( !( action in this.views ) ) {
-			//throw new Error( 'View for action "' + action + '" not found' );
+			throw new Error( 'View for action "' + action + '" not found' );
 		}
 		
 		return this.views[action];
@@ -73,10 +105,26 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
 	 *
 	 */
 	callAction	: function( action, params, view ) {
+        
 		if ( !( action in this.actions ) ) {
 			throw new Error( 'Action "' + action + '" not found' );
 		}
 		
+        this.menu.setActiveLink( action );
+        this.menu.show();
+        
+        for( var viewCode in this.views ) {
+            var el = this.views[viewCode].el;
+            if ( el.length > 0 ) {
+                el.hide();
+            }
+        }
+        
+        var currentViewContainer = view.el;
+        if ( currentViewContainer.length > 0 ) {
+            currentViewContainer.show();
+        }
+
 		return this.actions[action].call(this, params, view );
 	},
 	
@@ -85,7 +133,7 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
 	 */
 	defaultRoute: function( action, params ) {
 		var action = action || this.defaultAction;
-		return this.callAction( action, params, this.getActionView( action ) );
+		this.callAction( action, params, this.getActionView( action ) );
 	},
 
 	created: function() {

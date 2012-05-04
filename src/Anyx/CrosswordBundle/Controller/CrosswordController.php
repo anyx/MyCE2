@@ -7,15 +7,15 @@ namespace Anyx\CrosswordBundle\Controller;
 /**
  * 
  */
-use Symfony\Bundle\FrameworkBundle\Controller\Controller,
-	// 	
-	FOS\RestBundle\Controller\Annotations\View,
-	Anyx\CrosswordBundle\Document,
-	Anyx\CrosswordBundle\Request\ParamConverter\DoctrineMongoDBParamConverter,
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-	//tmp
-	Symfony\Component\HttpFoundation\Response
-;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
+use Anyx\CrosswordBundle\Document;
+use Anyx\CrosswordBundle\Request\ParamConverter\DoctrineMongoDBParamConverter;
+
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * 
@@ -24,7 +24,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller,
 class CrosswordController extends Controller {
 
 	/**
-	 * @View
+	 * @Template
 	 */
 	public function newAction() {
 		
@@ -39,8 +39,8 @@ class CrosswordController extends Controller {
 	}
 
 	/**
-	 *
-	 * @View
+	 * @Route("/crossword/{id}/edit/", name="edit_crossword", options={"expose" = true})
+	 * @Template
 	 * @param string $id 
 	 */
 	public function editAction( $id ) {
@@ -60,7 +60,16 @@ class CrosswordController extends Controller {
 		);
 	}
 
-	/**
+    /**
+     * @Route("/crossword/{id}/statistic/", name="crossword_statistic", options={"expose" = true})
+     * @Template
+     */
+    public function statisticAction( $id ) {
+        
+    }
+
+
+    /**
 	 *
 	 * @param Document\Crossword $crossword 
 	 */

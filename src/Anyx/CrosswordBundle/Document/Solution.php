@@ -116,7 +116,8 @@ class Solution {
 	}
 	
 	/**
-	 * @Serializer\VirtualProperty("is_correct")
+	 * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("is_correct")
 	 */
 	public function isCorrect() {
 		return false;

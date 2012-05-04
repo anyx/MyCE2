@@ -21,3 +21,11 @@ monolog:
 
 assetic:
     use_controller: true
+
+jms_serializer:
+    metadata:
+        auto_detection: true
+        directories:
+            any-name:
+                namespace_prefix: "JMS\\SerializerBundle\\Tests"
+                path: "@AnyxCrosswordBundle/Resources/config/serializer"

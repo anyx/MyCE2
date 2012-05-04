@@ -6,6 +6,8 @@
 	{% javascripts
 		'@AnyxCrosswordBundle/Resources/public/js/jquery.min.js'
 		'@AnyxCrosswordBundle/Resources/public/js/jquery-ui.min.js'
+
+        '@FOSJsRoutingBundle/Resources/public/js/router.js'
 	
 		'@AnyxCrosswordBundle/Resources/public/js/json2.js'
 		'@AnyxCrosswordBundle/Resources/public/js/underscore.js'
@@ -14,6 +16,9 @@
 		'@AnyxCrosswordBundle/Resources/public/js/views/View.js'
 
 		'@AnyxCrosswordBundle/Resources/public/js/models/Crossword.js'
+
+        '@AnyxUserBundle/Resources/public/js/models/Collection.js'
+
 		'@AnyxUserBundle/Resources/public/js/models/Crossword.js'
 		'@AnyxUserBundle/Resources/public/js/models/CrosswordCollection.js'
 
@@ -22,33 +27,37 @@
 
 		'@AnyxUserBundle/Resources/public/js/ProfileWorkspace.js'
 
-		'@AnyxUserBundle/Resources/public/js/views/Profile.js'
-
+		'@AnyxUserBundle/Resources/public/js/views/ProfileMenu.js'
+		'@AnyxUserBundle/Resources/public/js/views/CollectionView.js'
+		'@AnyxUserBundle/Resources/public/js/views/SolutionsView.js'
+		'@AnyxUserBundle/Resources/public/js/views/CrosswordsView.js'
 	%}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
-	
+
+    <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback" : "fos.Router.setData"}) }}"></script>
+    
 	<script type="text/javascript">
 		$(function() {
 			
 			var workspace = new Anyx.Profile.Workspace({
 				document	: window.document,
+                menuView    : new Anyx.View.ProfileMenu({
+                    el			: $('#i-profile-menu'),
+                    template	: 't-profile-menu'
+                }),
 				views		: {
-					solved	: new Anyx.View({
+					solved	: new Anyx.View.Solutions({
 						el			: $('#i-solutions'),
-						template	: 't-solutions'
-					})
+						template	: 't-solutions',
+					}),
+                    created : new Anyx.View.Crosswords({
+						el			: $('#i-crosswords'),
+						template	: 't-crosswords',
+                    }),
+                    settings: new Anyx.View({
+                    })
 				}
-			});
-
-			var profileView = new Anyx.View.Profile({
-				el			: $('#i-profile-menu'),
-				template	: 't-profile-menu'
-			});
-			
-			profileView.render({
-				links		: workspace.getAvailableRoutes(),
-				translation	: []
 			});
 
 			Backbone.history.start();
@@ -69,20 +78,22 @@
 	</div>
 	
 	<div id="i-profile-page">
-		<div id="i-solutions">
-		</div>
+		<div id="i-solutions"></div>
+        <div id="i-crosswords"></div>
 	</div>
 	
 	<script type="text/template" id="t-profile-menu">
-		<ul>
+		<ul class="nav nav-tabs">
 			<% _.each(links, function( name ) { %>
-			<li><a href="#/<%=name%>/"><%=name%></a></li>
+			<li rel="<%=name%>" <% if ( activeLink && activeLink == name) { %> class="active" <% }%>>
+                <a href="#/<%=name%>/"><%=name%></a>
+            </li>
 			<% }); %>
 		</ul>	
 	</script>
 
 	<script type="text/template" id="t-solutions">
-		<table class="table">
+		<table class="table table-striped">
 		<thead>
 			<th>{%trans%}Crossword{%endtrans%}</th>
 			<th>{%trans%}Solution date{%endtrans%}</th>
@@ -91,15 +102,17 @@
 		<tfoot>
 			<tr>
 				<td colspan="3">
+                    <% if( !collection.isAll() ) { %>
 					<div class="">
-						<a href="#/solved/<%=solutions.length%>">{%trans%}More{%endtrans%}</a>
+						<a class="i-more-link" href="#">{%trans%}More{%endtrans%}</a>
 					</div>
+                    <% } %>
 				</td>
 			</tr>
 		</tfoot>
 		<tbody>
-		<% if ( !_.isEmpty( solutions ) ) { %>
-			<% _.each(solutions, function( solution ) { %>
+		<% if ( !_.isEmpty( collection.models ) ) { %>
+			<% _.each(collection.models, function( solution ) { %>
 			<tr>
 				<td>
 					<a href="#"><%=solution.get('crossword').title%></a>
@@ -123,6 +136,69 @@
 		</table>	
 	</script>
 	
+    <script type="text/template" id="t-crosswords">
+		<table class="table table-striped">
+		<thead>
+			<th>{%trans%}Crossword{%endtrans%}</th>
+			<th>{%trans%}Date create{%endtrans%}</th>
+			<th class="th-center">{%trans%}Public{%endtrans%}</th>
+			<th class="th-center">{%trans%}Count solves{%endtrans%}</th>
+            <th class="th-center">{%trans%}Manage{%endtrans%}</th>
+		</thead>
+		<tfoot>
+			<tr>
+				<td colspan="5">
+                    <% if( !collection.isAll() ) { %>
+					<div class="">
+						<a class="i-more-link" href="#">{%trans%}More{%endtrans%}</a>
+					</div>
+                    <% } %>
+				</td>
+			</tr>
+		</tfoot>
+        <tbody>
+		<% if ( !_.isEmpty( collection.models ) ) { %>
+			<% _.each(collection.models, function( crossword ) { %>
+			<tr>
+                <% console.log(crossword); %>
+				<td>
+					<a href="#"><%=crossword.get('title')%></a>
+					<p>
+						<%=crossword.get('description')%>
+					</p>
+				</td>
+				<td><%=crossword.get('updated_at')%></td>
+				<td class="td-center">
+                    <% if( crossword.get('public') ) { %>
+                    <span class="icon-ok" title="{%trans%}Public{%endtrans%}"></span>
+                    <% } else { %>
+                    <span class="icon-wrench" title="{%trans%}Under construction{%endtrans%}"></span>
+                    <% } %>
+                </td>
+                <td class="td-center"><%=crossword.get('count_solving')%></td>
+                <td class="td-center">
+                    <a href="<%=Routing.generate('crossword_statistic', { id: crossword.get('id') })%>" title="{%trans%}View statistic{%endtrans%}">
+                        <span class="icon-list-alt"></span>
+                    </a>
+                    <a href="<%=Routing.generate('edit_crossword', { id: crossword.get('id') })%>" title="{%trans%}Edit{%endtrans%}">
+                        <span class="icon-edit"></span>
+                    </a>
+                    <a href="#" title="{%trans%}Remove{%endtrans%}">
+                        <span class="icon-remove"></span>
+                    </a>
+                </td>
+			</tr>
+			<% }); %>
+		<% } else { %>
+			<tr>
+				<td colspan="5">
+					{%trans%}Crosswords not found{%endtrans%}
+					<a href="#">{%trans%}Want create now?{%endtrans%}</a>
+				</td>
+			</tr>
+		<% } %>            
+        </tbody>
+    </script>
 	
 {% endblock body %}
 	

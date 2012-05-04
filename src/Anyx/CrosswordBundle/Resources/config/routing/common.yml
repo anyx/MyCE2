@@ -2,6 +2,10 @@ default:
     resource: "@AnyxCrosswordBundle/Controller/DefaultController.php"
     type:     annotation
 
+crossword:
+    resource: "@AnyxCrosswordBundle/Controller/CrosswordController.php"
+    type:     annotation
+    
 constructor:
     resource: "@AnyxCrosswordBundle/Controller/ConstructorController.php"
     type:     annotation
@@ -9,7 +13,7 @@ constructor:
 solving: 
     resource: "@AnyxCrosswordBundle/Controller/SolvingController.php"
     type:     annotation
-  
+
 #words_save:
 #    pattern:  /constructor/{id}/save
 #    defaults: { _controller: AnyxCrosswordBundle:Constructor:save }

@@ -31,7 +31,7 @@ class SolutionRepository extends DocumentRepository {
 	 * @param \Anyx\CrosswordBundle\Document\User $user
 	 * @return Doctrine\ODM\MongoDB\LoggableCursor
 	 */
-	public function getUserSolutions( Document\User $user, $skip = 0 ) {
+	public function getUserSolutions( Document\User $user, $limit = 20, $skip = 0 ) {
 		return $this->findBy(
 					array(
 						'user.id' 		=> $user->getId()
@@ -39,6 +39,7 @@ class SolutionRepository extends DocumentRepository {
 					array(
 						'updatedAt' => 'desc'
 					),
+                    $limit,
 					$skip
 		);
 	}
