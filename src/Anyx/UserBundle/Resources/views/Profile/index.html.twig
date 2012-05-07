@@ -71,15 +71,14 @@
 {% endblock %}
 	
 {% block body %}
-	<h4>{% trans %}Created crosswords{%endtrans%}</h4>
-	<h4>{% trans %}Solved crosswords{%endtrans%}</h4>
-	
-	<div id="i-profile-menu">
+
+    <div id="i-profile-menu">
 	</div>
 	
 	<div id="i-profile-page">
 		<div id="i-solutions"></div>
-        <div id="i-crosswords"></div>
+        <div id="i-crosswords">
+        </div>
 	</div>
 	
 	<script type="text/template" id="t-profile-menu">
@@ -137,6 +136,9 @@
 	</script>
 	
     <script type="text/template" id="t-crosswords">
+        
+        <a href="{{ path('create_crossword')}}" class="">{%trans%}Create{%endtrans%}</a>
+        
 		<table class="table table-striped">
 		<thead>
 			<th>{%trans%}Crossword{%endtrans%}</th>
@@ -160,9 +162,8 @@
 		<% if ( !_.isEmpty( collection.models ) ) { %>
 			<% _.each(collection.models, function( crossword ) { %>
 			<tr>
-                <% console.log(crossword); %>
 				<td>
-					<a href="#"><%=crossword.get('title')%></a>
+					<a href="<%=Routing.generate('crossword_solve', { id: crossword.get('id') })%>"><%=crossword.get('title')%></a>
 					<p>
 						<%=crossword.get('description')%>
 					</p>
@@ -193,7 +194,7 @@
 			<tr>
 				<td colspan="5">
 					{%trans%}Crosswords not found{%endtrans%}
-					<a href="#">{%trans%}Want create now?{%endtrans%}</a>
+					<a href="{{ path('create_crossword')}}">{%trans%}Want create now?{%endtrans%}</a>
 				</td>
 			</tr>
 		<% } %>            

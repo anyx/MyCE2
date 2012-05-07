@@ -1,9 +1,9 @@
 /**
  * 
  */
-Crossword.Presenter = Crossword.Presenter || {};
+Constructor.Presenter = Crossword.Presenter || {};
 
-Crossword.Presenter.Solver = Backbone.Presenter.extend({
+Constructor.Presenter.Solver = Backbone.Presenter.extend({
 
 	specialKeys : {
 			8 	: 'backspace',

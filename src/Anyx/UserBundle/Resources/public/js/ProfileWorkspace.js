@@ -5,9 +5,9 @@ Anyx.Profile = Anyx.Profile || {};
 
 Anyx.Profile.Workspace = Backbone.Router.extend({
 
-	document : null,
+	document    : null,
 	
-    menu    : null,
+    menu        : null,
     
 	defaultAction : 'solved',
 
@@ -30,7 +30,8 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
     views	: {},
 	
 	routes	: {
-		"/*action/:param": "defaultRoute"
+        "/*"                : "defaultRoute",
+		"/*action/:param"   : "defaultRoute"
 	},
 
 	actions	: {
@@ -105,8 +106,8 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
 	 *
 	 */
 	callAction	: function( action, params, view ) {
-        
-		if ( !( action in this.actions ) ) {
+
+        if ( !( action in this.actions ) ) {
 			throw new Error( 'Action "' + action + '" not found' );
 		}
 		

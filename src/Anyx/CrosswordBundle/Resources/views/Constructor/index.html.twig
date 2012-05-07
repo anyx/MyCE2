@@ -22,6 +22,7 @@
 		'@AnyxCrosswordBundle/Resources/public/js/views/Container.js'
 		
 		'@AnyxCrosswordBundle/Resources/public/js/views/View.js'
+        '@AnyxCrosswordBundle/Resources/public/js/views/Constructor.js'
 		'@AnyxCrosswordBundle/Resources/public/js/presenters/Presenter.js'
 		
 		'@AnyxCrosswordBundle/Resources/public/js/views/Grid.js'
@@ -38,7 +39,7 @@
 	
 	<script type="text/javascript">
 		$(function(){
-			var editor = new Crossword.Presenter.Editor({
+			var editor = new Constructor.Presenter.Editor({
 				id			: '{{crossword.getId()}}',
 				words		: {{crossword.words | serialize | raw}},
 				selectors	: {
@@ -80,51 +81,37 @@
 <a href="{{ path('crossword_edit', {'id'	: crossword.id} )}}">Edit</a>
 
 
-<span id="status" class="i-status-bar"></span>
-
-<div class="columns-container">
-	<div class="left-column">
+<div class="row">
+	<div class="span7">
 		<div class="i-grid crossword-editor">	
 		</div>
 	</div>
-	<div class="right-column">
-		
-		
-		<form class="i-word-form word-form">
-			<dl class="form">
-				<dt>
-					<label>Word</label>
-				</dt>
-				<dd>
-					<input type="text" class="i-word-text" autocomplete="off" />
-				</dd>
-				<dt>
-					<label>Definition</label>
-				</dt>
-				<dd>
-					<textarea class="i-word-definition" autocomplete="off"></textarea>
-				</dd>
-			</dl>
+	<div class="span4">
+        
+		<form class="i-word-form word-form form-vertical">
+            
+            <label>{% trans %}Word{% endtrans %}</label>
+            <span id="status" class="i-status-bar"></span>
+            <input type="text" class="i-word-text" autocomplete="off" />
+            <label>{% trans %}Definition{% endtrans %}</label>
+            <textarea class="i-word-definition" autocomplete="off"></textarea>
 
-			<div class="i-direction-chooser">
-				<ul class="i-direction-menu">
-					<li><a href="#" rel="vertical">Vertical</a></li>
-					<li><a href="#" rel="horizontal">Horizontal</a></li>
-				</ul>
+			<div class="i-direction-chooser btn-group">
+                <button class="btn" rel="horizontal">{% trans %}Horizontal{% endtrans %}</button>
+                <button class="btn" rel="vertical">{% trans %}Vertical{% endtrans %}</button>
 			</div>
-			<div class="i-word-preview word-preview">
+            
+			<div class="i-word-preview word-preview well">
 			</div>
 		</form>
 
-		<input type="button" value="save" class="i-save-button" />
+		<input type="button" value="{% trans %}Save{% endtrans %}" class="i-save-button btn btn-primary" />
 	</div>
 </div>
 
 <script type="text/template" id="t-status-bar">
-	<div class="editor-status <%= status %>">
-		<div class="icon"></div>
-		<div class="status-text i-status-text"><%= text %></div>
-	</div>
+    <span class="label <% if( !_.isEmpty(status) ) { %>label-<%= status %> <%}%>">{%trans%}status{%endtrans%}</span>
+	<div class="status-text i-status-text"><%= text %></div>
 </script>
 
 {% endblock %}

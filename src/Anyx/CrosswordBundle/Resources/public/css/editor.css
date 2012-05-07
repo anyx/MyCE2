@@ -1,11 +1,8 @@
 .crossword-editor {
-	position: relative;
-	width:600px;
-	height:600px;
 }
 
 .crossword-editor TABLE, .crossword-editor TD {
-	border: 1px solid #333;
+	border: 1px solid #999;
 	border-collapse: collapse; 
 }
 
@@ -15,6 +12,16 @@
 .crossword-editor TD DIV {
 	width: 18px;
 	height: 18px;
+}
+
+/* Word Form */
+
+.word-form INPUT, .word-form TEXTAREA {
+    width: 280px;
+}
+
+.word-form LABEL {
+    display: inline;
 }
 
 /* Word */
@@ -38,7 +45,6 @@ TABLE.word-table {
 .word-preview {
 	width: 250px;
 	height: 250px;
-	border: 1px solid #08C;
 	position: relative;
 	z-index: 2;
 }
@@ -76,11 +82,7 @@ TABLE.word-table {
 	background-color: #c00;
 }
 #status {
-	position: absolute;
-	width: 200px;
-	height: 60px;
-	right: 1px;
-	top: 1px;
-	border-radius: 5px;
-	overflow: hidden;
+    float: right;
+    margin-right: 11px;
+    margin-top: -5px;
 }

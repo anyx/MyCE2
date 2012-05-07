@@ -109,9 +109,14 @@ anyx_social:
 #aliases
 services:
     anyx.dm: "@doctrine.odm.mongodb.document_manager"
+
     twig.extension.text:
         class: Twig_Extensions_Extension_Text
         tags: [{ name: 'twig.extension' }]
+    twig.extension.debug:
+        class: Twig_Extensions_Extension_Debug
+        tags: [{ name: 'twig.extension' }]
+        
     user.listener:
       class: Anyx\CrosswordBundle\Listener\UserListener
       tags:

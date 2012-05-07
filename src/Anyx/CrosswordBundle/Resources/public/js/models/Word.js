@@ -3,9 +3,6 @@
  */
 Crossword.Model = Crossword.Model || {};
 
-var x = 'false';
-console.log( 'wtf', !!x );
-
 /**
  * Word
  */

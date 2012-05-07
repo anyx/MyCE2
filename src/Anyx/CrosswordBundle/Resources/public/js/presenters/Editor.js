@@ -2,12 +2,12 @@
  *
  */
 
-Crossword.Presenter = Crossword.Presenter || {};
+Constructor.Presenter = Crossword.Presenter || {};
 
 /**
  *
  */
-Crossword.Presenter.Editor = Backbone.Presenter.extend({
+Constructor.Presenter.Editor = Backbone.Presenter.extend({
 	
 	/**
 	 * 
@@ -16,7 +16,7 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 		//
 		var collection = new Crossword.Model.WordsCollection;
 		
-		Crossword.View.Word.setClass( this.options.classes.wordTable );
+		Constructor.View.Word.setClass( this.options.classes.wordTable );
 		
 		if( !_.isEmpty( this.options.words ) ) {
 			_.forEach(this.options.words, function( word ){
@@ -24,7 +24,7 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 			})
 		}
 		
-		this.registerWidget( 'grid', new Crossword.View.Grid({
+		this.registerWidget( 'grid', new Constructor.View.Grid({
 				words	: collection,
 				el		: $( this.options.selectors.grid ),
 				rows	: 25,
@@ -34,7 +34,7 @@ Crossword.Presenter.Editor = Backbone.Presenter.extend({
 		this.renderWords( collection );
 		
 		//
-		this.registerWidget( 'wordForm', new Crossword.View.WordForm({
+		this.registerWidget( 'wordForm', new Constructor.View.WordForm({
 				el			: $( this.options.selectors.form ),
 				selectors	: this.options.selectors.formSelectors
 		}));

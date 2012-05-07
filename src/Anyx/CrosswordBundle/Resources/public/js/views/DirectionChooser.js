@@ -1,13 +1,13 @@
 /**
  * 
  */
-Crossword.View.DirectionChooser = Anyx.View.extend({
+Constructor.View.DirectionChooser = Anyx.View.extend({
 
 	/**
 	 *
 	 */
 	events: {
-		'click a'	: 'changeDirection'
+		'click button'	: 'changeDirection'
 	},
 
 	/**
@@ -42,11 +42,11 @@ Crossword.View.DirectionChooser = Anyx.View.extend({
 	 */
 	setDirection	: function( isHorizontal ) {
 		
-		var links = this.$('a');
+		var buttons = this.$('button');
 		
-		links
+		buttons
 			.removeClass( 'active' )
-			.filter('a[rel=' + (isHorizontal ? 'horizontal' : 'vertical') + ']')
+			.filter('button[rel=' + (isHorizontal ? 'horizontal' : 'vertical') + ']')
 			.addClass('active');
 		
 		this.trigger( 'changeDirection', {horizontal : isHorizontal} );
@@ -56,7 +56,7 @@ Crossword.View.DirectionChooser = Anyx.View.extend({
 	 * 
 	 */
 	getDirection	: function() {
-		var links = this.$('a');
+		var links = this.$('button');
 		var direction = null;
 		
 		links.each(function(){

@@ -1,7 +1,7 @@
 /**
  *
  */
-Crossword.View.Grid = Anyx.View.extend({
+Constructor.View.Grid = Anyx.View.extend({
 
 	/**
 	 *

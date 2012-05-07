@@ -1,17 +1,20 @@
 /**
  * 
  */
-Crossword.View.StatusBar = Anyx.View.extend({
+Constructor.View.StatusBar = Anyx.View.extend({
 
 	events		: {
 		'mouseover .icon'	: 'showHint'
 	},
 
+	_timer		: 0,
+    
 	/**
 	 *
 	 */
 	initialize	: function( options ) {
 		this.options.timeout = options.timeout || 3000;
+        this.render({text: '', status: null});
 	},
 
 	/**
@@ -25,7 +28,7 @@ Crossword.View.StatusBar = Anyx.View.extend({
 	 * 
 	 */
 	showError	: function( text, forceShowHint ) {
-		return this._showMessage( text, 'error', forceShowHint );
+		return this._showMessage( text, 'important', forceShowHint );
 	},
 	
 	/**
@@ -71,7 +74,5 @@ Crossword.View.StatusBar = Anyx.View.extend({
 		if ( forceShowHint ) {
 			this.showHint();
 		}
-	},
-	
-	_timer		: 0
+	}
 });

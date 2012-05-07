@@ -13,28 +13,14 @@ security:
                 csrf_provider: form.csrf_provider
             logout:       true
             anonymous:    true
-
-#        secured_area:
-#            pattern:    ^/oauth
-#            oauth:
-#                oauth_provider:    facebook
-#                client_id:         114949468588006
-#                secret:            15266750e6ae656f3fab05a807c405f5
-#                check_path:        /oauth/login_check
-#                login_path:        /oauth,
-#                scope:             email,user_about_me
-#            logout:
-#                path: /oauth/logout
-#                target: /
-#    factories: 
-#        - "%kernel.root_dir%/../vendor/bundles/Knp/Bundle/OAuthBundle/Resources/config/security_factories.xml"
             
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
-
+        - { path: ^/crossword/, role: ROLE_USER }
+        
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN        

@@ -57,7 +57,36 @@ class Crossword {
 	 * @MongoDB\Date
 	 */
 	protected $updatedAt;
-	
+
+	/**
+	 * @MongoDB\ReferenceOne(targetDocument="User")
+	 */
+	protected $owner;
+
+    /**
+     *
+     * @return Anyx\CrosswordBundle\Document\User
+     */
+    public function getOwner() {
+        return $this->owner;
+    }
+
+    /**
+     *
+     * @param Document\User $owner 
+     */
+    public function setOwner( User $owner) {
+        $this->owner = $owner;
+    }
+
+    /**
+     *
+     * @param Document\User $owner 
+     */
+    public function hasOwner( User $user ) {
+        return !empty($this->owner) && $this->owner->getId() == $user->getId();
+    }
+    
     /**
      * Get id
      *

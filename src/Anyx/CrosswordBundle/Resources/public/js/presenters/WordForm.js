@@ -1,7 +1,7 @@
 /**
  *
  */
-Crossword.View.WordForm = Backbone.Presenter.extend({
+Constructor.View.WordForm = Backbone.Presenter.extend({
 	
 	/**
 	 * 
@@ -11,15 +11,15 @@ Crossword.View.WordForm = Backbone.Presenter.extend({
 		this.registerWidgets({
 			wordInput			: this.options.selectors.word,
 			definitionInput		: this.options.selectors.definition,
-			directionChooser	: new Crossword.View.DirectionChooser({
+			directionChooser	: new Constructor.View.DirectionChooser({
 				el : this.options.selectors.directionChooser
 			}),
 			
-			wordPreview			: new Crossword.View.WordPreview({
+			wordPreview			: new Constructor.View.WordPreview({
 				el	: this.options.selectors.wordPreview
 			}),
 			
-			statusBar			: new Crossword.View.StatusBar({
+			statusBar			: new Constructor.View.StatusBar({
 				el			: this.options.selectors.statusBar,
 				hintElement	: this.options.selectors.statusText,
 				template	: 't-status-bar'

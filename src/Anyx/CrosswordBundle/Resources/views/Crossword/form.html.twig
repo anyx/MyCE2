@@ -1,10 +1,37 @@
 {% if form.vars.value.getId() == null %}
-	{% set action = path('crossword_new') %}
+	{% set action = path('create_crossword') %}
 {% else %}
 	{% set action = path('crossword_edit', {'id' : form.vars.value.getId() }) %}
 {% endif %}
 
-<form action="{{action}}" method="POST" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <input type="submit" />
+{#
+debug form.public.vars.label
+#}
+
+{% form_theme form 'AnyxCrosswordBundle:Form:theme.html.twig' %}
+
+<form action="{{action}}" method="POST" {{ form_enctype(form) }} class="well">
+    {{ form_errors(form) }}
+    
+    {{ form_label(form.title) }}
+    {{ form_errors(form.title) }}
+    {{ form_widget(form.title) }}
+
+    {{ form_label(form.description) }}
+    {{ form_errors(form.description) }}
+    {{ form_widget(form.description) }}
+
+    {% if form.public is defined %}
+    <label class="checkbox">
+        {{ form_widget(form.public) }} {{ form.public.vars.label }}
+    </label>
+    {% endif %}
+
+    {{ form_widget(form.id) }}
+    
+    {{ form_rest(form) }}
+        
+    <div>
+        <input type="submit" class="btn" value="{% trans %}Save{% endtrans %}"/>
+    </div>
 </form>

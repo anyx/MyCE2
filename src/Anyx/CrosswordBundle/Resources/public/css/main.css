@@ -25,3 +25,7 @@ BODY {
 TABLE .td-center, TABLE .th-center {
     text-align: center;
 }
+
+TEXTAREA {
+    resize: none;
+}

@@ -1,4 +1,4 @@
-Crossword.View.Word = Anyx.View.extend({
+Constructor.View.Word = Anyx.View.extend({
 
 	initialize	: function() {
 		this.render();
@@ -83,14 +83,14 @@ Crossword.View.Word = Anyx.View.extend({
 	},
 	
 	getClass		: function() {
-		if ( _.isUndefined( Crossword.View.Word._class ) ) {
-			Crossword.View.Word._class = 'word';
+		if ( _.isUndefined( Constructor.View.Word._class ) ) {
+			Constructor.View.Word._class = 'word';
 		}
 
-		return Crossword.View.Word._class;
+		return Constructor.View.Word._class;
 	}
 });
 
-Crossword.View.Word.setClass = function( className ) {
-		Crossword.View.Word._class = className;
+Constructor.View.Word.setClass = function( className ) {
+    Constructor.View.Word._class = className;
 };

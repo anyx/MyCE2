@@ -14,8 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller,
 	Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
 	Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,
 
-	FOS\RestBundle\Controller\Annotations\View,
-		
 	//
 	Anyx\CrosswordBundle\Document
 ;
@@ -30,7 +28,7 @@ class ConstructorController extends Controller {
 	 * 
 	 * @Route("/{id}", name="constructor", options={"expose" = true})
 	 * @ParamConverter("crossword", class="Anyx\CrosswordBundle\Document\Crossword")
-	 * @View
+	 * @Template
 	 */
 	public function indexAction( Document\Crossword $crossword ) {
 		$dm = $this->get('anyx.dm');

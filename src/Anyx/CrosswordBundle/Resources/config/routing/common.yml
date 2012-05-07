@@ -18,10 +18,6 @@ solving:
 #    pattern:  /constructor/{id}/save
 #    defaults: { _controller: AnyxCrosswordBundle:Constructor:save }
 
-crossword_new:
-    pattern:  /crossword/new
-    defaults: { _controller: AnyxCrosswordBundle:Crossword:new }    
-
 crossword_edit:
     pattern:  /crossword/edit/{id}
     defaults: { _controller: AnyxCrosswordBundle:Crossword:edit }    

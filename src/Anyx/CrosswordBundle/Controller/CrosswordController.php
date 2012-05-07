@@ -16,6 +16,7 @@ use Anyx\CrosswordBundle\Document;
 use Anyx\CrosswordBundle\Request\ParamConverter\DoctrineMongoDBParamConverter;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception;
 
 /**
  * 
@@ -24,6 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 class CrosswordController extends Controller {
 
 	/**
+     * @Route("/crossword/new/", name="create_crossword")
 	 * @Template
 	 */
 	public function newAction() {
@@ -35,7 +37,7 @@ class CrosswordController extends Controller {
 			)));
 		}
 		
-		return array( 'form' => $form );
+		return array( 'form' => $form->createView() );
 	}
 
 	/**
@@ -48,6 +50,10 @@ class CrosswordController extends Controller {
 		$dm = $this->get( 'anyx.dm' );
 		$crossword = $dm->find( 'Anyx\CrosswordBundle\Document\Crossword', $id );
 		
+        if ( !$crossword->hasOwner( $this->get('security.context')->getToken()->getUser() ) ) {
+            throw new Exception\AccessDeniedException('Wrong crossword owner');
+        }
+        
 		$form = $this->createCrosswordForm( $crossword );
 		if ( $this->saveCrossword( $form ) ) {
 			return $this->redirect($this->generateUrl('crossword_edit', array(
@@ -56,7 +62,7 @@ class CrosswordController extends Controller {
 		}
 		
 		return array(
-			'form'	=> $form
+			'form'	=> $form->createView()
 		);
 	}
 
@@ -102,7 +108,10 @@ class CrosswordController extends Controller {
 
 			if ( $form->isValid() ) {
 				$dm = $this->get( 'anyx.dm' );
-				$dm->persist( $form->getData() );
+                
+                $crossword = $form->getData();
+                $crossword->setOwner( $this->get('security.context')->getToken()->getUser() );
+				$dm->persist( $crossword );
 				$dm->flush();
 				$this->get('session')->setFlash('message', 'Save succesfull');
 				return true;

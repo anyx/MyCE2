@@ -1,7 +1,7 @@
 /**
  * 
  */
-Crossword.View.WordPreview = Anyx.View.extend({
+Constructor.View.WordPreview = Anyx.View.extend({
 
 	/**
 	 * 
@@ -29,7 +29,7 @@ Crossword.View.WordPreview = Anyx.View.extend({
 	 */
 	getCurrentView	: function() {
 		if ( this._currentView == null ) {
-			this._currentView = new Crossword.View.Word;
+			this._currentView = new Constructor.View.Word;
 			this._currentView.getElement().appendTo( this.el );
 		}
 		

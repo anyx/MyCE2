@@ -19,7 +19,7 @@ class SolvingController extends Controller {
 
 	/**
 	 * @ParamConverter("crossword", class="Anyx\CrosswordBundle\Document\Crossword")
-	 * @Route("/crossword/{id}/solve", name="crossword_solve")
+	 * @Route("/solve/{id}/", name="crossword_solve",options={"expose" = true})
 	 * @Template
 	 */
     public function indexAction( Document\Crossword $crossword ) {
