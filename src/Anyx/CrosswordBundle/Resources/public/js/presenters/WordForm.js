@@ -19,10 +19,12 @@ Constructor.View.WordForm = Backbone.Presenter.extend({
 				el	: this.options.selectors.wordPreview
 			}),
 			
-			statusBar			: new Constructor.View.StatusBar({
+			statusBar		: new Constructor.View.StatusBar({
 				el			: this.options.selectors.statusBar,
 				hintElement	: this.options.selectors.statusText,
-				template	: 't-status-bar'
+				template	: 't-status-bar',
+                defaultText : this.options.messages.defaultStatus,
+                translations: this.options.messages
 			})
 		});
 		
@@ -59,14 +61,22 @@ Constructor.View.WordForm = Backbone.Presenter.extend({
 			horizontal		: this.getWidget( 'directionChooser' ).getDirection()
 		});
 		
-		if ( word.isValid() ) {
+        word.bind('error', function( model, errors ) {
+            
+            var messages = [];
+            _.each(errors, function( elementErrors, element ) {
+                _.each( elementErrors, function(errorMessage){
+                    messages[messages.length] = element + '_' + errorMessage;
+                });
+            });
+            
+            this.getWidget('statusBar').showError( messages );
+        }, this);
+
+        if ( word.isValid() ) {
 			this.getWidget( 'wordPreview' ).showWord( word );
 			this.trigger( 'create', this.getWidget( 'wordPreview' ).getCurrentView() );
-			this.getWidget( 'statusBar').showMessage( 'Valid' );
-			
-		} else {
-			this.getWidget( 'wordPreview' ).clear();
-			this.getWidget( 'statusBar').showError( 'Invalid' );
+			this.getWidget( 'statusBar').showMessage( 'word_valid' );
 		}
 	},
 	
@@ -98,6 +108,7 @@ Constructor.View.WordForm = Backbone.Presenter.extend({
 			horizontal	: true,
 			id			: null
 		});
+        this.buildWord();
 	}
 });
 

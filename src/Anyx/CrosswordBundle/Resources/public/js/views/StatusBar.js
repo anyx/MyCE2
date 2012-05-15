@@ -4,31 +4,38 @@
 Constructor.View.StatusBar = Anyx.View.extend({
 
 	events		: {
-		'mouseover .icon'	: 'showHint'
+		'mouseover'	: 'showHint'
 	},
 
 	_timer		: 0,
+    
+    defaultStatus : 'info',
+    
+    _translations : {},
     
 	/**
 	 *
 	 */
 	initialize	: function( options ) {
 		this.options.timeout = options.timeout || 3000;
-        this.render({text: '', status: null});
+        this._showMessage( options.defaultText, this.defaultStatus );
+        if ( 'translations' in options ) {
+            this._translations = options.translations;
+        }
 	},
 
 	/**
 	 * 
 	 */
 	showMessage	: function( text, forceShowHint ) {
-		return this._showMessage( text, 'info', forceShowHint );
+		return this._showMessage( this._prepareMessage(text), 'info', forceShowHint );
 	},
 
 	/**
 	 * 
 	 */
 	showError	: function( text, forceShowHint ) {
-		return this._showMessage( text, 'important', forceShowHint );
+		return this._showMessage( this._prepareMessage(text), 'error', forceShowHint );
 	},
 	
 	/**
@@ -60,7 +67,17 @@ Constructor.View.StatusBar = Anyx.View.extend({
 			hintElement.fadeOut();
 		}, this.options.timeout )
 	},
-	
+
+    /**
+     *
+     */
+    translate   : function(text) {
+        if ( text in this._translations ) {
+            return this._translations[text];
+        }
+        return text;
+    },
+    
 	/**
 	 * 
 	 */
@@ -69,10 +86,23 @@ Constructor.View.StatusBar = Anyx.View.extend({
 		
 		this.clear();
 		
-		this.render({text: text, status: type});
+		this.render({text: this.translate(text), status: type});
 		
 		if ( forceShowHint ) {
 			this.showHint();
 		}
-	}
+	},
+    
+    _prepareMessage : function( text ) {
+        var message = '';
+        if ( _.isArray(text) ) {
+            _.each(text, function( messageElement ){
+                message = message + this.translate( messageElement ) + '\n';
+            }, this)
+        } else {
+            message = text;
+        }
+        
+        return message;
+    }
 });

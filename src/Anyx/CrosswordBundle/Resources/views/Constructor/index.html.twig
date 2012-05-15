@@ -57,7 +57,14 @@
 				},
 				classes		: {
 					wordTable	: 'word-table'
-				}
+				},
+                messages    : {
+                    {% for message in ['definition_required', 'definition_minlength', 'text_required', 'text_minlength','word_valid'] %}
+                    {% set transMessage = 'constructor.message.' ~ message %}
+                    {{message}} : '{{transMessage | trans}}',
+                    {% endfor %}    
+                    defaultStatus   : '{%trans%}Current status is reflected in this block{%endtrans%}'
+                }
 			});
 		});
 	</script>
@@ -75,12 +82,17 @@
 	{% endstylesheets %}
 {% endblock %}
 
-{% block page_title %} Construct crossword &laquo;{{crossword.title}}&raquo; {% endblock %}
+{% block page_title %}
+    {%trans%}Construct crossword{%endtrans%} &laquo;{{crossword.title}}&raquo;
+{% endblock %}
 
+{% block page_subtitle %}
+<div class="menu-subtitle">
+    <a href="{{ path('crossword_edit', {'id'	: crossword.id} )}}">{%trans%}Edit{%endtrans%}</a>
+</div>
+{% endblock %}
+    
 {% block body %}
-<a href="{{ path('crossword_edit', {'id'	: crossword.id} )}}">Edit</a>
-
-
 <div class="row">
 	<div class="span7">
 		<div class="i-grid crossword-editor">	
@@ -110,8 +122,27 @@
 </div>
 
 <script type="text/template" id="t-status-bar">
-    <span class="label <% if( !_.isEmpty(status) ) { %>label-<%= status %> <%}%>">{%trans%}status{%endtrans%}</span>
-	<div class="status-text i-status-text"><%= text %></div>
+    <%
+    var classes = {
+        info    : {
+            label   : 'label-info',
+            hint    : 'alert-info'
+        },
+        error   : {
+            label   : 'label-important',
+            hint    : 'alert-error'
+        },
+        success   : {
+            label   : 'label-info',
+            hint    : 'alert-success'
+        }
+    };
+    %>
+    
+    <span class="label <%=classes[status]['label']%>">{%trans%}status{%endtrans%}</span>
+    <div class="status-text i-status-text alert <%=classes[status]['hint']%>" style="display:none">
+        <%= text %>
+    </div>
 </script>
 
 {% endblock %}

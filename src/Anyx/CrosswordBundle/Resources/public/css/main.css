@@ -1,5 +1,7 @@
 BODY {
 	background-color: #24748c;
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
 .row-fluid DIV.login-block {
 	float: right;
@@ -28,4 +30,8 @@ TABLE .td-center, TABLE .th-center {
 
 TEXTAREA {
     resize: none;
+}
+
+.menu-subtitle {
+    float: left;
 }

@@ -1,9 +1,4 @@
 /**
- *
- */
-Crossword.Model = Crossword.Model || {};
-
-/**
  * 
  */
 Crossword.Model.WordsCollection = Backbone.Collection.extend({

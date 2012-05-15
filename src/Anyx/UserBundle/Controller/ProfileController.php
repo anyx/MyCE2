@@ -22,6 +22,17 @@ class ProfileController extends Controller {
     public function indexAction()
     {
         /*
+        $skip = 0;
+        $securityContext = $this->get('security.context');
+		$currentUser = $securityContext->getToken()->getUser();
+		
+		$crosswordsRepository = $this->get('anyx.dm')->getRepository('Anyx\CrosswordBundle\Document\Crossword');
+		
+		$crosswords = $crosswordsRepository->getUserCrosswords( $currentUser, 20, $skip );
+        var_dump($crosswords);
+        */
+        
+        /*
 		$obj = new \Anyx\CrosswordBundle\Document\ObjectWithVirtualProperties;
 		$format = 'xml';
 		

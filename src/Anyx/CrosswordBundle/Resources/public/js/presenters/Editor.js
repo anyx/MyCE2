@@ -36,7 +36,8 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 		//
 		this.registerWidget( 'wordForm', new Constructor.View.WordForm({
 				el			: $( this.options.selectors.form ),
-				selectors	: this.options.selectors.formSelectors
+				selectors	: this.options.selectors.formSelectors,
+                messages    : this.options.messages
 		}));
 		
 		//

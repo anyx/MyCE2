@@ -1,9 +1,4 @@
 /**
- *
- */
-Crossword.Model = Crossword.Model || {};
-
-/**
  * Word
  */
 Crossword.Model.Word = Crossword.Model.extend({

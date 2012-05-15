@@ -51,7 +51,7 @@ class CrosswordRepository extends DocumentRepository {
     public function getUserCrosswords( Document\User $user, $limit = 20, $skip = 0 ) {
  		return $this->findBy(
 					array(
-						'user.id' 		=> $user->getId()
+						'owner.id' 		=> $user->getId()
 					),
 					array(
 						'createdAt' => 'desc'

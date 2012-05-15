@@ -14,15 +14,8 @@
 		{% endblock %}		
 
         {% block javascripts %}{% endblock %}
-
-		<style type="text/css">
-		body {
-			padding-top: 40px;
-			padding-bottom: 40px;
-		}
-		</style>
-				
     </head>
+    
     <body>
 
 		<div class="container">
@@ -49,17 +42,20 @@
 			{% endfor %}				
 			
 			<div class="main-content">
-            <div class="page-header">
-			<h1>{% block page_title %}{% endblock %}</h1>
-            </div>    
+                <div class="page-header">
+                <h1>{% block page_title %}{% endblock %}</h1>
+                {% block page_subtitle %}{% endblock %}
+                </div>    
 			
 			{% block body %}{% endblock %}
 
 			<a href="{{path('_tests')}}">Tests</a>
 			</div>
-			<footer>
+
+            <footer>
 				<p>&copy; Company 2012</p>
 			</footer>
+            
 		</div>
     </body>
 </html>

@@ -10,3 +10,18 @@ User profile: Профиль
 Horizontal: По горизонтали
 Vertical:	По вертикали
 Solving crossword: Кроссворд
+status: статус
+Word: Слово
+Definition: Определение
+Edit: Редактировать
+Current status is reflected in this block: В этом блоке отображается состояние редактирования
+Construct crossword: Построение кроссворда
+Save: Сохранить
+#Errors
+constructor:
+  message:
+    definition_required: Не указано определение слова
+    definition_minlength: Слишком короткое определение
+    text_required: Не указано слово
+    text_minlength: Слишком короткое слово
+    word_valid : Слово введено корректно

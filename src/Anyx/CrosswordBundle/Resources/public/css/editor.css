@@ -1,4 +1,5 @@
 .crossword-editor {
+    position: relative;
 }
 
 .crossword-editor TABLE, .crossword-editor TD {
@@ -49,40 +50,16 @@ TABLE.word-table {
 	z-index: 2;
 }
 /* Status Bar */
-.status-text {
-	display: none;
-	padding: 5px;
-	position: absolute;
-	background-color: #fff;
-    right: 20px;
-    top: 20px;	
-}
-
-.info .status-text {
-	color: #08C;
-	border: 1px solid #08C;
-}
-.error .status-text {
-	color: #f00;
-	border: 1px solid #c00;
-}
-.editor-status .icon {
-	width: 60px;
-	height: 60px;
-	position: absolute;
-	right: -35px;
-	bottom:30px;
-	border-radius: 25px;
-	cursor: help;
-}
-.info .icon {
-	background-color: #08C;
-}
-.error .icon {
-	background-color: #c00;
-}
 #status {
     float: right;
     margin-right: 11px;
     margin-top: -5px;
+    cursor: pointer;
+    position: relative;
+}
+.status-text {
+    position: absolute;
+    right: 0px;
+    bottom: 1px;
+    width: 237px;
 }
