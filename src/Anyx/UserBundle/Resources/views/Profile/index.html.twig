@@ -229,10 +229,12 @@
     </script>
 	
     <script type="text/template" id="t-error-block">
-        <div class="alert alert-error profile-error modal hide fade">
+        <div class="alert alert-error profile-error modal fade">
             <button type="button" class="close i-close-button" data-dismiss="alert">×</button>
             <strong>{% trans %}Error{%endtrans%}</strong>
+            <div>
             <%=message%>
+            </div>
         </div>
     </script>
 {% endblock body %}

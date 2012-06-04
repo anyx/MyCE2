@@ -19,6 +19,8 @@ Anyx.View.Error = Anyx.View.extend({
 
     show    : function( message ) {
         this.render({message : message});
-        $( this.el ).children().modal();
+        $( this.el ).children().modal({
+            backdrop    : false
+        });
     }
 });
