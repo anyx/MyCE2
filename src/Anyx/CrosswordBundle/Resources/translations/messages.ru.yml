@@ -17,6 +17,15 @@ Edit: Редактировать
 Current status is reflected in this block: В этом блоке отображается состояние редактирования
 Construct crossword: Построение кроссворда
 Save: Сохранить
+Success. Now you can add new word: Удачно! Теперь ты можешь добавить еще слово
+Word removed: Слово удалено из кроссворда
+Save successfully: Кроссворд успешно сохранен
+Are you sure want remove crossword: Вы уверены, что хотите удалить кроссворд
+Crossword removing: Удаление кроссворда
+Close: Закрыть
+Remove: Удалить
+Internal Server Error: Внутрення ошибка приложения. Попробуйте обновить страницу или зайти позднее
+Error: Ошибка
 #Errors
 constructor:
   message:

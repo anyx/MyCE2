@@ -1,7 +1,7 @@
 /**
  * 
  */
-Constructor.Presenter = Crossword.Presenter || {};
+Constructor.Presenter = Backbone.Presenter || {};
 
 Constructor.Presenter.Solver = Backbone.Presenter.extend({
 

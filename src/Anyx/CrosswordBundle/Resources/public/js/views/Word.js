@@ -52,7 +52,7 @@ Constructor.View.Word = Anyx.View.extend({
 		var tbody = this.getElement().children( 'tbody' ).empty();
 		for ( var i = 0; i < word.getLength(); i++ ) {
 			tbody
-				.append( '<tr><td>'+word.get('text').charAt(i)+'</td></tr>' );
+				.append( '<tr><td><div>'+word.get('text').charAt(i)+'</div></td></tr>' );
 		}	
 	},
 	
@@ -64,7 +64,7 @@ Constructor.View.Word = Anyx.View.extend({
 		tbody.append( $( '<tr />' ) );
 		
 		for ( var i = 0; i < word.getLength(); i++ ) {
-			tbody.children( 'tr' ).append( '<td>'+word.get('text').charAt(i)+'</td>' );
+			tbody.children( 'tr' ).append( '<td><div>'+word.get('text').charAt(i)+'</div></td>' );
 		}
 	},
 	

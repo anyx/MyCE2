@@ -61,7 +61,28 @@ class CrosswordRepository extends DocumentRepository {
 		);
     }
     
-	/**
+    /**
+     *
+     * @param Document\User $user
+     * @param int $crosswordId
+     * @return Document\Crossword
+     */
+    public function getUserCrossword( Document\User $user, $crosswordId ) {
+ 		
+        if ( empty( $crosswordId ) ) {
+            throw new \InvalidArgumentException( 'Crossword id is missing' );
+        }
+        
+        return $this->findOneBy(
+					array(
+                        'id'            => $crosswordId,
+						'owner.id' 		=> $user->getId()
+					)
+		);
+    }
+
+
+    /**
 	 *
 	 */
 	protected function getPublicCrosswordsQueryBuilder() {

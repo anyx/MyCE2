@@ -61,9 +61,12 @@
                 messages    : {
                     {% for message in ['definition_required', 'definition_minlength', 'text_required', 'text_minlength','word_valid'] %}
                     {% set transMessage = 'constructor.message.' ~ message %}
-                    {{message}} : '{{transMessage | trans}}',
+                    {{message}}     : '{{transMessage | trans}}',
                     {% endfor %}    
-                    defaultStatus   : '{%trans%}Current status is reflected in this block{%endtrans%}'
+                    defaultStatus   : '{%trans%}Current status is reflected in this block{%endtrans%}',
+                    wordAdded       : '{%trans%}Success. Now you can add new word{%endtrans%}',
+                    wordRemoved     : '{%trans%}Word removed{%endtrans%}',
+                    saveSuccessfully: '{%trans%}Save successfully{%endtrans%}'
                 }
 			});
 		});
@@ -88,7 +91,7 @@
 
 {% block page_subtitle %}
 <div class="menu-subtitle">
-    <a href="{{ path('crossword_edit', {'id'	: crossword.id} )}}">{%trans%}Edit{%endtrans%}</a>
+    <a href="{{ path('crossword_edit', {'id' : crossword.id} )}}">{%trans%}Edit{%endtrans%}</a>
 </div>
 {% endblock %}
     

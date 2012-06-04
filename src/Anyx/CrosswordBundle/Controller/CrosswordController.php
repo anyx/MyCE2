@@ -16,7 +16,8 @@ use Anyx\CrosswordBundle\Document;
 use Anyx\CrosswordBundle\Request\ParamConverter\DoctrineMongoDBParamConverter;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Exception;
+use Symfony\Component\HttpKernel\Exception as HttpException;
+use Symfony\Component\Security\Core\Exception as SecurityException;
 
 /**
  * 
@@ -50,8 +51,12 @@ class CrosswordController extends Controller {
 		$dm = $this->get( 'anyx.dm' );
 		$crossword = $dm->find( 'Anyx\CrosswordBundle\Document\Crossword', $id );
 		
+        if ( empty( $crossword ) ) {
+            throw new HttpException\NotFoundHttpException('Crossword not found');
+        }
+        
         if ( !$crossword->hasOwner( $this->get('security.context')->getToken()->getUser() ) ) {
-            throw new Exception\AccessDeniedException('Wrong crossword owner');
+            throw new SecurityException\AccessDeniedException('Wrong crossword owner');
         }
         
 		$form = $this->createCrosswordForm( $crossword );

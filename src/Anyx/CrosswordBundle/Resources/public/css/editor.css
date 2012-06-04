@@ -36,10 +36,10 @@ TABLE.word-table, .word-table TD {
 TABLE.word-table {
 	position: absolute;
 }
-.word-table TD {
+.word-table TD DIV {
 	width: 19px;
+	height: 19px;
 	min-width: 18px;
-	height: 18px;
 	min-height: 18px;
 	text-align: center;
 }

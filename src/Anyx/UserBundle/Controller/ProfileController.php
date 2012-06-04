@@ -76,6 +76,7 @@ class ProfileController extends Controller {
      */
 	public function solvedAction( Request $request ) {
 
+        return '';
         $skip = (int) $request->get('skip', 0);
         
 		$securityContext = $this->get('security.context');
@@ -98,5 +99,28 @@ class ProfileController extends Controller {
      */
     public function removeCrosswordAction( $id ) {
         
+        $result = false;
+        $message = '';
+       
+        $dm = $this->get('anyx.dm');
+        
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+        
+		$crosswordsRepository = $dm->getRepository('Anyx\CrosswordBundle\Document\Crossword');
+		
+		$crossword = $crosswordsRepository->getUserCrossword( $currentUser, $id);
+        
+        if ( empty($crossword) ) {
+            $message = $this->get('translator')->trans('Crossword not found');
+        } else {
+            $dm->remove($crossword);
+            $dm->flush();
+            $result = true;
+        }
+        
+        return new Response(json_encode(array(
+            'success'    => $result,
+            'message'    => $message
+        )));
     }
 }

@@ -111,7 +111,7 @@
         if (list = calls[ev]) {
           for (var i = 0, l = list.length; i < l; i++) {
             if (!(callback = list[i])) {
-              list.splice(i, 1); i--; l--;
+              list.splice(i, 1);i--;l--;
             } else {
               args = both ? Array.prototype.slice.call(arguments, 1) : arguments;
               callback[0].apply(callback[1] || this, args);
@@ -437,7 +437,7 @@
     // The JSON representation of a Collection is an array of the
     // models' attributes.
     toJSON : function() {
-      return this.map(function(model){ return model.toJSON(); });
+      return this.map(function(model){return model.toJSON();});
     },
 
     // Add a model, or list of models to the set. Pass **silent** to avoid
@@ -494,7 +494,7 @@
 
     // Pluck an attribute from each model in the collection.
     pluck : function(attr) {
-      return _.map(this.models, function(model){ return model.get(attr); });
+      return _.map(this.models, function(model){return model.get(attr);});
     },
 
     // When you have more items than you want to add or remove individually,
@@ -1100,7 +1100,7 @@
     if (protoProps && protoProps.hasOwnProperty('constructor')) {
       child = protoProps.constructor;
     } else {
-      child = function(){ return parent.apply(this, arguments); };
+      child = function(){return parent.apply(this, arguments);};
     }
 
     // Inherit class (static) properties from parent.

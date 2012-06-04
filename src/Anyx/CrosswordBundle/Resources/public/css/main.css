@@ -35,3 +35,12 @@ TEXTAREA {
 .menu-subtitle {
     float: left;
 }
+
+.profile-error {
+    display: none;
+    position: fixed;
+    width: 840px;
+    top: 135px;
+    left: 50%;
+    margin-left: -445px;
+}

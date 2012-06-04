@@ -13,6 +13,8 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
 
     collections : {},
 
+    options     : {},
+    
 	initialize	: function( options ) {
 		this.document = options.document;
 
@@ -25,6 +27,8 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
         this.menu = options.menuView;
         this.menu.setLinks( this.getAvailableRoutes() );
         this.menu.show();
+        
+        this.options = options;
 	},
 
     views	: {},
@@ -56,33 +60,46 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
         }
 	},
 
+    /**
+     *
+     */
     _showCollection : function( type, url, view ) {
+        var _this = this;
         var collection = new Anyx.Collection[type]([], {
             url     : url,
             success : function( collection, response ) {
-
-                if ( response.length == 0 ) {
-                    collection.setIsAll( true );
-                }
-
-                view.render({
-                    collection	: collection
-                });
+                collection.trigger('reset', collection, response);
             },
             error   : function( error ) {
-                alert( error );
+                _this.showError();
             }
         });
 
         view.model = collection;
 
+        collection.bind('reset', function( collection, response ) {
+            if ( response.length == 0 ) {
+                collection.setIsAll( true );
+            }
+
+            view.render({
+                collection	: collection
+            });
+        });
+        
         collection.load();
     },
 
+    /**
+     *
+     */
     registerView    : function( code, view ) {
         this.views[code] = view;
     },
 
+    /**
+     *
+     */
 	getAvailableRoutes	: function() {
 		return {
             'solved'    : 'solved',
@@ -128,7 +145,20 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
 
 		return this.actions[action].call(this, params, view );
 	},
-	
+
+    /**
+     *
+     */
+    showError   : function( error ) {
+        var message = this.translate( error || 'internalError');
+
+        if ( _.isEmpty( this.options.errorView ) ) {
+            alert( message );
+        } else {
+            this.options.errorView.show( message );
+        }
+    },
+    
 	/**
 	 * 
 	 */
@@ -136,12 +166,16 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
 		var action = action || this.defaultAction;
 		this.callAction( action, params, this.getActionView( action ) );
 	},
-
-	created: function() {
-	},
-
-	settings: function() {
-	}
+    
+    /**
+     * 
+     */
+    translate   : function( message ) {
+        var translatedMessage = message;
+        if ( message in this.options.messages ) {
+            translatedMessage = this.options.messages[message];
+        }
+        
+        return translatedMessage;
+    }
 });
-
-

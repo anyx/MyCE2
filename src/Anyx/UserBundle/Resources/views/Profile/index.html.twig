@@ -12,6 +12,7 @@
 		'@AnyxCrosswordBundle/Resources/public/js/json2.js'
 		'@AnyxCrosswordBundle/Resources/public/js/underscore.js'
 		'@AnyxCrosswordBundle/Resources/public/js/backbone.js'
+        '@AnyxCrosswordBundle/Resources/public/js/bootstrap-modal.js'
 		
 		'@AnyxCrosswordBundle/Resources/public/js/views/View.js'
 
@@ -28,6 +29,7 @@
 		'@AnyxUserBundle/Resources/public/js/ProfileWorkspace.js'
 
 		'@AnyxUserBundle/Resources/public/js/views/ProfileMenu.js'
+        '@AnyxUserBundle/Resources/public/js/views/ErrorView.js'
 		'@AnyxUserBundle/Resources/public/js/views/CollectionView.js'
 		'@AnyxUserBundle/Resources/public/js/views/SolutionsView.js'
 		'@AnyxUserBundle/Resources/public/js/views/CrosswordsView.js'
@@ -46,6 +48,9 @@
                     el			: $('#i-profile-menu'),
                     template	: 't-profile-menu'
                 }),
+                errorView   : new Anyx.View.Error({
+                    template    : 't-error-block'
+                }),
 				views		: {
 					solved	: new Anyx.View.Solutions({
 						el			: $('#i-solutions'),
@@ -54,16 +59,24 @@
                     created : new Anyx.View.Crosswords({
 						el			: $('#i-crosswords'),
 						template	: 't-crosswords',
+                        selectors   : {
+                            modalWindow     : '.removingModal',
+                            crosswordName   : '.i-crossword-name',
+                            removeButton    : '.i-remove-button',
+                            closeButton     : '.i-close-button'
+                        },
+                        router      : Routing,
+                        deleteRoute : 'remove_crossword'
                     }),
-                    settings: new Anyx.View({
-                    })
-				}
+				},
+                messages    : {
+                    internalError : '{%trans%}Internal Server Error{%endtrans%}'
+                }
 			});
 
 			Backbone.history.start();
 		});
 	</script>			
-	
 {% endblock %}	
 
 {% block page_title %}
@@ -136,7 +149,6 @@
 	</script>
 	
     <script type="text/template" id="t-crosswords">
-        
         <a href="{{ path('create_crossword')}}" class="">{%trans%}Create{%endtrans%}</a>
         
 		<table class="table table-striped">
@@ -184,7 +196,7 @@
                     <a href="<%=Routing.generate('edit_crossword', { id: crossword.get('id') })%>" title="{%trans%}Edit{%endtrans%}">
                         <span class="icon-edit"></span>
                     </a>
-                    <a href="#" title="{%trans%}Remove{%endtrans%}">
+                        <a class="i-remove-crossword" href="#" data-id="<%=crossword.get('id')%>" title="{%trans%}Remove{%endtrans%}">
                         <span class="icon-remove"></span>
                     </a>
                 </td>
@@ -199,7 +211,28 @@
 			</tr>
 		<% } %>            
         </tbody>
+        </table>
+        
+        <div class="modal hide fade removingModal">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">×</button>
+                <h3>{% trans %}Crossword removing{%endtrans%}</h3>
+            </div>
+            <div class="modal-body">
+                {% trans %}Are you sure want remove crossword{%endtrans%} <em>&laquo;</em><em class="i-crossword-name">Crossword name</em><em>&raquo;</em>?
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn i-close-button">{%trans%}Close{%endtrans%}</a>
+                <a href="#" class="btn btn-primary i-remove-button">{%trans%}Remove{%endtrans%}</a>
+            </div>
+        </div>
     </script>
 	
+    <script type="text/template" id="t-error-block">
+        <div class="alert alert-error profile-error modal hide fade">
+            <button type="button" class="close i-close-button" data-dismiss="alert">×</button>
+            <strong>{% trans %}Error{%endtrans%}</strong>
+            <%=message%>
+        </div>
+    </script>
 {% endblock body %}
-	

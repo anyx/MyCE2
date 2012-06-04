@@ -120,7 +120,7 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 				}
 				
 				wordView.model.set({
-					'position' : {
+					position : {
 						x : x,
 						y : y
 				}});
@@ -169,6 +169,8 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 				if ( activeCell != false && gridView.getWords().addWord( wordModel ) ) {
 					//adding
 					_this.getWidget( 'wordForm' ).clear();
+                    _this.getWidget( 'wordPreview' ).clear();
+                    _this.getWidget( 'statusBar' ).showMessage(_this.options.messages.wordAdded);
 				} else {
 					_this.getWidget( 'wordForm' ).bindWord( wordView );
 					wordView.getElement().remove();
@@ -192,6 +194,8 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 				var wordView = wordElement.data( 'view' );
 				_this.getWidget( 'grid' ).getWords().remove( wordView.model );
 				_this.getWidget( 'wordForm' ).clear();
+                _this.getWidget( 'wordPreview' ).clear();
+                _this.getWidget( 'statusBar' ).showMessage(_this.options.messages.wordAdded);
 				wordElement.remove();
 			}
 		});
@@ -210,10 +214,10 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 				var wordView = wordElement.data( 'view' );
 				
 				if( _this.inGrid( wordView ) ) {
+                    //view instead model
 					_this.getWidget( 'grid' ).getWords().remove( wordView.model );
 					_this.getWidget( 'wordForm' ).bindWord( wordView );
 				} else {
-					
 				}
 				
 				wordElement.remove();
@@ -258,7 +262,7 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 					words : this.getWidget('grid').getWords().getData()
 				},
 				success: function( data ) {
-					_this.getWidget('statusBar').showMessage( 'Save successfully', true );
+					_this.getWidget('statusBar').showMessage( _this.options.messages.saveSuccessfully, true );
 				}
 			}
 		);
@@ -295,7 +299,7 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 		this.clearWordViews();
 
 		wordsCollection.each( function( wordModel ) {
-			var wordView = new Crossword.View.Word({
+			var wordView = new Constructor.View.Word({
 				model	: wordModel
 			});
 			this.initWordDraggable( wordView );
@@ -307,15 +311,6 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 	 *
 	 */
 	clearWordViews	: function() {
-		
 		$( this.getWidget( 'grid' ).el ).find( '.' + this.options.classes.wordTable );
-		console.log(  );
-		
-	},	
-	/**
-	 * 
-	 */
-	saveCrossword		: function() {
-		
 	}
 });

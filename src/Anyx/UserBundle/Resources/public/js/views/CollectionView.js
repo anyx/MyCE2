@@ -10,5 +10,5 @@ Anyx.View.Collection = Anyx.View.extend({
     extendCollection : function() {
         this.model.extend();
         return false;
-    },
+    }
 });

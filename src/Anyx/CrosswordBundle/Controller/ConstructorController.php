@@ -9,6 +9,7 @@ namespace Anyx\CrosswordBundle\Controller;
  */
 use Symfony\Bundle\FrameworkBundle\Controller\Controller,
 	Symfony\Component\HttpFoundation\Response,
+    Symfony\Component\HttpFoundation\Request,
 	Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
 	Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
 	Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
@@ -31,11 +32,6 @@ class ConstructorController extends Controller {
 	 * @Template
 	 */
 	public function indexAction( Document\Crossword $crossword ) {
-		$dm = $this->get('anyx.dm');
-		$crossword->setTitle('asd!');
-		$dm->persist( $crossword );
-		$dm->flush();
-
 		return array(
 			'crossword'	=> $crossword
 		);
@@ -47,20 +43,22 @@ class ConstructorController extends Controller {
 	 * @ParamConverter("crossword", class="Anyx\CrosswordBundle\Document\Crossword")
 	 * @Method({"POST"})
 	 */
-	public function saveAction( Document\Crossword $crossword ) {
+	public function saveAction( Document\Crossword $crossword, Request $reguest ) {
 		
-		$words = $this->get('request')->get('words');
+		$words = $reguest->get('words');
 		
-		$wordsDocuments = $this->get('anyx.document.factory')->createCollection( 'Word', $words, false );
-		
-		$crossword->updateWords( $wordsDocuments );
+        if ( !empty( $words ) ) {
+            $wordsDocuments = $this->get('anyx.document.factory')->createCollection( 'Word', $words, false );
 
-		$dm = $this->get('anyx.dm');
-		
-		$dm->persist( $crossword );
-		
-		$dm->flush();
-		
+            $crossword->updateWords( $wordsDocuments );
+
+            $dm = $this->get('anyx.dm');
+
+            $dm->persist( $crossword );
+
+            $dm->flush();
+        }
+        
 		return new Response(json_encode(array('success' => true)));
 	}
 }

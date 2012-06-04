@@ -34,7 +34,7 @@ Constructor.View.Grid = Anyx.View.extend({
 	 * 
 	 */
 	getCellSize		: function() {
-		return this.$( this.el ).find('td:eq(0)').width() + 3;
+		return this.$( this.el ).find('tr:eq(0)').height();
 	},
 	
 	/**
