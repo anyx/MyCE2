@@ -1,9 +1,9 @@
 /**
  * 
  */
-Constructor.Presenter = Backbone.Presenter || {};
+Anyx.Presenter = Backbone.Presenter || {};
 
-Constructor.Presenter.Solver = Backbone.Presenter.extend({
+Anyx.Presenter.Solver = Backbone.Presenter.extend({
 
 	specialKeys : {
 			8 	: 'backspace',
@@ -76,7 +76,6 @@ Constructor.Presenter.Solver = Backbone.Presenter.extend({
 					}
 				}
 			)
-			console.log( 'w', _this.getSolution() );
 		});
 	},
 	
@@ -104,7 +103,7 @@ Constructor.Presenter.Solver = Backbone.Presenter.extend({
 	 *
 	 */
 	addWord		: function( word ) {
-		var solverWord = new Crossword.View.SolverWord({
+		var solverWord = new Anyx.View.SolverWord({
 			model		: word,
 			cellSize	: this.options.cellSize,
 			template	: this.options.templates.word
@@ -118,7 +117,7 @@ Constructor.Presenter.Solver = Backbone.Presenter.extend({
 		this.mapInputs( solverWord.getInputs() );
 
 		//definition
-		var wordDefintion = new Crossword.View.WordDefinition({
+		var wordDefintion = new Anyx.View.WordDefinition({
 			definition	: word.definition,
 			number		: word.number,
 			wordCid		: solverWord.cid,

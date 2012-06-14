@@ -5,6 +5,7 @@ parameters:
         Word: Anyx\CrosswordBundle\Document\Word
         Solution: Anyx\CrosswordBundle\Document\Solution
         Answer: Anyx\CrosswordBundle\Document\Answer
+        User: Anyx\CrosswordBundle\Document\User
         
     anyx.mapping.types:
           Point: Anyx\CrosswordBundle\Doctrine\Type\Point

@@ -26,6 +26,7 @@ Close: Закрыть
 Remove: Удалить
 Internal Server Error: Внутрення ошибка приложения. Попробуйте обновить страницу или зайти позднее
 Error: Ошибка
+Saving error: Ошибка сохранения кроссворда. Попробуйте позже
 #Errors
 constructor:
   message:

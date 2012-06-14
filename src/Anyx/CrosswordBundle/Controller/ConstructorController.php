@@ -59,6 +59,6 @@ class ConstructorController extends Controller {
             $dm->flush();
         }
         
-		return new Response(json_encode(array('success' => true)));
+		return new Response(json_encode(array('success' => false)));
 	}
 }

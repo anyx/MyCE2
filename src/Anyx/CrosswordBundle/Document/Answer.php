@@ -8,6 +8,7 @@ namespace Anyx\CrosswordBundle\Document;
  *
  */
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use JMS\SerializerBundle\Annotation as Serializer;
 
 /**
  * @MongoDB\EmbeddedDocument
@@ -21,6 +22,7 @@ class Answer {
 
 	/**
 	 * @MongoDB\ReferenceOne(targetDocument="Word")
+     * @Serializer\Exclude
 	 */
 	protected $word;
 
@@ -63,4 +65,12 @@ class Answer {
 	public function getWord() {
 		return $this->word;
 	}
+    
+    /**
+     * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("wordId")
+     */
+    public function getWordId() {
+        return $this->getWord()->getId();
+    }
 }

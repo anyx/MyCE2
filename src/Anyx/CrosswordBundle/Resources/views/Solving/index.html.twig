@@ -26,10 +26,11 @@
 	
 	<script type="text/javascript">
 		$(function(){
-			var solver = new Crossword.Presenter.Solver({
+			var solver = new Anyx.Presenter.Solver({
 				el			: $('.i-crossword'),
 				cellSize	: 19,
 				words		: {{ crossword.wordsForSolving | serialize | raw }},
+                answers     : {{ solution.answers | serialize | raw }},
 				selectors	: {
 					verticalPanel	: '.i-vertical-container',
 					horizontalPanel : '.i-horizontal-container',
@@ -67,10 +68,10 @@
 {% block body %}
 
 <div class="row">
-	<div class="span9">
+	<div class="span7">
 		<div class="i-crossword crossword-solver"></div>
 	</div>
-	<div class="span2">
+	<div class="span4">
 		<h4>{%trans%}Horizontal{%endtrans%}</h4>
 		<ul class="i-horizontal-container">
 		</ul>
@@ -78,7 +79,7 @@
 		<ul class="i-vertical-container">
 		</ul>
 		
-		<input type="button" class="btn btn-primary i-save-button" value="save" />	
+		<input type="button" class="btn btn-primary i-save-button" value="{% trans %}Save{% endtrans %}" />	
 	</div>	
 </div>	
 

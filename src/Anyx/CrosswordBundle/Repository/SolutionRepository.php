@@ -43,5 +43,4 @@ class SolutionRepository extends DocumentRepository {
 					$skip
 		);
 	}
-	
 }

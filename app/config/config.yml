@@ -121,4 +121,8 @@ services:
       class: Anyx\CrosswordBundle\Listener\UserListener
       tags:
         - { name: kernel.event_listener, event: users.merge, method: onMergeUsers}
+    solution.listener:
+      class: Anyx\CrosswordBundle\Listener\SolutionListener
+      tags:
+        - { name: doctrine.odm.mongodb.default_event_listener, event: postPersist, method: postPersist}
         

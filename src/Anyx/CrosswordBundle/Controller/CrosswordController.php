@@ -94,7 +94,7 @@ class CrosswordController extends Controller {
 		;
 		
 		if ( $crossword->hasWords() ) {
-			$formBuilder->add('public', 'checkbox');
+			$formBuilder->add('public', 'checkbox', array('required' => false));
 		}
 		
 		return $formBuilder->getForm();

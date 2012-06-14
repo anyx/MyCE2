@@ -262,7 +262,11 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 					words : this.getWidget('grid').getWords().getData()
 				},
 				success: function( data ) {
-					_this.getWidget('statusBar').showMessage( _this.options.messages.saveSuccessfully, true );
+                    if ( _.isObject(data) && data.success == true ) {
+                        _this.getWidget('statusBar').showMessage( _this.options.messages.saveSuccessfully, true );
+                    } else {
+                        _this.getWidget('statusBar').showError( _this.options.messages.saveError, true );
+                    }
 				}
 			}
 		);

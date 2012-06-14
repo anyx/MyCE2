@@ -23,8 +23,21 @@ class SolvingController extends Controller {
 	 * @Template
 	 */
     public function indexAction( Document\Crossword $crossword ) {
+
+        $securityContext = $this->get('security.context');
+
+        $solution = null;
+
+		if ( $securityContext->isGranted('ROLE_USER') ) {
+            $user = $this->get('security.context')->getToken()->getUser();
+            $documentManager = $this->get('anyx.dm');
+            $solutionRepository = $documentManager->getRepository('Anyx\CrosswordBundle\Document\Solution');
+            $solution = $solutionRepository->getUserSolution( $user, $crossword );
+		}
+        
 		return array(
-			'crossword' => $crossword
+			'crossword' => $crossword,
+            'solution'  => $solution
 		);
 	}
 
