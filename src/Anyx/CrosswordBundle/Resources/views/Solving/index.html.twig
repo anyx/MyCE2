@@ -30,7 +30,7 @@
 				el			: $('.i-crossword'),
 				cellSize	: 19,
 				words		: {{ crossword.wordsForSolving | serialize | raw }},
-                answers     : {{ solution.answers | serialize | raw }},
+                answers     : {{ answers | serialize | raw }},
 				selectors	: {
 					verticalPanel	: '.i-vertical-container',
 					horizontalPanel : '.i-horizontal-container',
@@ -84,7 +84,7 @@
 </div>	
 
 <script type="text/template" id="t-solver-word">
-<div class="word-container">
+<div class="word-container" data-id="<%=word.id%>">
 	<table class="solver-word-table">
 		<% if ( word.horizontal ) { %>
 			<tr>

@@ -59,6 +59,15 @@ class ConstructorController extends Controller {
             $dm->flush();
         }
         
-		return new Response(json_encode(array('success' => false)));
+		return new Response(
+                    $this->get('serializer')->serialize(
+                            array(
+                                'success'   => true,
+                                'crossword' => $crossword,
+                                'words'     => array_values($crossword->getWords()->toArray())
+                            ),
+                            'json'
+                    )
+        );
 	}
 }

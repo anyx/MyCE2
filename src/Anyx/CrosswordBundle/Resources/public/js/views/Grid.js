@@ -41,6 +41,11 @@ Constructor.View.Grid = Anyx.View.extend({
 	 * 
 	 */
 	getWords		: function() {
+        
+        if ( _.isEmpty( this.options.words ) ) {
+            this.options.words = new Crossword.Model.WordsCollection();
+        }
+        
 		return this.options.words;
 	},
 	

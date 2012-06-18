@@ -35,9 +35,14 @@ class SolvingController extends Controller {
             $solution = $solutionRepository->getUserSolution( $user, $crossword );
 		}
         
+        $s = $this->get('serializer')->serialize($solution->getAnswers(), 'json');
+        
+        var_dump($crossword->getWords()->toArray(),  $s);
+        die();
 		return array(
 			'crossword' => $crossword,
-            'solution'  => $solution
+            'solution'  => $solution,
+            'answers'   => !empty($solution) ? $solution->getAnswers() : array()
 		);
 	}
 

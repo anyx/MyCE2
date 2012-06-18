@@ -52,7 +52,6 @@ Crossword.Model.WordsCollection = Backbone.Collection.extend({
 	 * @param word
 	 */
 	canAddWord	: function( word ) {
-		
 		var parrallelWords = this.getWordsByDirection( word.isHorizontal() );
 		var perpendicularWords = this.getWordsByDirection( !word.isHorizontal() );
 		

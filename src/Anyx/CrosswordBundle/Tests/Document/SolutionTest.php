@@ -7,9 +7,6 @@ use Anyx\CrosswordBundle\Tests as BaseTest;
 class SolutionTest extends BaseTest\TestCase
 {
     
-    protected function setUp() {
-    }
-    
     public function testUpdatingCountSolving() {
         
         $user = $this->createDocument(

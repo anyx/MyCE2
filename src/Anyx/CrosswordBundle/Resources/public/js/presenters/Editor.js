@@ -14,25 +14,17 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 	 */
 	initialize		: function() {
 		//
-		var collection = new Crossword.Model.WordsCollection;
-		
-		Constructor.View.Word.setClass( this.options.classes.wordTable );
-		
-		if( !_.isEmpty( this.options.words ) ) {
-			_.forEach(this.options.words, function( word ){
-				collection.add(new Crossword.Model.Word( word ));
-			})
-		}
-		
 		this.registerWidget( 'grid', new Constructor.View.Grid({
-				words	: collection,
 				el		: $( this.options.selectors.grid ),
 				rows	: 25,
 				cols	: 25
 		}));
+
+        Constructor.View.Word.setClass( this.options.classes.wordTable );
 		
-		this.renderWords( collection );
-		
+        var wordsCollection = this.createWordsCollection( this.options.words );
+        
+		this.renderWords( wordsCollection );
 		//
 		this.registerWidget( 'wordForm', new Constructor.View.WordForm({
 				el			: $( this.options.selectors.form ),
@@ -48,6 +40,15 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 		
 		this.initEvents();
 	},
+
+    /**
+     *
+     */
+    createWordsCollection   : function( words ) {
+        var collection = this.getWidget('grid').getWords();
+        collection.reset(words);
+        return collection;
+    },
 
 	/**
 	 *
@@ -175,7 +176,6 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 					_this.getWidget( 'wordForm' ).bindWord( wordView );
 					wordView.getElement().remove();
 				}
-				
 				return false;
 			}
 		});
@@ -185,7 +185,6 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 	 * 
 	 */
 	initBodyDroppable	: function() {
-		
 		var _this = this;
 		$( 'body' ).not( this.getWidget( 'wordPreview' ).el ).droppable({
 			accept	: '.' + this.options.classes.wordTable,
@@ -257,13 +256,17 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 		$.ajax(
 			savePath,
 			{
-				type : 'POST',
+				type        : 'POST',
+                dataType    : 'json',
 				data : {
 					words : this.getWidget('grid').getWords().getData()
 				},
 				success: function( data ) {
                     if ( _.isObject(data) && data.success == true ) {
                         _this.getWidget('statusBar').showMessage( _this.options.messages.saveSuccessfully, true );
+                        _this.clearWordViews();
+                        console.log( 'success', data.words);
+                        _this.renderWords( _this.createWordsCollection( data.words ) );
                     } else {
                         _this.getWidget('statusBar').showError( _this.options.messages.saveError, true );
                     }
@@ -296,25 +299,27 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 	 */
 	renderWords : function( wordsCollection ) {
 		
-		if ( _.isEmpty( this.options.words ) ) {
+		if ( _.isEmpty( wordsCollection ) ) {
 			return;
 		}
 
+        console.log( 'render', wordsCollection.at(0).attributes );
+        this.getWidget('grid').getWords().reset( wordsCollection.models );
 		this.clearWordViews();
-
+        
 		wordsCollection.each( function( wordModel ) {
 			var wordView = new Constructor.View.Word({
 				model	: wordModel
 			});
 			this.initWordDraggable( wordView );
 			this.renderWord( wordView );
-		}, this);
+		}, this );
 	},
 	
 	/**
 	 *
 	 */
 	clearWordViews	: function() {
-		$( this.getWidget( 'grid' ).el ).find( '.' + this.options.classes.wordTable );
+		$( this.getWidget( 'grid' ).el ).find( '.' + this.options.classes.wordTable ).remove();
 	}
 });

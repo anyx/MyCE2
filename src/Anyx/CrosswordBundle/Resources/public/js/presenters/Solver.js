@@ -52,7 +52,12 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 		}, this);
 
 		this.initKeysEvents();
-		/**
+
+        if ( !_.isEmpty(this.options.answers) ) {
+            this.setAnswers( this.options.answers );
+        }
+
+        /**
 		 * tmp
 		 */
 		var _this = this;
@@ -103,6 +108,7 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 	 *
 	 */
 	addWord		: function( word ) {
+        
 		var solverWord = new Anyx.View.SolverWord({
 			model		: word,
 			cellSize	: this.options.cellSize,
@@ -310,5 +316,14 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 			}
 		}, this);
 		return this.solution;
-	}
+	},
+    
+    /**
+     * 
+     */
+    setAnswers  : function( answers ) {
+        _.each(answers, function( answer ) {
+            var wordElement = this.options.el.find('DIV[data-id=' + answer.wordId + ']');
+        }, this);
+    }
 });
