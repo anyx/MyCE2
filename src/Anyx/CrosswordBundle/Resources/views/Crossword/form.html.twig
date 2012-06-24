@@ -10,16 +10,16 @@ debug form.public.vars.label
 
 {% form_theme form 'AnyxCrosswordBundle:Form:theme.html.twig' %}
 
-<form action="{{action}}" method="POST" {{ form_enctype(form) }} class="well">
+<form action="{{action}}" method="POST" {{ form_enctype(form) }} class="form">
     {{ form_errors(form) }}
     
     {{ form_label(form.title) }}
     {{ form_errors(form.title) }}
-    {{ form_widget(form.title) }}
+    {{ form_widget(form.title, { 'attr': { 'class' : 'input-xxlarge' } }) }}
 
     {{ form_label(form.description) }}
     {{ form_errors(form.description) }}
-    {{ form_widget(form.description) }}
+    {{ form_widget(form.description, { 'attr': { 'class' : 'input-xxlarge', 'rows' : 4 } }) }}
 
     {% if form.public is defined %}
     <label class="checkbox">
@@ -31,7 +31,7 @@ debug form.public.vars.label
     
     {{ form_rest(form) }}
         
-    <div>
-        <input type="submit" class="btn" value="{% trans %}Save{% endtrans %}"/>
+    <div class="submit-container">
+        <input type="submit" class="button blue-gradient glossy" value="{% trans %}Save{% endtrans %}"/>
     </div>
 </form>

@@ -303,7 +303,6 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 			return;
 		}
 
-        console.log( 'render', wordsCollection.at(0).attributes );
         this.getWidget('grid').getWords().reset( wordsCollection.models );
 		this.clearWordViews();
         

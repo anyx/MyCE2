@@ -8,52 +8,78 @@
 			{% stylesheets
 				'@AnyxCrosswordBundle/Resources/public/css/bootstrap.min.css'
 				'@AnyxCrosswordBundle/Resources/public/css/main.css'
+				'@AnyxCrosswordBundle/Resources/public/css/reset.css'
+				'@AnyxCrosswordBundle/Resources/public/css/style.css'
+				'@AnyxCrosswordBundle/Resources/public/css/colors.css'
 			%}
 				<link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
 			{% endstylesheets %}
+            <!--[if gte IE 9]>
+            <style type="text/css">
+                .gradient {
+                filter: none;
+                }
+            </style>
+            <![endif]-->
+            <link href='http://fonts.googleapis.com/css?family=Play&subset=cyrillic,latin' rel='stylesheet' type='text/css'>
 		{% endblock %}		
 
         {% block javascripts %}{% endblock %}
     </head>
     
     <body>
+        <header>
+        <div class="container">
+            <nav role="navigation" class="top-menu">
+                <a href="#">Crosswords</a>
+            </nav>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="login-block">
+                        {% if app.user %}
+                        <a href="{{path('user_profile')}}">{{app.user.username}}</a>
+                        {% else %}
+                        <a href="{{path('fos_user_security_login')}}">{% trans %}Login{%endtrans%}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        </header>
+        
+        <div class="container logo-container">
+            <div id="logo"></div>
+            <div id="site-name">{%trans%}Crosswords editor{%endtrans%}</div>
+        </div>
+            
+		<div class="container content">
 
-		<div class="container">
+            <hgroup id="main-title" class="thin">
+                <h1>{% block page_title %}{% endblock %}</h1>
+                {% block page_subtitle %}{% endblock %}
+            </hgroup>
 
-			<div class="container-fluid">
-				<div class="row-fluid">
-					<div class="login-block">
-						{% if app.user %}
-						<a href="{{path('user_profile')}}">{{app.user.username}}</a>
-						{% else %}
-						<a href="{{path('fos_user_security_login')}}">{% trans %}Login{%endtrans%}</a>
-						{% endif %}
-					<!--Body content-->
-					</div>
-				</div>
-			</div>
-			
-			{% block hero_block %}{% endblock %}
+            <div class="main-content">
+
+            {% if error is defined and error %}
+                <div class="alert alert-error">{{ error|trans() }}</div>
+            {% endif %}
 
 			{% for key, flash in app.session.getFlashes() %}
 				<div class="alert {{key}}">
-					{{ flash }}
+					{{ flash | trans }}
 				</div>
 			{% endfor %}				
-			
-			<div class="main-content">
-                <div class="page-header">
-                <h1>{% block page_title %}{% endblock %}</h1>
-                {% block page_subtitle %}{% endblock %}
-                </div>    
-			
-			{% block body %}{% endblock %}
-			</div>
 
-            <footer>
-				<p>&copy; Company 2012</p>
-			</footer>
-            
+			{% block body %}{% endblock %}
+
+            </div>
 		</div>
+            
+        <footer>
+            <div class="container">
+            <p>&copy; Company 2012</p>
+            </div>
+        </footer>            
     </body>
 </html>

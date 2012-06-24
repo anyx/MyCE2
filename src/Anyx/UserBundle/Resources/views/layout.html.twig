@@ -1,26 +1,39 @@
 {% extends '::main.html.twig' %}
 
+{% block page_title %}
+    {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
+{% endblock %}
+
 {% block body %}
-	<div>
-		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-			{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-			<a href="{{ path('fos_user_security_logout') }}">
-				{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-			</a>
-		{% else %}
-			<a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-		{% endif %}
-	</div>
+<div class="row">
+    <div class="span7">
+        <div>
+            {#
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+            #}
+        </div>
 
-	{% for key, message in app.session.getFlashes() %}
-	<div class="{{ key }}">
-		{{ message|trans({}, 'FOSUserBundle') }}
-	</div>
-	{% endfor %}
+        {% for key, message in app.session.getFlashes() %}
+        <div class="{{ key }}">
+            {{ message|trans({}, 'FOSUserBundle') }}
+        </div>
+        {% endfor %}
 
-	{% render "AnyxCrosswordBundle:Default:listAuthServices"  %}
-
-	<div>
-		{% block fos_user_content %}{% endblock fos_user_content %}
-	</div>
+        {% render "AnyxCrosswordBundle:Default:listAuthServices"  %}
+        <p>{% trans %}or use your account on site{% endtrans %}:</p>
+        <div>
+            {% block fos_user_content %}{% endblock fos_user_content %}
+        </div>
+    </div>
+    <div class="span4 well hint">
+        {{ 'Authorized users can create own crosswords. For solving crosswords authorization not required' | trans }}
+    </div>
+</div>
 {% endblock %}

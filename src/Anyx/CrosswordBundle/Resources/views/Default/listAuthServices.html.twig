@@ -1,7 +1,9 @@
 {% if services %}
-<ul>
+<span class="social-message">{% trans %}Login through social services{% endtrans %}:</span>
+<ul class="social-services">
 	{% for code,url in services %}
-		<li><a href="{{ url }}">{{ code }}</a></li>
+		<li><a class="{{ code }}" href="{{ url }}"></a></li>
 	{% endfor %}
-<ul>
+</ul>
+<div style="clear: both;"></div>
 {% endif %}

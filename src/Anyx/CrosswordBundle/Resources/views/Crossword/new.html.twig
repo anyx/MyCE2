@@ -1,11 +1,18 @@
 {% extends '::main.html.twig' %}
 
-{% set title = 'New Crossword' %}
+{% set title = 'Create crossword' | trans() %}
 
 {% block title %}{{title}}{% endblock %}
 
-{% block page_title %}{{title}}{% endblock %}
+{% block page_title %}{{title| trans}}{% endblock %}
 
 {% block body %}
-{% include "AnyxCrosswordBundle:Crossword:form.html.twig" with {'form': form} %}
+<div class="row">
+    <div class="span7">
+        {% include "AnyxCrosswordBundle:Crossword:form.html.twig" with {'form': form} %}
+    </div>
+    <div class="well hint span4">
+    {{ 'Type crossword title and description. After save you can start adding words.' | trans() }}
+    </div>
+</div>
 {% endblock %}

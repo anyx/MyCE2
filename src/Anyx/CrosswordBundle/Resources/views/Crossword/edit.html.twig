@@ -1,15 +1,24 @@
 {% extends '::main.html.twig' %}
 
-{% set title = 'Edit Crossword' %}
+{% set title = 'Edit crossword' | trans() %}
 
 {% block title %}{{title}}{% endblock %}
 
 {% block page_title %}{{title}}{% endblock %}
 
+{% block page_subtitle %}
+<a href="{{ path('constructor', {'id' : form.vars.value.id}) }}">{{'Go to constructor' | trans}}</a>
+{% endblock %}
+
 {% block body %}
 
-<a href="{{ path('constructor', {'id' : form.vars.value.id}) }}">Go to constructor</a>
-
-{% include "AnyxCrosswordBundle:Crossword:form.html.twig" with {'form': form} %}
+<div class="row">
+    <div class="span7">
+        {% include "AnyxCrosswordBundle:Crossword:form.html.twig" with {'form': form} %}
+    </div>
+    <div class="well hint span4">
+    {{ 'Crossword can be published if he contains more than one word' | trans }}
+    </div>
+</div>
 
 {% endblock %}

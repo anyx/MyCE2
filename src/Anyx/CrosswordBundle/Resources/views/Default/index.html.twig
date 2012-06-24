@@ -1,23 +1,41 @@
-{% extends '::main.html.twig' %}
+{% extends '::index.html.twig' %}
 
-{% block hero_block %}
-<div class="hero-unit">
-<h2>{% trans %}Welcome{% endtrans %}</h2>
-
-<p>{% trans %}This is another service for solving and creating crosswords{% endtrans %}</p>
-<p>
-	<a class="btn btn-primary btn-large">{% trans %}Learn more{% endtrans %} &raquo;</a>
-</p>
-</div>
-{% endblock hero_block %}
-
+{% block javascripts %}
+	{{ parent() }}
+        <script type="text/javascript">
+        // List of changing terms
+		//var terms = ['webapp', 'intranet', 'CRM', 'extranet', 'dashboard'];
+        </script>
+    {% javascripts
+        '@AnyxCrosswordBundle/Resources/public/js/jquery.min.js'
+        '@AnyxCrosswordBundle/Resources/public/js/script.js'
+        '@AnyxCrosswordBundle/Resources/public/js/libs/modernizr-2.5.3.min.js'
+        '@AnyxCrosswordBundle/Resources/public/js/libs/colorbox/jquery.colorbox-min.js'
+	%}
+	<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+{% endblock %}
+    
+{% block inlineJavascripts %}
+	{{ parent() }}
+    {% javascripts
+        '@AnyxCrosswordBundle/Resources/public/js/script.js'
+	%}
+	<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}    
+{% endblock %}
+    
 {% block body %}
 
-<div class="row">
-	{% if crosswords.popular | length > 0 %}
-	<div class="span3">
-	<h4>{% trans %}Popular crosswords{% endtrans %}</h4>
-		<ul>
+<article>
+    <p class="intro" id="intro">
+        {%trans%}main_intro{%endtrans%}
+    </p>
+
+ 	{% if crosswords.popular | length > 0 %}
+	<h2>{% trans %}Popular crosswords{% endtrans %}</h2>
+    <section>
+        <ul class="bullets">
 		{% for crossword in crosswords.popular %}
 			<li>
 				<a href="{{ path( 'crossword_solve', { 'id' : crossword.id })}}">{{ crossword.title }}</a>
@@ -25,14 +43,14 @@
 			</li>
 		{% endfor %}
 		</ul>
-
-	</div>
+        <a href="#" class="right-link">{% trans %}all{% endtrans %}(0)</a>
+    </section>
 	{% endif %}
 
 	{% if crosswords.new | length > 0 %}
-	<div class="span3">
-	<h4>{% trans %}Last crosswords{% endtrans %}</h4>
-		<ul>
+	<section>
+	<h2>{% trans %}Last crosswords{% endtrans %}</h2>
+		<ul class="bullets">
 		{% for crossword in crosswords.new%}
 			<li>
 				<a href="{{ path( 'crossword_solve', { 'id' : crossword.id })}}">{{ crossword.title }}</a>
@@ -40,13 +58,8 @@
 			</li>
 		{% endfor %}
 		</ul>
-	</div>
+        <a href="#" class="right-link">{% trans %}all{% endtrans %}(0)</a>
+	</section>
 	{% endif %}
-		
-	<div class="span4">
-		<h4>{% trans %}Twitter{% endtrans %}</h4>
-	</div>
-	
-</div>
-
+</article>    
 {% endblock %}

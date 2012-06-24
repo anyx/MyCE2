@@ -35,3 +35,41 @@ constructor:
     text_required: Не указано слово
     text_minlength: Слишком короткое слово
     word_valid : Слово введено корректно
+main_intro: "Приветствуем вас на нашем сайте-сервисе по созданию и редактированию кроссвордов. Найдеемся, наша работа окажется вам полезной"
+Crosswords: Кроссворды
+Profile: Профиль
+News: Новости
+Contatcs: Обратная связь
+your: твоя
+collection: коллекция
+crosswords: кроссвордов
+Creation: Создание
+own crosswords: собственных кроссвордов
+Solution: Решение
+community crosswords: кроссвордов сообщества
+Constructor: Конструктор
+Easy creation and editing crosswords, access managment: Простое создание  и редактирование кроссвордов, настройка доступа
+Catalog: Каталог
+Search crosswords: Поиск кроссвордов по интересной вам тематике
+Analyse: Аналитика
+Statistic of views and solutions your own crosswords: Просмотр статистики просмотров и прохождений кроссвородов
+Also: А также
+A lot of some stuff, if you ask: Многое другое из того, что сейчас не реализовано и не будет реализовано никогда без вашей поддержки, например.
+And yes: И да
+All this is totally: Всё это (кто бы мог подумать) совершенно
+free!: бесплатно!
+Share: Поделиться
+Try: Попробовать
+Crosswords editor: Редактор кроссвордов
+Login through social services: Вы можете войти на сайт, используя аккаунт в социальных сервисах
+or use your account on site: или использовать зарегистрированный на сайте аккаунт
+Bad credentials: Неверная пара логин/пароль
+Authorized users can create own crosswords. For solving crosswords authorization not required: Авторизиванным пользователям доступно создание кроссвордов. Для решения кроссвордов авторизация не требуется.
+Create crossword: Создание кроссворда
+Edit crossword: Редактирование кроссворда
+Title: Название
+Description: Описание
+Type crossword title and description. After save you can start adding words.: Введите название о описание кроссворда. После сохранения вы сможете приступить к добавлению слов к кроссворду.
+Crossword saved successfully: Кроссворд успешно сохранен
+Crossword can be published if he contains more than one word: Кроссворд может быть опубликован, если он содержит более одного слова
+Go to constructor: Перейти к конструктору

@@ -47,8 +47,8 @@ class CrosswordController extends Controller {
 	 * @param string $id 
 	 */
 	public function editAction( $id ) {
-		
-		$dm = $this->get( 'anyx.dm' );
+
+        $dm = $this->get( 'anyx.dm' );
 		$crossword = $dm->find( 'Anyx\CrosswordBundle\Document\Crossword', $id );
 		
         if ( empty( $crossword ) ) {
@@ -118,7 +118,7 @@ class CrosswordController extends Controller {
                 $crossword->setOwner( $this->get('security.context')->getToken()->getUser() );
 				$dm->persist( $crossword );
 				$dm->flush();
-				$this->get('session')->setFlash('message', 'Save succesfull');
+				$this->get('session')->setFlash('message', 'Crossword saved successfully');
 				return true;
 			}
 		}

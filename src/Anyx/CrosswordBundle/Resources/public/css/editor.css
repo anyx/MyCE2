@@ -37,10 +37,10 @@ TABLE.word-table {
 	position: absolute;
 }
 .word-table TD DIV {
-	width: 19px;
-	height: 19px;
-	min-width: 18px;
-	min-height: 18px;
+	width: 17px;
+	height: 17px;
+	min-width: 17px;
+	min-height: 17px;
 	text-align: center;
 }
 .word-preview {
