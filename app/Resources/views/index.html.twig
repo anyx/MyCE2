@@ -48,12 +48,12 @@
 	<link rel="apple-touch-icon" href="apple-touch-icon.png">
 
 	<!-- Facebook opengraph data: http://developers.facebook.com/docs/share -->
-	<meta property="og:title" content="Developr Admin Skin" />
-    <meta property="og:type" content="product" />
-    <meta property="og:url" content="http://www.display-inline.fr/demo/developr/" />
-    <meta property="og:site_name" content="Display:inline" />
-	<meta property="og:description" content="Building a web app for desktop and mobile devices? Developr is for you. Write your code once, and let it handle the magic of responsive webdesign." />
-	<meta property="og:image" content="http://www.display-inline.fr/demo/developr/img/facebook.jpg" />
+	<meta property="og:title" content="{{ 'Crossword editor' | trans }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ url('homepage') }}" />
+    <meta property="og:site_name" content="{{ 'Crossword editor' | trans }}" />
+	<meta property="og:description" content="{{ 'Crossword editor. Service for creating and solving crosswords' | trans }}" />
+	<meta property="og:image" content="{{baseUrl}}{{ asset('img/logo.png') }}" />
 
 	<!-- All JavaScript at the bottom, except this Modernizr build.
 			 Modernizr enables HTML5 elements & feature detects for optimal performance.
@@ -70,10 +70,15 @@
         <div id="header-back"></div>
         <div class="container">
 		<nav role="navigation">
-			<a href="#" title="Создание и решение кроссвордов" class="nav-right">{%trans%}Crosswords{%endtrans%}</a>
-			<a href="#intro" title="Профиль">{%trans%}Profile{%endtrans%}</a>
-			<a href="#features" title="Have a look at what's inside"></a>
-			<a href="#links" title="Хотите поговорить?">{%trans%}Contatcs{%endtrans%}</a>
+            {% if app.user %}
+            <a href="{{path('user_profile')}}" title="{{app.user.username}}" class="nav-right" >{{ 'Profile' | trans }}</a>
+            {% else %}
+            <a href="{{path('fos_user_security_login')}}" class="nav-right">{% trans %}Login{%endtrans%}</a>
+            {% endif %}
+            
+			<a href="#" title="{{ 'Creation and solution crosswords' | trans }}" >{%trans%}Crosswords{%endtrans%}</a>
+			<a href="#features" title="{{ 'About' | trans }}">{{ 'About' | trans }}</a>
+			<a href="#links" title="{{ 'Wanna talk?' | trans}}">{%trans%}Contatcs{%endtrans%}</a>
 		</nav>
 
 		<hgroup>

@@ -63,3 +63,9 @@ TABLE.word-table {
     bottom: 1px;
     width: 237px;
 }
+.direction-selector {
+    width: 100%;
+}
+.direction-selector .button {
+    width: 40%;
+}

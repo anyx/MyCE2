@@ -80,6 +80,7 @@
 {% block stylesheets %}
 	{{ parent() }}
 	{% stylesheets
+        '@AnyxCrosswordBundle/Resources/public/css/styles/form.css'
 		'@AnyxCrosswordBundle/Resources/public/css/editor.css'
 	%}
 		<link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
@@ -112,9 +113,9 @@
             <label>{% trans %}Definition{% endtrans %}</label>
             <textarea class="i-word-definition" class="no-resize" autocomplete="off"></textarea>
 
-			<div class="i-direction-chooser btn-group">
-                <button class="btn" rel="horizontal">{% trans %}Horizontal{% endtrans %}</button>
-                <button class="btn" rel="vertical">{% trans %}Vertical{% endtrans %}</button>
+			<div class="i-direction-chooser button-group direction-selector">
+                <button class="button blue-active active" rel="horizontal">{% trans %}Horizontal{% endtrans %}</button>
+                <button class="button blue-active" rel="vertical">{% trans %}Vertical{% endtrans %}</button>
 			</div>
             
 			<div class="i-word-preview word-preview well">

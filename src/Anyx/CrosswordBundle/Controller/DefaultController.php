@@ -2,15 +2,14 @@
 
 namespace Anyx\CrosswordBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller,
-	Symfony\Component\HttpFoundation\Response,
-	Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
-	Anyx\CrosswordBundle\Document,
-		
-	Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-	Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
-	Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter
-;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request; 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Anyx\CrosswordBundle\Document;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * 
@@ -22,7 +21,7 @@ class DefaultController extends Controller {
 	 * @Route("/", name="homepage")
 	 * @Template
 	 */
-    public function indexAction() {
+    public function indexAction( Request $request ) {
 		
 		$dm = $this->get('anyx.dm');
 		$crosswordsRepository = $dm->getRepository('Anyx\CrosswordBundle\Document\Crossword');
@@ -30,8 +29,9 @@ class DefaultController extends Controller {
 		return array(
 			'crosswords' => array(
 				'popular'	=> $crosswordsRepository->getPopular(),
-				'new'		=> $crosswordsRepository->getNew()
-			) 
+				'new'		=> $crosswordsRepository->getNew(),
+			), 
+            'baseUrl'   => $request->getScheme() . '://' . $request->getHttpHost()
 		);
 	}
 	
