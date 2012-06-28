@@ -10,6 +10,11 @@ HTML BODY {
     height: 100%;
 }
 
+.container {
+  width: 940px;
+  margin: 0 auto;
+}
+
 .top-menu {
     height: 40px;
     background: #2D9AD3;

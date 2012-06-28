@@ -7,6 +7,11 @@ Constructor.View.StatusBar = Anyx.View.extend({
 		'mouseover'	: 'showHint'
 	},
 
+    classesMap  : {
+        'info'  : 'blue-gradient',
+        'error' : 'red-gradient'
+    },
+
 	_timer		: 0,
     
     defaultStatus : 'info',
@@ -37,7 +42,14 @@ Constructor.View.StatusBar = Anyx.View.extend({
 	showError	: function( text, forceShowHint ) {
 		return this._showMessage( this._prepareMessage(text), 'error', forceShowHint );
 	},
-	
+
+	/**
+	 * 
+	 */
+	showLoader	: function( text, forceShowHint ) {
+		return this._showMessage( this._prepareMessage(text), 'error', forceShowHint );
+	},
+
 	/**
 	 * 
 	 */
@@ -97,7 +109,7 @@ Constructor.View.StatusBar = Anyx.View.extend({
         var message = '';
         if ( _.isArray(text) ) {
             _.each(text, function( messageElement ){
-                message = message + this.translate( messageElement ) + '\n';
+                message = message + this.translate( messageElement ) + '<br />';
             }, this)
         } else {
             message = text;

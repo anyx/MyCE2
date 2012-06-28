@@ -33,10 +33,12 @@
 		
 		'@AnyxCrosswordBundle/Resources/public/js/presenters/WordForm.js'
 		'@AnyxCrosswordBundle/Resources/public/js/presenters/Editor.js'
+
+		'@AnyxCrosswordBundle/Resources/public/js/theme/libs/modernizr.custom.js'
 	%}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
-	
+    
 	<script type="text/javascript">
 		$(function(){
 			var editor = new Constructor.Presenter.Editor({
@@ -67,20 +69,33 @@
                     wordAdded       : '{%trans%}Success. Now you can add new word{%endtrans%}',
                     wordRemoved     : '{%trans%}Word removed{%endtrans%}',
                     saveSuccessfully: '{%trans%}Save successfully{%endtrans%}',
-                    saveError       : '{%trans%}Saving error{%endtrans%}'
+                    saveError       : '{%trans%}Saving error{%endtrans%}',
+                    saving          : '{%trans%}Saving...{%endtrans%}'
                 }
 			});
 		});
 	</script>
 	
 	<script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback" : "fos.Router.setData"}) }}"></script>
-	
 {% endblock %}
 
+{% block inlineJavascripts %} 
+	{{ parent() }}
+
+	{% javascripts
+		'@AnyxCrosswordBundle/Resources/public/js/theme/setup.js'
+		'@AnyxCrosswordBundle/Resources/public/js/theme/developr.modal.js'
+	%}
+	<script type="text/javascript" src="{{ asset_url }}"></script>
+
+	{% endjavascripts %}    
+{% endblock %}
+    
 {% block stylesheets %}
 	{{ parent() }}
 	{% stylesheets
         '@AnyxCrosswordBundle/Resources/public/css/styles/form.css'
+		'@AnyxCrosswordBundle/Resources/public/css/styles/modal.css'
 		'@AnyxCrosswordBundle/Resources/public/css/editor.css'
 	%}
 		<link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
@@ -98,31 +113,34 @@
 {% endblock %}
     
 {% block body %}
-<div class="row">
-	<div class="span7">
+<div class="columns">
+	<div class="eight-columns">
 		<div class="i-grid crossword-editor">	
 		</div>
 	</div>
-	<div class="span4">
+	<div class="four-columns">
         
 		<form class="i-word-form word-form form-vertical">
             
             <label>{% trans %}Word{% endtrans %}</label>
             <span id="status" class="i-status-bar"></span>
-            <input type="text" class="i-word-text" autocomplete="off" />
+            <input type="text" class="i-word-text input" autocomplete="off" />
             <label>{% trans %}Definition{% endtrans %}</label>
-            <textarea class="i-word-definition" class="no-resize" autocomplete="off"></textarea>
+            <textarea class="i-word-definition input no-resize" autocomplete="off"></textarea>
 
 			<div class="i-direction-chooser button-group direction-selector">
                 <button class="button blue-active active" rel="horizontal">{% trans %}Horizontal{% endtrans %}</button>
                 <button class="button blue-active" rel="vertical">{% trans %}Vertical{% endtrans %}</button>
 			</div>
             
-			<div class="i-word-preview word-preview well">
+			<div class="i-word-preview word-preview wrapped relative">
+                <span class="ribbon tiny">
+                    <span class="ribbon-inner blue-gradient">{{ 'Preview' | trans }}</span>
+                </span>
 			</div>
 		</form>
 
-		<input type="button" value="{% trans %}Save{% endtrans %}" class="i-save-button btn btn-primary" />
+		<input type="button" value="{% trans %}Save{% endtrans %}" class="i-save-button button blue-gradient float-right" />
 	</div>
 </div>
 
@@ -130,23 +148,26 @@
     <%
     var classes = {
         info    : {
-            label   : 'label-info',
-            hint    : 'alert-info'
+            label   : 'blue-bg',
+            hint    : 'blue-gradient'
         },
         error   : {
-            label   : 'label-important',
-            hint    : 'alert-error'
+            label   : 'red-bg',
+            hint    : 'red-gradient'
         },
         success   : {
-            label   : 'label-info',
-            hint    : 'alert-success'
+            label   : 'green-bg green-color',
+            hint    : 'green-gradient'
         }
     };
     %>
     
-    <span class="label <%=classes[status]['label']%>">{%trans%}status{%endtrans%}</span>
-    <div class="status-text i-status-text alert <%=classes[status]['hint']%>" style="display:none">
+    <span class="tag <%=classes[status]['label']%>">{%trans%}status{%endtrans%}</span>
+    <div class="status-text i-status-text message <%=classes[status]['hint']%>" style="display:none">
         <%= text %>
+        <span class="block-arrow bottom">
+          <span></span>
+        </span>
     </div>
 </script>
 

@@ -6,7 +6,6 @@
 
 		{% block stylesheets %}
 			{% stylesheets
-				'@AnyxCrosswordBundle/Resources/public/css/bootstrap.min.css'
 				'@AnyxCrosswordBundle/Resources/public/css/main.css'
 				'@AnyxCrosswordBundle/Resources/public/css/reset.css'
 				'@AnyxCrosswordBundle/Resources/public/css/style.css'
@@ -28,6 +27,7 @@
     </head>
     
     <body>
+        {% block inlineJavascripts %}{% endblock %}
         <header>
         <div class="container">
             <nav role="navigation" class="top-menu">
@@ -75,7 +75,7 @@
 
             </div>
 		</div>
-            
+
         <footer>
             <div class="container">
             <p>&copy; Company 2012</p>

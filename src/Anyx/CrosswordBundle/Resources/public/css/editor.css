@@ -18,7 +18,7 @@
 /* Word Form */
 
 .word-form INPUT, .word-form TEXTAREA {
-    width: 280px;
+    width: 260px;
 }
 
 .word-form LABEL {
@@ -44,8 +44,9 @@ TABLE.word-table {
 	text-align: center;
 }
 .word-preview {
-	width: 250px;
-	height: 250px;
+    margin: 5px 0px;
+	width: 260px;
+	height: 260px;
 	position: relative;
 	z-index: 2;
 }
@@ -60,12 +61,26 @@ TABLE.word-table {
 .status-text {
     position: absolute;
     right: 0px;
-    bottom: 1px;
-    width: 237px;
+    bottom: 20px;
+    width: 253px;
 }
 .direction-selector {
     width: 100%;
 }
 .direction-selector .button {
-    width: 40%;
+    width: 41%;
+}
+
+#status .tag {
+    font-size: 11px;
+    line-height: 13px;
+    font-weight: bold;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6);
+}
+.status-text .block-arrow {
+    right: 15px;
+    left: auto;
+}
+.saving-message {
+    padding-left: 35px;
 }

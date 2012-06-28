@@ -16,8 +16,8 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 		//
 		this.registerWidget( 'grid', new Constructor.View.Grid({
 				el		: $( this.options.selectors.grid ),
-				rows	: 25,
-				cols	: 25
+				rows	: 30,
+				cols	: 30
 		}));
 
         Constructor.View.Word.setClass( this.options.classes.wordTable );
@@ -246,6 +246,15 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 		
 		var _this = this;
 		
+        var modal = $.modal({
+				content: '<span class="loader big waiting"></span><span class="saving-message">' + this.options.messages.saving + '...</span>',
+                title: false,
+                titleBar: false,
+                buttons: {},
+                resizable: false,
+                actions: {},
+        });
+        
 		var savePath = Routing.generate(
 							'constructor_save',
 							{
@@ -265,12 +274,16 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
                     if ( _.isObject(data) && data.success == true ) {
                         _this.getWidget('statusBar').showMessage( _this.options.messages.saveSuccessfully, true );
                         _this.clearWordViews();
-                        console.log( 'success', data.words);
                         _this.renderWords( _this.createWordsCollection( data.words ) );
                     } else {
                         _this.getWidget('statusBar').showError( _this.options.messages.saveError, true );
                     }
-				}
+                    modal.closeModal();
+				},
+                error: function() {
+                     _this.getWidget('statusBar').showError( _this.options.messages.saveError, true );
+                     modal.closeModal();
+                }
 			}
 		);
 	},

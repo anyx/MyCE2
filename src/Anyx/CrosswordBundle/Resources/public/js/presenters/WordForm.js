@@ -65,9 +65,8 @@ Constructor.View.WordForm = Backbone.Presenter.extend({
             
             var messages = [];
             _.each(errors, function( elementErrors, element ) {
-                _.each( elementErrors, function(errorMessage){
-                    messages[messages.length] = element + '_' + errorMessage;
-                });
+                var error = elementErrors[0];
+                messages[messages.length] = element + '_' + error;
             });
             
             this.getWidget('statusBar').showError( messages );
