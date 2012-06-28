@@ -16,5 +16,7 @@ Anyx.View = Backbone.View.extend({
 		var content = _.template( $( '#' + this.options.template ).html(), vars );
 		
 		this.$( this.el ).html( content );
+        
+        this.trigger( 'afterRender', this );
 	}
 });

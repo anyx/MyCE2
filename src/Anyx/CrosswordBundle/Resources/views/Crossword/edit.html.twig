@@ -6,17 +6,26 @@
 
 {% block page_title %}{{title}}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+        '@AnyxCrosswordBundle/Resources/public/css/styles/form.css'
+    %}
+        <link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}  
+
 {% block page_subtitle %}
 <a href="{{ path('constructor', {'id' : form.vars.value.id}) }}">{{'Go to constructor' | trans}}</a>
 {% endblock %}
 
 {% block body %}
 
-<div class="row">
-    <div class="span7">
+<div class="columns">
+    <div class="seven-columns">
         {% include "AnyxCrosswordBundle:Crossword:form.html.twig" with {'form': form} %}
     </div>
-    <div class="well hint span4">
+    <div class="four-columns wrapped hint">
     {{ 'Crossword can be published if he contains more than one word' | trans }}
     </div>
 </div>

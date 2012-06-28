@@ -24,6 +24,16 @@
 		{% endblock %}		
 
         {% block javascripts %}{% endblock %}
+            
+        <!-- For progressively larger displays -->
+        <link rel="stylesheet" media="only all and (min-width: 480px)" href="/css/480.css?v=1">
+        <link rel="stylesheet" media="only all and (min-width: 768px)" href="/css/768.css?v=1">
+        <link rel="stylesheet" media="only all and (min-width: 992px)" href="/css/992.css?v=1">
+        <link rel="stylesheet" media="only all and (min-width: 1200px)" href="/css/1200.css?v=1">
+        <!-- For Retina displays -->
+
+        <link rel="stylesheet" media="only all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (min-device-pixel-ratio: 1.5)" href="/css/2x.css?v=1">
+            
     </head>
     
     <body>
@@ -62,11 +72,13 @@
             <div class="main-content">
 
             {% if error is defined and error %}
-                <div class="alert alert-error">{{ error|trans() }}</div>
+            <p><div class="message red-gradient">
+                    {{ error|trans() }}
+            </div></p>    
             {% endif %}
 
 			{% for key, flash in app.session.getFlashes() %}
-				<div class="alert {{key}}">
+				<div class="message {{key}}">
 					{{ flash | trans }}
 				</div>
 			{% endfor %}				

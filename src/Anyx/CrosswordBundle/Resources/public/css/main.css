@@ -14,6 +14,9 @@ HTML BODY {
   width: 940px;
   margin: 0 auto;
 }
+.container .columns:last-child {
+    margin-bottom: 0px;
+}
 
 .top-menu {
     height: 40px;
@@ -148,4 +151,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .form .button {
     height: 28px;
+}
+
+.login-form .input-unstyled {
+    width: 235px;
+}
+
+#main-title h1 {
+    font-size: 32px;
 }

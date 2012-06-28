@@ -4,9 +4,18 @@
     {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
 {% endblock %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	{% stylesheets
+        '@AnyxCrosswordBundle/Resources/public/css/styles/form.css'
+	%}
+        <link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
+{% endblock %}
+
 {% block body %}
-<div class="row">
-    <div class="span7">
+<div class="columns">
+    <div class="seven-columns">
         <div>
             {#
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -32,8 +41,10 @@
             {% block fos_user_content %}{% endblock fos_user_content %}
         </div>
     </div>
-    <div class="span4 well hint">
-        {{ 'Authorized users can create own crosswords. For solving crosswords authorization not required' | trans }}
+    <div class="four-columns ">
+        <div class="wrapped relative hint">
+            {{ 'Authorized users can create own crosswords. For solving crosswords authorization not required' | trans }}
+        </div>
     </div>
 </div>
 {% endblock %}

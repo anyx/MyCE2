@@ -1,3 +1,4 @@
+
 {% if form.vars.value.getId() == null %}
 	{% set action = path('create_crossword') %}
 {% else %}
@@ -10,16 +11,16 @@ debug form.public.vars.label
 
 {% form_theme form 'AnyxCrosswordBundle:Form:theme.html.twig' %}
 
-<form action="{{action}}" method="POST" {{ form_enctype(form) }} class="form">
+<form action="{{action}}" method="POST" {{ form_enctype(form) }} class="form relative">
     {{ form_errors(form) }}
     
     {{ form_label(form.title) }}
     {{ form_errors(form.title) }}
-    {{ form_widget(form.title, { 'attr': { 'class' : 'input-xxlarge' } }) }}
+    {{ form_widget(form.title, { 'attr': { 'class' : 'input six-columns' } }) }}
 
     {{ form_label(form.description) }}
     {{ form_errors(form.description) }}
-    {{ form_widget(form.description, { 'attr': { 'class' : 'input-xxlarge', 'rows' : 4 } }) }}
+    {{ form_widget(form.description, { 'attr': { 'class' : 'input six-columns', 'rows' : 4 } }) }}
 
     {% if form.public is defined %}
     <label class="checkbox">

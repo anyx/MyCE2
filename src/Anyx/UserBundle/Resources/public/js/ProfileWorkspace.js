@@ -16,8 +16,11 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
     options     : {},
     
 	initialize	: function( options ) {
-		this.document = options.document;
-
+        
+        this.options = options;
+		
+        this.document = options.document;
+        
         if ( options.views ) {
             for( var action in options.views ) {
                 this.registerView( action, options.views[action] );
@@ -25,10 +28,9 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
         }
         
         this.menu = options.menuView;
-        this.menu.setLinks( this.getAvailableRoutes() );
         this.menu.show();
         
-        this.options = options;
+        this.menu.setLinks( this.getAvailableRoutes() );
 	},
 
     views	: {},
@@ -87,6 +89,10 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
             });
         });
         
+        view.bind('afterRender', function( view ) {
+            view.el.appendTo( this.el.find('.tabs-content') );
+        }, this.menu );
+        
         collection.load();
     },
 
@@ -101,11 +107,7 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
      *
      */
 	getAvailableRoutes	: function() {
-		return {
-            'solved'    : 'solved',
-            'created'   : 'created',
-            'settings'  : 'settings'
-        }
+        return this.options.routeNames;
 	},
 	
 	/**

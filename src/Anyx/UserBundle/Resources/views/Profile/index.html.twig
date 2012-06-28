@@ -33,6 +33,8 @@
 		'@AnyxUserBundle/Resources/public/js/views/CollectionView.js'
 		'@AnyxUserBundle/Resources/public/js/views/SolutionsView.js'
 		'@AnyxUserBundle/Resources/public/js/views/CrosswordsView.js'
+
+		'@AnyxCrosswordBundle/Resources/public/js/theme/libs/modernizr.custom.js'
 	%}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
@@ -41,9 +43,21 @@
     
 	<script type="text/javascript">
 		$(function() {
-			
+			var messages = {
+                    internalError   : '{%trans%}Internal Server Error{%endtrans%}',
+                    removingConfirm : '{% trans %}Are you sure want remove crossword{%endtrans%}',
+                    remove          : '{% trans %}Remove{%endtrans%}',
+                    cancel          : '{% trans %}Cancel{%endtrans%}',
+                    removing        : '{% trans %}Removing{%endtrans%}'
+            };
+            
 			var workspace = new Anyx.Profile.Workspace({
 				document	: window.document,
+                routeNames  : {
+                    solved    : '{{ 'Solved' | trans }}',
+                    created   : '{{ 'Created' | trans }}',
+                    settings  : '{{ 'Settings' | trans }}'
+                },
                 menuView    : new Anyx.View.ProfileMenu({
                     el			: $('#i-profile-menu'),
                     template	: 't-profile-menu'
@@ -66,12 +80,11 @@
                             closeButton     : '.i-close-button'
                         },
                         router      : Routing,
-                        deleteRoute : 'remove_crossword'
+                        deleteRoute : 'remove_crossword',
+                        messages     : messages
                     }),
 				},
-                messages    : {
-                    internalError : '{%trans%}Internal Server Error{%endtrans%}'
-                }
+                messages    : messages
 			});
 
 			Backbone.history.start();
@@ -79,33 +92,56 @@
 	</script>			
 {% endblock %}	
 
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+        '@AnyxCrosswordBundle/Resources/public/css/styles/table.css'
+		'@AnyxCrosswordBundle/Resources/public/css/styles/modal.css'
+    %}
+        <link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block inlineJavascripts %} 
+	{{ parent() }}
+
+	{% javascripts
+		'@AnyxCrosswordBundle/Resources/public/js/theme/setup.js'
+		'@AnyxCrosswordBundle/Resources/public/js/theme/developr.modal.js'
+	%}
+	<script type="text/javascript" src="{{ asset_url }}"></script>
+
+	{% endjavascripts %}    
+{% endblock %}        
+        
 {% block page_title %}
 	{%trans%}User profile{%endtrans%}
 {% endblock %}
 	
 {% block body %}
 
-    <div id="i-profile-menu">
-	</div>
-	
-	<div id="i-profile-page">
-		<div id="i-solutions"></div>
-        <div id="i-crosswords">
-        </div>
-	</div>
+    <div id="i-profile-menu" class="standard-tabs margin-bottom tabs-active">
+    </div>
+
+    <div id="i-solutions" class="with-padding">
+    </div>
+    <div id="i-crosswords" class="with-padding">
+    </div>
 	
 	<script type="text/template" id="t-profile-menu">
-		<ul class="nav nav-tabs">
-			<% _.each(links, function( name ) { %>
-			<li rel="<%=name%>" <% if ( activeLink && activeLink == name) { %> class="active" <% }%>>
-                <a href="#/<%=name%>/"><%=name%></a>
+		<ul class="tabs">
+			<% _.each(links, function( name, route ) { %>
+            
+			<li rel="<%=route%>" <% if ( activeLink && activeLink == route) { %> class="active" <% }%>>
+                <a href="#/<%=route%>/"><%=name%></a>
             </li>
 			<% }); %>
-		</ul>	
+		</ul>
+        <div class="tabs-content"></div>    
 	</script>
 
 	<script type="text/template" id="t-solutions">
-		<table class="table table-striped">
+		<table class="simple-table responsive-table responsive-table-on">
 		<thead>
 			<th>{%trans%}Crossword{%endtrans%}</th>
 			<th>{%trans%}Solution date{%endtrans%}</th>
@@ -128,9 +164,10 @@
 			<tr>
 				<td>
 					<a href="#"><%=solution.get('crossword').title%></a>
-					<p>
+                    <br />
+                    <small>
 						<%=solution.get('crossword').description%>
-					</p>
+					</small>
 				</td>
 				<td><%=solution.get('updated_at')%></td>
 				<td><%=solution.get('is_correct')%></td>
@@ -151,7 +188,7 @@
     <script type="text/template" id="t-crosswords">
         <a href="{{ path('create_crossword')}}" class="">{%trans%}Create{%endtrans%}</a>
         
-		<table class="table table-striped">
+		<table class="simple-table responsive-table responsive-table-on">
 		<thead>
 			<th>{%trans%}Crossword{%endtrans%}</th>
 			<th>{%trans%}Date create{%endtrans%}</th>
@@ -190,15 +227,11 @@
                 </td>
                 <td class="td-center"><%=crossword.get('count_solving')%></td>
                 <td class="td-center">
-                    <a href="<%=Routing.generate('crossword_statistic', { id: crossword.get('id') })%>" title="{%trans%}View statistic{%endtrans%}">
-                        <span class="icon-list-alt"></span>
-                    </a>
-                    <a href="<%=Routing.generate('edit_crossword', { id: crossword.get('id') })%>" title="{%trans%}Edit{%endtrans%}">
-                        <span class="icon-edit"></span>
-                    </a>
-                        <a class="i-remove-crossword" href="#" data-id="<%=crossword.get('id')%>" title="{%trans%}Remove{%endtrans%}">
-                        <span class="icon-remove"></span>
-                    </a>
+                    <span class="button-group compact">
+                        <a class="button icon-pencil" href="<%=Routing.generate('edit_crossword', { id: crossword.get('id') })%>">{%trans%}Edit{%endtrans%}</a>
+                        <a class="button icon-gear with-tooltip" title="{%trans%}View statistic{%endtrans%}" href="<%=Routing.generate('crossword_statistic', { id: crossword.get('id') })%>"></a>
+                        <a class="button icon-trash with-tooltip confirm i-remove-crossword" data-id="<%=crossword.get('id')%>" title="{%trans%}Remove{%endtrans%}" href="#"></a>
+                    </span>
                 </td>
 			</tr>
 			<% }); %>
@@ -212,20 +245,6 @@
 		<% } %>            
         </tbody>
         </table>
-        
-        <div class="modal hide fade removingModal">
-            <div class="modal-header">
-                <button class="close" data-dismiss="modal">×</button>
-                <h3>{% trans %}Crossword removing{%endtrans%}</h3>
-            </div>
-            <div class="modal-body">
-                {% trans %}Are you sure want remove crossword{%endtrans%} <em>&laquo;</em><em class="i-crossword-name">Crossword name</em><em>&raquo;</em>?
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn i-close-button">{%trans%}Close{%endtrans%}</a>
-                <a href="#" class="btn btn-primary i-remove-button">{%trans%}Remove{%endtrans%}</a>
-            </div>
-        </div>
     </script>
 	
     <script type="text/template" id="t-error-block">

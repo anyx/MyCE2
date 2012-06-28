@@ -1822,11 +1822,11 @@ li.message-menu {
 
 @font-face {
 	font-family: 'EntypoRegular';
-	src: url('Entypo/entypo-webfont.eot');
-	src: url('Entypo/entypo-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('Entypo/entypo-webfont.woff') format('woff'),
-		 url('Entypo/entypo-webfont.ttf') format('truetype'),
-		 url('Entypo/entypo-webfont.svg#EntypoRegular') format('svg');
+	src: url('/fonts/Entypo/entypo-webfont.eot');
+	src: url('/fonts/Entypo/entypo-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/Entypo/entypo-webfont.woff') format('woff'),
+		 url('/fonts/Entypo/entypo-webfont.ttf') format('truetype'),
+		 url('/fonts/Entypo/entypo-webfont.svg#EntypoRegular') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
