@@ -64,6 +64,19 @@ class CrosswordRepository extends DocumentRepository {
     /**
      *
      * @param Document\User $user
+     * @return int $skip
+     */
+    public function getUserCrosswordsCount( Document\User $user ) {
+		return $this->createQueryBuilder()
+                    ->field('owner.id')->equals( $user->getId() )
+                    ->getQuery()
+                    ->count()
+        ;   
+    }
+    
+    /**
+     *
+     * @param Document\User $user
      * @param int $crosswordId
      * @return Document\Crossword
      */

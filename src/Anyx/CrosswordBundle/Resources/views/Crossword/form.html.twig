@@ -5,27 +5,28 @@
 	{% set action = path('crossword_edit', {'id' : form.vars.value.getId() }) %}
 {% endif %}
 
-{#
-debug form.public.vars.label
-#}
-
 {% form_theme form 'AnyxCrosswordBundle:Form:theme.html.twig' %}
 
 <form action="{{action}}" method="POST" {{ form_enctype(form) }} class="form relative">
     {{ form_errors(form) }}
-    
-    {{ form_label(form.title) }}
-    {{ form_errors(form.title) }}
-    {{ form_widget(form.title, { 'attr': { 'class' : 'input six-columns' } }) }}
 
+    <div class="margin-bottom">
+    {{ form_label(form.title) }}
+    {{ form_widget(form.title, { 'attr': { 'class' : 'input eleven-columns' } }) }}
+    {{ form_errors(form.title) }}
+    </div>
+
+    <div class="margin-bottom">
     {{ form_label(form.description) }}
+    {{ form_widget(form.description, { 'attr': { 'class' : 'input eleven-columns', 'rows' : 4 } }) }}
     {{ form_errors(form.description) }}
-    {{ form_widget(form.description, { 'attr': { 'class' : 'input six-columns', 'rows' : 4 } }) }}
+    </div>
 
     {% if form.public is defined %}
-    <label class="checkbox">
-        {{ form_widget(form.public) }} {{ form.public.vars.label }}
-    </label>
+    <div class="margin-bottom">
+        {{ form_widget(form.public) }}
+        {{ form_label(form.public) }}
+    </div>
     {% endif %}
 
     {{ form_widget(form.id) }}

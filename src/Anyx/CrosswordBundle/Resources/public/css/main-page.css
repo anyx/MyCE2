@@ -220,22 +220,22 @@ td { vertical-align: top; }
 
 @font-face {
     font-family: 'AeroportalBold';
-    src: url('/img/Aeroportal/aeroportal_bold-webfont.eot');
-    src: url('/img/Aeroportal/aeroportal_bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/img/Aeroportal/aeroportal_bold-webfont.woff') format('woff'),
-         url('/img/Aeroportal/aeroportal_bold-webfont.ttf') format('truetype'),
-         url('/img/Aeroportal/aeroportal_bold-webfont.svg#AeroportalBold') format('svg');
+    src: url('/fonts/Aeroportal/aeroportal_bold-webfont.eot');
+    src: url('/fonts/Aeroportal/aeroportal_bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/Aeroportal/aeroportal_bold-webfont.woff') format('woff'),
+         url('/fonts/Aeroportal/aeroportal_bold-webfont.ttf') format('truetype'),
+         url('/fonts/Aeroportal/aeroportal_bold-webfont.svg#AeroportalBold') format('svg');
     font-weight: normal;
     font-style: normal;
 
 }
 @font-face {
     font-family: 'AeroportalRegular';
-    src: url('/img/Aeroportal/aeroportal-webfont.eot');
-    src: url('/img/Aeroportal/aeroportal-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/img/Aeroportal/aeroportal-webfont.woff') format('woff'),
-         url('/img/Aeroportal/aeroportal-webfont.ttf') format('truetype'),
-         url('/img/Aeroportal/aeroportal-webfont.svg#AeroportalRegular') format('svg');
+    src: url('/fonts/Aeroportal/aeroportal-webfont.eot');
+    src: url('/fonts/Aeroportal/aeroportal-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/Aeroportal/aeroportal-webfont.woff') format('woff'),
+         url('/fonts/Aeroportal/aeroportal-webfont.ttf') format('truetype'),
+         url('/fonts/Aeroportal/aeroportal-webfont.svg#AeroportalRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 

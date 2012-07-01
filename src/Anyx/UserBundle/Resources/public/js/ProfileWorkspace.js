@@ -152,13 +152,8 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
      *
      */
     showError   : function( error ) {
-        var message = this.translate( error || 'internalError');
-
-        if ( _.isEmpty( this.options.errorView ) ) {
-            alert( message );
-        } else {
-            this.options.errorView.show( message );
-        }
+        var message = error || 'internalError';
+        Anyx.Utils.alertError( message );
     },
     
 	/**
@@ -168,16 +163,4 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
 		var action = action || this.defaultAction;
 		this.callAction( action, params, this.getActionView( action ) );
 	},
-    
-    /**
-     * 
-     */
-    translate   : function( message ) {
-        var translatedMessage = message;
-        if ( message in this.options.messages ) {
-            translatedMessage = this.options.messages[message];
-        }
-        
-        return translatedMessage;
-    }
 });

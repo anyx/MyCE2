@@ -20,7 +20,7 @@
                 }
             </style>
             <![endif]-->
-            <link href='http://fonts.googleapis.com/css?family=Play&subset=cyrillic,latin' rel='stylesheet' type='text/css'>
+            <link href='http://fonts.googleapis.com/css?family=Play&amp;subset=cyrillic,latin' rel='stylesheet' type='text/css'>
 		{% endblock %}		
 
         {% block javascripts %}{% endblock %}
@@ -42,18 +42,12 @@
         <div class="container">
             <nav role="navigation" class="top-menu">
                 <a href="#">Crosswords</a>
-            </nav>
-            <div class="container-fluid">
-                <div class="row-fluid">
-                    <div class="login-block">
-                        {% if app.user %}
-                        <a href="{{path('user_profile')}}">{{app.user.username}}</a>
-                        {% else %}
-                        <a href="{{path('fos_user_security_login')}}">{% trans %}Login{%endtrans%}</a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
+                {% if app.user %}
+                <a href="{{path('user_profile')}}" title="{{app.user.username}}" class="nav-right" >{{ 'Profile' | trans }}</a>
+                {% else %}
+                <a href="{{path('fos_user_security_login')}}" class="nav-right">{% trans %}Login{%endtrans%}</a>
+                {% endif %}
+                </nav>
         </div>
         </header>
         
@@ -64,10 +58,10 @@
             
 		<div class="container content">
 
-            <hgroup id="main-title" class="thin">
+            <div id="main-title" class="thin">
                 <h1>{% block page_title %}{% endblock %}</h1>
                 {% block page_subtitle %}{% endblock %}
-            </hgroup>
+            </div>
 
             <div class="main-content">
 
@@ -78,9 +72,12 @@
             {% endif %}
 
 			{% for key, flash in app.session.getFlashes() %}
-				<div class="message {{key}}">
+            
+            {% set classes = { 'message' : 'blue-gradient', 'error' : 'red-gradient' } %}
+
+            <p><div class="message {% if key in classes|keys %} {{classes[key]}} {% endif %}">
 					{{ flash | trans }}
-				</div>
+			</div></p>
 			{% endfor %}				
 
 			{% block body %}{% endblock %}

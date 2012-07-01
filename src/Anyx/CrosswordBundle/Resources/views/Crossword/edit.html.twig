@@ -16,7 +16,9 @@
 {% endblock %}  
 
 {% block page_subtitle %}
-<a href="{{ path('constructor', {'id' : form.vars.value.id}) }}">{{'Go to constructor' | trans}}</a>
+<div class="menu-subtitle">
+    <a href="{{ path('constructor', {'id' : form.vars.value.id}) }}">{{'Go to constructor' | trans}}</a>
+</div>    
 {% endblock %}
 
 {% block body %}
@@ -25,7 +27,7 @@
     <div class="seven-columns">
         {% include "AnyxCrosswordBundle:Crossword:form.html.twig" with {'form': form} %}
     </div>
-    <div class="four-columns wrapped hint">
+    <div class="four-columns wrapped hint left-icon icon-info-round">
     {{ 'Crossword can be published if he contains more than one word' | trans }}
     </div>
 </div>

@@ -4,7 +4,8 @@
 Anyx.View.Crosswords = Anyx.View.Collection.extend({
     
     events  : {
-        'click .i-remove-crossword'    : 'removeCrossword'
+        'click .i-remove-crossword' : 'removeCrossword',
+        'click .i-more-link'        : 'extendCollection'
     },
     
     /**
@@ -33,11 +34,11 @@ Anyx.View.Crosswords = Anyx.View.Collection.extend({
                         _this.model.fetch();
                         modal.closeModal();
                     } else {
-                        //error
+                       $.modal.alert();
                     }
                 },
                 error    : function() {
-
+                    modal.closeModal();
                 }
             });
         };
@@ -51,18 +52,13 @@ Anyx.View.Crosswords = Anyx.View.Collection.extend({
                                 click       : function(modal) { modal.closeModal(); }
         };        
 
-        var dialog = $.modal(
-                        {
-                            title: this.options.messages.removing,
-                            content: questionText,
-                            buttons: buttons
-                        }
+       $.modal(
+            {
+                title: this.options.messages.removing,
+                content: questionText,
+                buttons: buttons
+            }
         );
-
-        return false;
-        
-
-        
         return false;
     }
 });

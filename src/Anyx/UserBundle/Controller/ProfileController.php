@@ -26,24 +26,18 @@ class ProfileController extends Controller {
         $securityContext = $this->get('security.context');
 		$currentUser = $securityContext->getToken()->getUser();
 		
-		$crosswordsRepository = $this->get('anyx.dm')->getRepository('Anyx\CrosswordBundle\Document\Crossword');
-		
-		$crosswords = $crosswordsRepository->getUserCrosswords( $currentUser, 20, $skip );
-        var_dump($crosswords);
-        */
+		$crosswordsRepository = $this->get('anyx.dm')->getRepository('Anyx\CrosswordBundle\Document\Solution');
+		*/
+		//$crosswords = $crosswordsRepository->getUserCrosswords( $currentUser, 20, $skip );
+        
+        //var_dump($crosswordsRepository->getUserSolutionsCount( $currentUser)->count());
+        //die();
         
         /*
-		$obj = new \Anyx\CrosswordBundle\Document\ObjectWithVirtualProperties;
-		$format = 'xml';
-		
         $serializer = $this->get('serializer');
-        $serializer->setGroups(array('versions'));
-        $serializer->setVersion(8);
-        //$serializer->setGroups(array('xml-value'));
-		//$s = $serializer->serialize($obj, $format );
 		
-		//var_dump( $obj, $s, $this->get('serializer')->deserialize( $s, get_class($obj), $format ) );
-		var_dump( '|', $serializer->serialize( $obj, $format ) );
+		var_dump( '|', $serializer->serialize( $crosswords->toArray(), 'json' ) );
+        die();
         */
         return array();
 		
@@ -67,8 +61,13 @@ class ProfileController extends Controller {
 		$crosswordsRepository = $this->get('anyx.dm')->getRepository('Anyx\CrosswordBundle\Document\Crossword');
 		
 		$crosswords = $crosswordsRepository->getUserCrosswords( $currentUser, 20, $skip );
-		
-		return new Response( $this->get('serializer')->serialize( array_values( $crosswords->toArray() ), 'json' ) );
+
+         $response = array(
+            'models'        => array_values( $crosswords->toArray() ),
+            'totalCount'    => $crosswordsRepository->getUserCrosswordsCount( $currentUser )
+        );
+        
+		return new Response( $this->get('serializer')->serialize( $response, 'json' ) );       
 	}
 
 	/**
@@ -90,7 +89,12 @@ class ProfileController extends Controller {
 		
 		$solutions = $solutionsRepository->getUserSolutions( $currentUser, 20, $skip );
 		
-		return new Response( $this->get('serializer')->serialize( array_values( $solutions->toArray() ), 'json' ) );
+        $response = array(
+            'models'        => array_values( $solutions->toArray() ),
+            'totalCount'    => $solutionsRepository->getUserSolutionsCount( $currentUser )
+        );
+        
+		return new Response( $this->get('serializer')->serialize( $response, 'json' ) );
 	}
     
 	/**

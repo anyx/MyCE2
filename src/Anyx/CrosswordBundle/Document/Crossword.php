@@ -29,6 +29,7 @@ class Crossword {
 
 	/**
 	 * @MongoDB\String
+     * @Serializer\Accessor(getter="getTruncatedDescription")
 	 */
 	protected $description;
 
@@ -50,11 +51,13 @@ class Crossword {
 	
 	/**
 	 * @MongoDB\Date
+     * @Serializer\Type("DateTime",format="Y")
 	 */
 	protected $createdAt;
 
 	/**
 	 * @MongoDB\Date
+     * @Serializer\Type("DatdeTime")
 	 */
 	protected $updatedAt;
 
@@ -137,7 +140,22 @@ class Crossword {
         return $this->description;
     }
 
-	/**
+    public function getTruncatedDescription( $length = 100, $separator = '...' ) {
+        
+        $description = $this->description;
+        
+        if (mb_strlen($description) > $length) {
+            if (false !== ($breakpoint = mb_strpos($description, ' ', $length ))) {
+                $length = $breakpoint;
+            }
+
+            return mb_substr($description, 0, $length) . $separator;
+        }
+
+        return htmlspecialchars( $description );        
+    }
+
+    /**
 	 *
 	 * @return bool
 	 */
@@ -249,18 +267,6 @@ class Crossword {
 	 */
 	public function incCountSolving() {
 		return $this->countSolving++;
-	}
-	
-	/**
-	 * 
-	 */
-	private function getWordById( $id ) {
-		foreach ( $this->getWords() as $word ) {
-			if ( $word->getId() == $id ) {
-				return $word;
-			}
-		}
-		return null;		
 	}
 	
 	/**

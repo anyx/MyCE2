@@ -17,11 +17,11 @@
 
 
 {% block body %}
-<div class="row">
-    <div class="span7">
+<div class="columns">
+    <div class="seven-columns">
         {% include "AnyxCrosswordBundle:Crossword:form.html.twig" with {'form': form} %}
     </div>
-    <div class="well hint span4">
+    <div class="four-columns wrapped hint left-icon icon-info-round">
     {{ 'Type crossword title and description. After save you can start adding words.' | trans() }}
     </div>
 </div>

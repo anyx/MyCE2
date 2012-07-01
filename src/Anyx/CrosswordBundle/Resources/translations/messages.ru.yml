@@ -13,7 +13,7 @@ Solving crossword: Кроссворд
 status: статус
 Word: Слово
 Definition: Определение
-Edit: Редактировать
+Edit: Правка
 Current status is reflected in this block: В этом блоке отображается состояние редактирования
 Construct crossword: Построение кроссворда
 Save: Сохранить
@@ -46,6 +46,7 @@ constructor:
 main_intro: "Приветствуем вас на нашем сайте-сервисе по созданию и редактированию кроссвордов. Найдеемся, наша работа окажется вам полезной"
 Crosswords: Кроссворды
 Profile: Профиль
+Under construction: В разработке
 News: Новости
 Contatcs: Обратная связь
 your: твоя
@@ -79,7 +80,7 @@ Crossword: Кроссворд
 Solution date: Дата прохождения
 Correct: Результат
 Date create: Дата создания
-Public: Доступ
+Public: Опубликован
 Count solves: Количество прохождений
 Removing: Удаление
 Manage: Управление
@@ -88,6 +89,11 @@ Created: Созданные кроссворды
 Settings: Настройки
 Title: Название
 Description: Описание
+View statistic: Просмотр статистики
+Create: Создать
+More: Еще
+Error: Ошибка
+Close: Закрыть
 Type crossword title and description. After save you can start adding words.: Введите название о описание кроссворда. После сохранения вы сможете приступить к добавлению слов к кроссворду.
 Crossword saved successfully: Кроссворд успешно сохранен
 Crossword can be published if he contains more than one word: Кроссворд может быть опубликован, если он содержит более одного слова
@@ -98,3 +104,4 @@ About: О проекте
 Wanna talk?: Хотите поговорить?
 Creation and solution crosswords: Создание и решение кроссвордов
 Preview: Вид
+Wrong symbols in title: Недопустимые символы в названии

@@ -18,15 +18,33 @@ HTML BODY {
     margin-bottom: 0px;
 }
 
+header {
+    height: 2.9em;
+}
+
 .top-menu {
-    height: 40px;
+    height: 2.9em;
     background: #2D9AD3;
     float: left;
     padding: 0 10px;
-    line-height: 38px;
+    line-height: 2.9em;
+    padding: 0 10px;
+    border-radius: 0 0 7px 7px;
+    text-shadow: 1px 1px 1px #222222;
+    font-size:	14px;
 }
+.nav-right {
+    float: right;
+    font-weight: bold;
+}
+
 .top-menu A {
     color: #fff;
+    padding: 0 10px;
+}
+.top-menu A:hover {
+    color: #FEFFBC;
+    text-decoration: none;
 }
 
 #logo {
@@ -44,7 +62,7 @@ HTML BODY {
     color: #fff;
     text-shadow:1px 1px #000;
     font-size: 26px;
-    top: 30px;
+    top: 17px;
     left: 145px;
     width: 60px;
     line-height: 24px;
@@ -78,6 +96,8 @@ TEXTAREA {
 }
 .menu-subtitle {
     float: left;
+    margin-top: -10px;
+    margin-left: 2px;
 }
 
 .main-content {
@@ -133,13 +153,18 @@ h1, h2, h3, h4, h5, h6 {
     background-image: url(/img/icons/vkontakte.png);
 }
 
-.hint {
+div.hint {
     font-family: 'Tahoma', sans-serif;
-    background-color: #f6fcff;
-    color: #4b5b77;
+    background-color: #e4f8ff;
+    color: #258cae;
+    border-color: #258cae;
 }
 
 /* Forms */
+
+.form p > .button, .form p > .input {
+    margin-top: 0px;
+}
 .form .checkbox {
     background: none;
     border-color: none;
@@ -153,10 +178,27 @@ h1, h2, h3, h4, h5, h6 {
     height: 28px;
 }
 
+ul.form-errors {
+    margin-left: 0px;
+}
+.form-errors li {
+    list-style: none;
+}
+
 .login-form .input-unstyled {
     width: 235px;
 }
 
+/** Main */
+
+
+
+
 #main-title h1 {
     font-size: 32px;
+}
+
+/** Profile */
+.profile-container .simple-table > thead > tr > th, .simple-table > thead > tr > td {
+    font-size: 13px;
 }

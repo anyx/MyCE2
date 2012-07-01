@@ -34,10 +34,16 @@ Anyx.Collection = Backbone.Collection.extend({
     },
 
     isAll       : function() {
-        return this._isAll == true;
+        return this.length == this.getTotalCount();
     },
     
-    setIsAll    : function( isAll ) {
-        this._isAll = isAll;
+    getTotalCount   : function() {
+        return this.totalCount;
+    },
+    
+    parse       : function( response ) {
+        this.totalCount = parseInt( response.totalCount || 0 );
+        return response.models
     }
+    
 })

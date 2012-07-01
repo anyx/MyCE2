@@ -34,7 +34,7 @@ class SolutionRepository extends DocumentRepository {
 	public function getUserSolutions( Document\User $user, $limit = 20, $skip = 0 ) {
 		return $this->findBy(
 					array(
-						'user.id' 		=> $user->getId()
+						'user.id' 	=> $user->getId()
 					),
 					array(
 						'updatedAt' => 'desc'
@@ -43,4 +43,16 @@ class SolutionRepository extends DocumentRepository {
 					$skip
 		);
 	}
+    
+	/**
+	 * @param \Anyx\CrosswordBundle\Document\User $user
+	 * @return int
+	 */
+	public function getUserSolutionsCount( Document\User $user ) {
+		return $this->createQueryBuilder()
+                    ->field('user.id')->equals( $user->getId() )
+                    ->getQuery()
+                    ->count()
+        ;        
+	}    
 }

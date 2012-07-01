@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception as HttpException;
 use Symfony\Component\Security\Core\Exception as SecurityException;
 
+use Symfony\Component\Form\FormError;
+
 /**
  * 
  * 
@@ -120,7 +122,7 @@ class CrosswordController extends Controller {
 				$dm->flush();
 				$this->get('session')->setFlash('message', 'Crossword saved successfully');
 				return true;
-			}
+			} 
 		}
 		
 		return false;

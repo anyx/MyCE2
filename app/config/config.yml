@@ -44,6 +44,12 @@ jms_security_extra:
     secure_controllers:  true
     secure_all_services: false
 
+jms_serializer:
+    handlers:
+        object_based: false
+        datetime:
+            format: "d.m.Y" 
+
 sensio_framework_extra:
     router:  { annotations: true }
     request: { converters: true }
@@ -74,6 +80,16 @@ fos_user:
         user_manager: anyx_social_user.user.manager
     firewall_name: main
     user_class: Anyx\CrosswordBundle\Document\User
+
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+
+        sonata.block.service.text:
+        sonata.block.service.action:
+        sonata.block.service.rss:
 
 anyx_social_user:
   fos_user:

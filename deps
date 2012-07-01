@@ -74,7 +74,7 @@
     version=v2.0.1
 
 [JMSSerializerBundle]
-    git=git://github.com/anyx/JMSSerializerBundle.git
+    git=git://github.com/schmittjoh/JMSSerializerBundle.git
     target=bundles/JMS/SerializerBundle
 
 [FOSJsRoutingBundle]
@@ -100,3 +100,8 @@
 [AnyxSocialUserBundle]
     git=https://github.com/anyx/AnyxSocialUserBundle.git
     target=/bundles/Anyx/SocialUserBundle
+
+[SonataAdminBundle]
+    git=git://github.com/sonata-project/SonataAdminBundle.git
+    target=/bundles/Sonata/AdminBundle
+    version=origin/2.0

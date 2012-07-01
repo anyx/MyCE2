@@ -15,6 +15,8 @@
         '@AnyxCrosswordBundle/Resources/public/js/bootstrap-modal.js'
 		
 		'@AnyxCrosswordBundle/Resources/public/js/views/View.js'
+		'@AnyxCrosswordBundle/Resources/public/js/utils/Translator.js'
+        '@AnyxCrosswordBundle/Resources/public/js/utils/Alert.js'
 
 		'@AnyxCrosswordBundle/Resources/public/js/models/Crossword.js'
 
@@ -29,7 +31,6 @@
 		'@AnyxUserBundle/Resources/public/js/ProfileWorkspace.js'
 
 		'@AnyxUserBundle/Resources/public/js/views/ProfileMenu.js'
-        '@AnyxUserBundle/Resources/public/js/views/ErrorView.js'
 		'@AnyxUserBundle/Resources/public/js/views/CollectionView.js'
 		'@AnyxUserBundle/Resources/public/js/views/SolutionsView.js'
 		'@AnyxUserBundle/Resources/public/js/views/CrosswordsView.js'
@@ -42,15 +43,19 @@
     <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback" : "fos.Router.setData"}) }}"></script>
     
 	<script type="text/javascript">
+
+         Anyx.Utils.Translator.setTranslations({
+            internalError   : '{%trans%}Internal Server Error{%endtrans%}',
+            removingConfirm : '{% trans %}Are you sure want remove crossword{%endtrans%}',
+            remove          : '{% trans %}Remove{%endtrans%}',
+            cancel          : '{% trans %}Cancel{%endtrans%}',
+            removing        : '{% trans %}Removing{%endtrans%}',
+            error           : '{% trans %}Error{%endtrans%}',
+            Close           : '{% trans %}Close{%endtrans%}'
+        });
+        
 		$(function() {
-			var messages = {
-                    internalError   : '{%trans%}Internal Server Error{%endtrans%}',
-                    removingConfirm : '{% trans %}Are you sure want remove crossword{%endtrans%}',
-                    remove          : '{% trans %}Remove{%endtrans%}',
-                    cancel          : '{% trans %}Cancel{%endtrans%}',
-                    removing        : '{% trans %}Removing{%endtrans%}'
-            };
-            
+			
 			var workspace = new Anyx.Profile.Workspace({
 				document	: window.document,
                 routeNames  : {
@@ -62,9 +67,6 @@
                     el			: $('#i-profile-menu'),
                     template	: 't-profile-menu'
                 }),
-                errorView   : new Anyx.View.Error({
-                    template    : 't-error-block'
-                }),
 				views		: {
 					solved	: new Anyx.View.Solutions({
 						el			: $('#i-solutions'),
@@ -74,17 +76,14 @@
 						el			: $('#i-crosswords'),
 						template	: 't-crosswords',
                         selectors   : {
-                            modalWindow     : '.removingModal',
                             crosswordName   : '.i-crossword-name',
                             removeButton    : '.i-remove-button',
                             closeButton     : '.i-close-button'
                         },
                         router      : Routing,
                         deleteRoute : 'remove_crossword',
-                        messages     : messages
                     }),
 				},
-                messages    : messages
 			});
 
 			Backbone.history.start();
@@ -120,7 +119,7 @@
 	
 {% block body %}
 
-    <div id="i-profile-menu" class="standard-tabs margin-bottom tabs-active">
+    <div id="i-profile-menu" class="standard-tabs margin-bottom tabs-active profile-container">
     </div>
 
     <div id="i-solutions" class="with-padding">
@@ -151,9 +150,10 @@
 			<tr>
 				<td colspan="3">
                     <% if( !collection.isAll() ) { %>
-					<div class="">
-						<a class="i-more-link" href="#">{%trans%}More{%endtrans%}</a>
-					</div>
+                    <a class="i-more-link button margin-right compact" href="#">
+                        <span class="button-icon"><%=collection.getTotalCount() - collection.length%></span>
+                        {{'More'| trans }}
+                    </a>
                     <% } %>
 				</td>
 			</tr>
@@ -162,15 +162,15 @@
 		<% if ( !_.isEmpty( collection.models ) ) { %>
 			<% _.each(collection.models, function( solution ) { %>
 			<tr>
-				<td>
+				<td class="seven-columns">
 					<a href="#"><%=solution.get('crossword').title%></a>
                     <br />
                     <small>
 						<%=solution.get('crossword').description%>
 					</small>
 				</td>
-				<td><%=solution.get('updated_at')%></td>
-				<td><%=solution.get('is_correct')%></td>
+				<td class="three-columns"><%=solution.get('updated_at')%></td>
+				<td class="two-columns"><%=solution.get('is_correct')%></td>
 			</tr>
 			<% }); %>
 		<% } else { %>
@@ -186,11 +186,17 @@
 	</script>
 	
     <script type="text/template" id="t-crosswords">
-        <a href="{{ path('create_crossword')}}" class="">{%trans%}Create{%endtrans%}</a>
+        <a class="button compact margin-bottom" href="{{ path('create_crossword')}}">
+            <span class="button-icon">
+                <span class="icon-star"></span>
+            </span>
+            {{ 'Create' | trans }}
+        </a>
+        <a href="" class=""></a>
         
 		<table class="simple-table responsive-table responsive-table-on">
 		<thead>
-			<th>{%trans%}Crossword{%endtrans%}</th>
+            <th>{%trans%}Crossword{%endtrans%}</th>
 			<th>{%trans%}Date create{%endtrans%}</th>
 			<th class="th-center">{%trans%}Public{%endtrans%}</th>
 			<th class="th-center">{%trans%}Count solves{%endtrans%}</th>
@@ -200,9 +206,10 @@
 			<tr>
 				<td colspan="5">
                     <% if( !collection.isAll() ) { %>
-					<div class="">
-						<a class="i-more-link" href="#">{%trans%}More{%endtrans%}</a>
-					</div>
+                    <a class="i-more-link button margin-right compact" href="#">
+                        <span class="button-icon"><%=collection.getTotalCount() - collection.length%></span>
+                        {{'More'| trans }}
+                    </a>
                     <% } %>
 				</td>
 			</tr>
@@ -211,22 +218,22 @@
 		<% if ( !_.isEmpty( collection.models ) ) { %>
 			<% _.each(collection.models, function( crossword ) { %>
 			<tr>
-				<td>
+                <td class="five-columns">
 					<a href="<%=Routing.generate('crossword_solve', { id: crossword.get('id') })%>"><%=crossword.get('title')%></a>
-					<p>
+					<br><small>
 						<%=crossword.get('description')%>
-					</p>
+					</small>
 				</td>
-				<td><%=crossword.get('updated_at')%></td>
-				<td class="td-center">
+				<td class="one-column"><%=crossword.get('updated_at')%></td>
+				<td class="one-column td-center">
                     <% if( crossword.get('public') ) { %>
-                    <span class="icon-ok" title="{%trans%}Public{%endtrans%}"></span>
+                    <span class="icon-tick icon-size1" title="{%trans%}Public{%endtrans%}"></span>
                     <% } else { %>
-                    <span class="icon-wrench" title="{%trans%}Under construction{%endtrans%}"></span>
+                    <span class="icon-minus-round icon-size1" title="{%trans%}Under construction{%endtrans%}"></span>
                     <% } %>
                 </td>
-                <td class="td-center"><%=crossword.get('count_solving')%></td>
-                <td class="td-center">
+                <td class="td-center one-column"><%=crossword.get('count_solving')%></td>
+                <td class="align-right vertical-center two-column">
                     <span class="button-group compact">
                         <a class="button icon-pencil" href="<%=Routing.generate('edit_crossword', { id: crossword.get('id') })%>">{%trans%}Edit{%endtrans%}</a>
                         <a class="button icon-gear with-tooltip" title="{%trans%}View statistic{%endtrans%}" href="<%=Routing.generate('crossword_statistic', { id: crossword.get('id') })%>"></a>
@@ -245,15 +252,5 @@
 		<% } %>            
         </tbody>
         </table>
-    </script>
-	
-    <script type="text/template" id="t-error-block">
-        <div class="alert alert-error profile-error modal fade">
-            <button type="button" class="close i-close-button" data-dismiss="alert">×</button>
-            <strong>{% trans %}Error{%endtrans%}</strong>
-            <div>
-            <%=message%>
-            </div>
-        </div>
     </script>
 {% endblock body %}
