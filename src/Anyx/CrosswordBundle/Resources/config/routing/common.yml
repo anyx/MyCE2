@@ -14,6 +14,10 @@ solving:
     resource: "@AnyxCrosswordBundle/Controller/SolvingController.php"
     type:     annotation
 
+lists:
+    resource: "@AnyxCrosswordBundle/Controller/ListsController.php"
+    type:     annotation
+  
 #words_save:
 #    pattern:  /constructor/{id}/save
 #    defaults: { _controller: AnyxCrosswordBundle:Constructor:save }

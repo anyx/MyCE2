@@ -28,7 +28,13 @@ class AppKernel extends Kernel
 			new FOS\UserBundle\FOSUserBundle(),
 			//
 			new Sensio\Bundle\BuzzBundle\SensioBuzzBundle(),
+            //
+            new Sonata\CacheBundle\SonataCacheBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Sonata\AdminBundle\SonataAdminBundle(),
 			//
+            new FOQ\ElasticaBundle\FOQElasticaBundle(),
+            //
 			new Anyx\CrosswordBundle\AnyxCrosswordBundle(),
             new Anyx\UserBundle\AnyxUserBundle(),
             new Anyx\SocialBundle\AnyxSocialBundle(),

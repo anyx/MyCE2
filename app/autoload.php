@@ -19,15 +19,22 @@ $loader->registerNamespaces(array(
     'Assetic'          => __DIR__.'/../vendor/assetic/src',
     'Metadata'         => __DIR__.'/../vendor/metadata/src',
 	//
-	'FOS'				=> __DIR__.'/../vendor/bundles',
+	'FOS'              => __DIR__.'/../vendor/bundles',
 	//
     'Knp'              => __DIR__.'/../vendor/bundles',
+    'Knp\Bundle'       => __DIR__.'/../vendor/bundles',
+    'Knp\Menu'         => __DIR__.'/../vendor/KnpMenu/src',
+    //
     'Buzz'             => __DIR__.'/../vendor/Buzz/lib',
-	'Anyx'			   => __DIR__.'/../vendor/bundles'
+    'Sonata'           => __DIR__.'/../vendor/bundles',
+    'FOQ'              => __DIR__.'/../vendor/bundles',
+	'Anyx'			   => __DIR__.'/../vendor/bundles',
 ));
+
 $loader->registerPrefixes(array(
-    'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',
-    'Twig_'            => __DIR__.'/../vendor/twig/lib',
+    'Twig_Extensions_'  => __DIR__.'/../vendor/twig-extensions/lib',
+    'Twig_'             => __DIR__.'/../vendor/twig/lib',
+    'Elastica_'         => __DIR__.'/../vendor/elastica/lib',
 ));
 
 // intl

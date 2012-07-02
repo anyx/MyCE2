@@ -69,9 +69,9 @@
     git=http://github.com/doctrine/mongodb-odm.git
 
 [DoctrineMongoDBBundle]
-    git=http://github.com/symfony/DoctrineMongoDBBundle.git
+    git=http://github.com/doctrine/DoctrineMongoDBBundle.git
     target=/bundles/Symfony/Bundle/DoctrineMongoDBBundle
-    version=v2.0.1
+    version=origin/2.0
 
 [JMSSerializerBundle]
     git=git://github.com/schmittjoh/JMSSerializerBundle.git
@@ -101,7 +101,34 @@
     git=https://github.com/anyx/AnyxSocialUserBundle.git
     target=/bundles/Anyx/SocialUserBundle
 
+[KnpMenu]
+    git=https://github.com/KnpLabs/KnpMenu.git
+
+[KnpMenuBundle]
+    git=https://github.com/KnpLabs/KnpMenuBundle.git
+    target=bundles/Knp/Bundle/MenuBundle
+
+[SonataCacheBundle]
+    git=http://github.com/sonata-project/SonataCacheBundle.git
+    target=/bundles/Sonata/CacheBundle
+
+[SonataBlockBundle]
+    git=http://github.com/sonata-project/SonataBlockBundle.git
+    target=/bundles/Sonata/BlockBundle
+
+[SonatajQueryBundle]
+    git=https://github.com/sonata-project/SonatajQueryBundle.git
+    target=/bundles/Sonata/jQueryBundle
+
 [SonataAdminBundle]
     git=git://github.com/sonata-project/SonataAdminBundle.git
     target=/bundles/Sonata/AdminBundle
+
+[Elastica]
+    git=git://github.com/ruflin/Elastica.git
+    target=elastica
+
+[FOQElasticaBundle]
+    git=git://github.com/Exercise/FOQElasticaBundle.git
+    target=bundles/FOQ/ElasticaBundle
     version=origin/2.0

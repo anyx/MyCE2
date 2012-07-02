@@ -56,7 +56,6 @@ sensio_framework_extra:
     view:    { annotations: true }
     cache:   { annotations: true }
 
-#
 doctrine_mongodb:
     connections:
         default:
@@ -81,6 +80,32 @@ fos_user:
     firewall_name: main
     user_class: Anyx\CrosswordBundle\Document\User
 
+foq_elastica:
+    clients:
+        default: { host: localhost, port: 9200 }
+    indexes:
+        website:
+            client: default
+            types:
+                crossword:
+                  mappings:
+                    title: {boost: 5}
+                    description: {boost: 4}
+                    countSolving: {boost: 3}
+                  persistence:
+                      driver: mongodb
+                      model: Anyx\CrosswordBundle\Document\Crossword
+                      provider: 
+
+sonata_cache:
+    caches:
+        mongo:
+            database:   cache
+            collection: cache
+            servers:
+                - {host: 127.0.0.1, port: 27017, user: username, password: pASS'}
+                - {host: 127.0.0.2}
+
 sonata_block:
     default_contexts: [cms]
     blocks:
@@ -90,6 +115,26 @@ sonata_block:
         sonata.block.service.text:
         sonata.block.service.action:
         sonata.block.service.rss:
+
+sonata_admin:
+    title:      Sonata Project
+    title_logo: /bundles/sonataadmin/logo_title.png
+    templates:
+        # default global templates
+        layout:  SonataAdminBundle::standard_layout.html.twig
+        ajax:    SonataAdminBundle::ajax_layout.html.twig
+
+        # default actions templates, should extend a global templates
+        list:    SonataAdminBundle:CRUD:list.html.twig
+        show:    SonataAdminBundle:CRUD:show.html.twig
+        edit:    SonataAdminBundle:CRUD:edit.html.twig
+    dashboard:
+        blocks:
+            # display a dashboard block
+            - { position: left, type: sonata.admin.block.admin_list }
+
+        groups:
+            default: ~
 
 anyx_social_user:
   fos_user:
