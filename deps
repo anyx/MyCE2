@@ -132,3 +132,12 @@
     git=git://github.com/Exercise/FOQElasticaBundle.git
     target=bundles/FOQ/ElasticaBundle
     version=origin/2.0
+
+[Pagerfanta]
+    git=git://github.com/whiteoctober/Pagerfanta.git
+    target=pagerfanta
+
+[PagerfantaBundle]
+    git=git://github.com/whiteoctober/WhiteOctoberPagerfantaBundle.git
+    target=bundles/WhiteOctober/PagerfantaBundle
+    version=origin/symfony2.0

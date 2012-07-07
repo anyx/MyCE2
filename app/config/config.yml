@@ -20,6 +20,12 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    globals:
+        pagerfanta_opts:
+            previous_message: '&laquo;'
+            next_message:     '&raquo;'
+            dots_message:     '...'
+
     
 # Assetic Configuration
 assetic:
@@ -86,17 +92,31 @@ foq_elastica:
     indexes:
         website:
             client: default
+            settings:
+                index:
+                  analysis:
+                    analyzer: 
+                      ru_snowball:
+                        type : snowball
+#                        tokenizer: standart
+                        language: Russian
+                        filter: [standart, lowercase, ru_snowball_filter]
+                    filter:
+                      ru_snowball_filter:
+                        type: snowball
+                        language: Russian
             types:
                 crossword:
                   mappings:
-                    title: {boost: 5}
-                    description: {boost: 4}
+                    title: {boost: 5, analyzer: ru_snowball}
+                    description: {boost: 4, analyzer: ru_snowball}
                     countSolving: {boost: 3}
                   persistence:
                       driver: mongodb
                       model: Anyx\CrosswordBundle\Document\Crossword
                       provider: 
-
+                      listener:
+                      finder:
 sonata_cache:
     caches:
         mongo:

@@ -25,6 +25,9 @@ $loader->registerNamespaces(array(
     'Knp\Bundle'       => __DIR__.'/../vendor/bundles',
     'Knp\Menu'         => __DIR__.'/../vendor/KnpMenu/src',
     //
+    'WhiteOctober\PagerfantaBundle' => __DIR__.'/../vendor/bundles',
+    'Pagerfanta'       => __DIR__.'/../vendor/pagerfanta/src',
+    //
     'Buzz'             => __DIR__.'/../vendor/Buzz/lib',
     'Sonata'           => __DIR__.'/../vendor/bundles',
     'FOQ'              => __DIR__.'/../vendor/bundles',

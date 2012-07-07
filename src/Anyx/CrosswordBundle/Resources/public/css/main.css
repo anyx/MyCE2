@@ -189,11 +189,11 @@ ul.form-errors {
     width: 235px;
 }
 
+.form .columns > div {
+    margin-bottom: 0px;
+}
+
 /** Main */
-
-
-
-
 #main-title h1 {
     font-size: 32px;
 }
@@ -201,4 +201,25 @@ ul.form-errors {
 /** Profile */
 .profile-container .simple-table > thead > tr > th, .simple-table > thead > tr > td {
     font-size: 13px;
+}
+
+/** Lists */
+div .pagerfanta a, div .pagerfanta span {
+    color: #2D9AD3;
+    border-color: #2D9AD3;
+    padding: 0.25em 0.5em;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;    
+}
+
+div .pagerfanta .current {
+    background: none;
+    border-color: #CCCCFF;
+    color: #CCCCFF;
+}
+
+.results-info {
+    display: block;
+    color: #003d86;
 }

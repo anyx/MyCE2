@@ -105,3 +105,10 @@ Wanna talk?: Хотите поговорить?
 Creation and solution crosswords: Создание и решение кроссвордов
 Preview: Вид
 Wrong symbols in title: Недопустимые символы в названии
+Search: Поиск
+Go search: Искать
+Search term: Искомая строка
+This value is too short. It should have {{ limit }} characters or more: Значение слишком короткое. Должно быть {{ limit }} символов или больше
+Count solving: Количество прохождений
+Unfortunately nothing found: К сожалению, ничего не найдено
+Total found crosswords: Всего найдено кроссвордов

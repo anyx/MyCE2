@@ -32,6 +32,8 @@ class AppKernel extends Kernel
             new Sonata\CacheBundle\SonataCacheBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Sonata\AdminBundle\SonataAdminBundle(),
+            //
+            new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
 			//
             new FOQ\ElasticaBundle\FOQElasticaBundle(),
             //

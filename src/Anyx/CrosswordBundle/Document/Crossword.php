@@ -140,6 +140,22 @@ class Crossword {
         return $this->description;
     }
 
+    /**
+     *
+     * @return DateTime
+     */
+    public function getCreatedAt() {
+        return $this->createdAt;
+    }
+
+    /**
+     *
+     * @return DateTime
+     */
+    public function getUpdatedAt() {
+        return $this->updatedAt;
+    }
+        
     public function getTruncatedDescription( $length = 100, $separator = '...' ) {
         
         $description = $this->description;
