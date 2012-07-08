@@ -15,6 +15,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use Symfony\Component\Validator\Constraints as Validator;
 
+use Pagerfanta;
+use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as Paginator;
 
 /**
  * 
@@ -22,11 +24,25 @@ use Symfony\Component\Validator\Constraints as Validator;
 class ListsController extends Controller {
 
 	/**
-	 * @Route("/new", name="popular_crosswords")
-	 * @Template
+	 * @Route("/new", name="new_crosswords")
+	 * @Template("AnyxCrosswordBundle:Lists:new.html.twig")
 	 */
     public function listNewAction() {
-        return new Response('t');
+		$crosswordsRepository = $this->get( 'anyx.dm' )->getRepository( 'Anyx\CrosswordBundle\Document\Crossword');
+        return array(
+            'result' => $this->getPaginator( $crosswordsRepository->getNewCrosswordsQueryBuilder() )
+        );
+	}
+    
+	/**
+	 * @Route("/popular", name="popular_crosswords")
+	 * @Template
+	 */
+    public function listPopularAction() {
+		$crosswordsRepository = $this->get( 'anyx.dm' )->getRepository( 'Anyx\CrosswordBundle\Document\Crossword');       
+        return array(
+            'result' => $this->getPaginator( $crosswordsRepository->getPopularCrosswordsQueryBuilder() )
+        );
 	}
     
 	/**
@@ -92,5 +108,14 @@ class ListsController extends Controller {
 		$formBuilder->add( 'term', 'text', array('required' => false) );
         
 		return $formBuilder->getForm();
-	}    
+	}
+    
+    /**
+     *
+     * @param \Doctrine\ODM\MongoDB\Query\Builder $builder
+     * @return \Pagerfanta\Pagerfanta 
+     */
+    protected function getPaginator( \Doctrine\ODM\MongoDB\Query\Builder $builder ) {
+        return new Pagerfanta\Pagerfanta( new Paginator( $builder ) );
+    }
 }

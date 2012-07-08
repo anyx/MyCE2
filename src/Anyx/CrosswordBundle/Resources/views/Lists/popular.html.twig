@@ -1,0 +1,20 @@
+{% extends '::main.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{% stylesheets
+        '@WhiteOctoberPagerfantaBundle/Resources/public/css/pagerfantaDefault.css'
+	%}
+		<link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
+{% endblock %}
+
+{% block page_title %}
+    {{ 'Popular crosswords' | trans }}
+{% endblock %}
+
+{% block body %}
+<div class="results clear">
+    {% include 'AnyxCrosswordBundle:Lists:list.html.twig' with {'result': result}  %}
+</div>
+{% endblock %}

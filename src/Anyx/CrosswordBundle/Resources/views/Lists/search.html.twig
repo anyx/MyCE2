@@ -24,24 +24,8 @@
         <span class="results-info margin-bottom">{{ 'Unfortunately nothing found' | trans }}</span>
     {% else %}
         <span class="results-info margin-bottom">{{ 'Total found crosswords' | trans }}: {{ result.count }}</span>
-        <ul>
-        {% for crossword in result %}
-        <li class="margin-bottom">
-            <a href="{{path('crossword_solve', {'id' : crossword.id })}}">{{ crossword.title }}</a>
-            <br>
-            <small>{{ crossword.description | truncate(300)}}</small>
-            <div class="crossword-info  blue-color">
-                <span class="count-solving icon-users icon-size1 color" title="{{ 'Count solving' | trans }}">{{ crossword.countSolving }}</span>
-                <small class="margin-left" title="{{ 'Date create' | trans }}">{{ crossword.createdAt.format('d.m.Y') }}</small>
-            </div>
-        </li>
-        {% endfor %}
-        </ul>
-        <div class="pagerfanta">
-            {{ pagerfanta(result, 'default', pagerfanta_opts) }}
-        </div>        
+        {% include 'AnyxCrosswordBundle:Lists:list.html.twig' with {'result': result}  %}
     {% endif %}
-        
 </div>
 
 {% endblock %}

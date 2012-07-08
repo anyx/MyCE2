@@ -23,8 +23,7 @@ class CrosswordRepository extends DocumentRepository {
 	 * 
 	 */
 	public function getPopular( $limit = 10 ) {
-		return $this->getPublicCrosswordsQueryBuilder()
-			->sort( 'countSolving', 'desc' )
+		return $this->getPopularCrosswordsQueryBuilder()
 			->limit( $limit )
 			->getQuery()
 			->execute();
@@ -34,13 +33,28 @@ class CrosswordRepository extends DocumentRepository {
 	 *
 	 */
 	public function getNew( $limit = 10 ) {
-		return $this->getPublicCrosswordsQueryBuilder()
-			->sort( 'createdAt', 'desc' )
+		return $this->getNewCrosswordsQueryBuilder()
 			->limit( $limit )
 			->getQuery()
 			->execute();
 	}
 
+	/**
+	 *
+	 */
+	public function getPopularCrosswordsQueryBuilder() {
+		return $this->getPublicCrosswordsQueryBuilder()
+			->sort( 'countSolving', 'desc' );
+	}
+
+	/**
+	 *
+	 */
+	public function getNewCrosswordsQueryBuilder() {
+		return $this->getPublicCrosswordsQueryBuilder()
+			->sort( 'createdAt', 'desc' );
+	}
+    
     /**
      *
      * @param Document\User $user
@@ -51,7 +65,7 @@ class CrosswordRepository extends DocumentRepository {
     public function getUserCrosswords( Document\User $user, $limit = 20, $skip = 0 ) {
  		return $this->findBy(
 					array(
-						'owner.id' 		=> $user->getId()
+						'owner.id' => $user->getId()
 					),
 					array(
 						'createdAt' => 'desc'
@@ -68,7 +82,7 @@ class CrosswordRepository extends DocumentRepository {
      */
     public function getUserCrosswordsCount( Document\User $user ) {
 		return $this->createQueryBuilder()
-                    ->field('owner.id')->equals( $user->getId() )
+                    ->field( 'owner.id' )->equals( $user->getId() )
                     ->getQuery()
                     ->count()
         ;   

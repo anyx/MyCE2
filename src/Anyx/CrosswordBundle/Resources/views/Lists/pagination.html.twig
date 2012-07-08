@@ -1,0 +1,5 @@
+{% if result.count > result.maxPerPage %}
+<div class="pagerfanta">
+    {{ pagerfanta(result, 'default', pagerfanta_opts) }}
+</div>
+{% endif %}
