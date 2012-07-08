@@ -2,7 +2,6 @@
 
 namespace Anyx\CrosswordBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Anyx\CrosswordBundle\Document;
 

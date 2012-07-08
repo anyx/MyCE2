@@ -2,14 +2,15 @@
 
 namespace Anyx\CrosswordBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Anyx\CrosswordBundle\Document;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request; 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Anyx\CrosswordBundle\Document;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * 
@@ -23,19 +24,31 @@ class DefaultController extends Controller {
 	 */
     public function indexAction( Request $request ) {
 		
-		$dm = $this->get('anyx.dm');
-		$crosswordsRepository = $dm->getRepository('Anyx\CrosswordBundle\Document\Crossword');
-		
-		return array(
+		$crosswordsRepository = $this->get( 'anyx.dm' )->getRepository( 'Anyx\CrosswordBundle\Document\Crossword');
+        $newCrosswords = $this->getPaginator( $crosswordsRepository->getNewCrosswordsQueryBuilder() );
+        $newCrosswords->setMaxPerPage(5);
+        
+        $popularCrosswords = $this->getPaginator( $crosswordsRepository->getNewCrosswordsQueryBuilder() );
+        $popularCrosswords->setMaxPerPage(5);
+
+        return array(
 			'crosswords' => array(
-				'popular'	=> $crosswordsRepository->getPopular(),
-				'new'		=> $crosswordsRepository->getNew(),
+				'popular'	=> $popularCrosswords,
+				'new'		=> $newCrosswords,
 			), 
             'baseUrl'   => $request->getScheme() . '://' . $request->getHttpHost()
 		);
 	}
 	
 	/**
+	 * @Route("/page", name="page")urn 
+	 * @Template
+	 */
+    public function pageAction() {
+        return array();
+    }
+
+    /**
 	 * 
 	 * @Template("AnyxCrosswordBundle:Crossword:list.html.twig")
 	 */

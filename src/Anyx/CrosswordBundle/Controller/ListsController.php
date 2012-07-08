@@ -2,7 +2,6 @@
 
 namespace Anyx\CrosswordBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -14,9 +13,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use Symfony\Component\Validator\Constraints as Validator;
-
-use Pagerfanta;
-use Pagerfanta\Adapter\DoctrineODMMongoDBAdapter as Paginator;
 
 /**
  * 
@@ -36,7 +32,7 @@ class ListsController extends Controller {
     
 	/**
 	 * @Route("/popular", name="popular_crosswords")
-	 * @Template
+	 * @Template("AnyxCrosswordBundle:Lists:popular.html.twig")
 	 */
     public function listPopularAction() {
 		$crosswordsRepository = $this->get( 'anyx.dm' )->getRepository( 'Anyx\CrosswordBundle\Document\Crossword');       
@@ -56,7 +52,8 @@ class ListsController extends Controller {
         $form->bindRequest( $request );
 
         $result = array();
-        if ( $form->isValid() ) {
+        $isValid = $form->isValid();
+        if ( $isValid ) {
             
             $data = $form->getData();
 
@@ -83,7 +80,8 @@ class ListsController extends Controller {
         
         return array(
             'form'      => $form->createView(),
-            'result'    => $result
+            'result'    => $result,
+            'isValid'   => $isValid
         );
     }
     
@@ -110,12 +108,7 @@ class ListsController extends Controller {
 		return $formBuilder->getForm();
 	}
     
-    /**
-     *
-     * @param \Doctrine\ODM\MongoDB\Query\Builder $builder
-     * @return \Pagerfanta\Pagerfanta 
-     */
-    protected function getPaginator( \Doctrine\ODM\MongoDB\Query\Builder $builder ) {
-        return new Pagerfanta\Pagerfanta( new Paginator( $builder ) );
+    protected function getMenu() {
+
     }
 }

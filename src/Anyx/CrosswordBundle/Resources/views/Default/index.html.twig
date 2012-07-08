@@ -43,7 +43,7 @@
 			</li>
 		{% endfor %}
 		</ul>
-        <a href="#" class="right-link">{% trans %}all{% endtrans %}(0)</a>
+        <a href="{{path('new_crosswords')}}" class="right-link">{% trans %}all{% endtrans %} ({{crosswords.popular.count}})</a>
     </section>
 	{% endif %}
 
@@ -55,10 +55,10 @@
 			<li>
 				<a href="{{ path( 'crossword_solve', { 'id' : crossword.id })}}">{{ crossword.title }}</a>
 				<p class="description">{{crossword.description | truncate(20)}}</p>
-			</li>
+			</li
 		{% endfor %}
 		</ul>
-        <a href="#" class="right-link">{% trans %}all{% endtrans %}(0)</a>
+        <a href="{{path('popular_crosswords')}}" class="right-link">{% trans %}all{% endtrans %} ({{crosswords.new.count}})</a>
 	</section>
 	{% endif %}
 </article>    

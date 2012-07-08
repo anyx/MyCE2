@@ -15,13 +15,21 @@
 	{% endstylesheets %}
 {% endblock %}
 
+{% block page_subtitle %}
+<div class="menu-subtitle">
+    {{ knp_menu_render('AnyxCrosswordBundle:Builder:crosswordsMenu', {'template' : 'AnyxCrosswordBundle:Default:menu.html.twig', 'rootClass' : 'bullets margin-right' }) }}
+</div>
+{% endblock %}
+
 {% block body %}
 
 {% include 'AnyxCrosswordBundle:Lists:form.html.twig' with {'form': form} %}
 
 <div class="results clear">
     {% if result is empty %}
-        <span class="results-info margin-bottom">{{ 'Unfortunately nothing found' | trans }}</span>
+        {% if isValid %}
+            <span class="results-info margin-bottom">{{ 'Unfortunately nothing found' | trans }}</span>
+        {% endif %}
     {% else %}
         <span class="results-info margin-bottom">{{ 'Total found crosswords' | trans }}: {{ result.count }}</span>
         {% include 'AnyxCrosswordBundle:Lists:list.html.twig' with {'result': result}  %}

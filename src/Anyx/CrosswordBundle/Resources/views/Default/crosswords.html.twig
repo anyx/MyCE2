@@ -10,17 +10,8 @@
 {% endblock %}
 
 {% block page_title %}
-    {{ 'Popular crosswords' | trans }}
+    {{ 'Crosswords' | trans }}
 {% endblock %}
 
-{% block page_subtitle %}
-<div class="menu-subtitle">
-    {{ knp_menu_render('AnyxCrosswordBundle:Builder:crosswordsMenu') }}
-</div>
-{% endblock %}
-        
 {% block body %}
-<div class="results clear">
-    {% include 'AnyxCrosswordBundle:Lists:list.html.twig' with {'result': result}  %}
-</div>
 {% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'knp_menu.html.twig' %}
+
+{% block label %}
+{% if options.allow_safe_labels and item.getExtra('safe_label', false) %}{{ item.label|raw }}{% else %}{{ item.label | trans }}{% endif %}
+{% endblock %}
+
+{% block root %}
+{% if 'rootClass' in options|keys %}
+    {% set listAttributes = item.childrenAttributes|merge({ 'class' : options.rootClass }) %}
+{% else %}
+    {% set listAttributes = item.childrenAttributes %}
+{% endif %}
+
+{{ block('list') -}}
+
+{% endblock %}

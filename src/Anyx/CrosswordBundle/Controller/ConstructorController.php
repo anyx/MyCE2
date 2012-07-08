@@ -4,20 +4,15 @@
  */
 namespace Anyx\CrosswordBundle\Controller;
 
-/**
- * 
- */
-use Symfony\Bundle\FrameworkBundle\Controller\Controller,
-	Symfony\Component\HttpFoundation\Response,
-    Symfony\Component\HttpFoundation\Request,
-	Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-	Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
-	Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
-	Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,
+use Anyx\CrosswordBundle\Document;
 
-	//
-	Anyx\CrosswordBundle\Document
-;
+use	Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+
+use	Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use	Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use	Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use	Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * 

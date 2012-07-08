@@ -29,6 +29,8 @@ class AppKernel extends Kernel
 			//
 			new Sensio\Bundle\BuzzBundle\SensioBuzzBundle(),
             //
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            //
             new Sonata\CacheBundle\SonataCacheBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Sonata\AdminBundle\SonataAdminBundle(),

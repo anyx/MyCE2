@@ -12,6 +12,7 @@ crosswords:
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    
 fos_user:
     resource: "@AnyxCrosswordBundle/Resources/config/routing/fos_user.yml"
 

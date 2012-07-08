@@ -38,22 +38,27 @@
     
     <body>
         {% block inlineJavascripts %}{% endblock %}
+        <div class="container header-container orange-gradient">
         <header>
-        <div class="container">
-            <nav role="navigation" class="top-menu">
-                <a href="#">Crosswords</a>
-                {% if app.user %}
-                <a href="{{path('user_profile')}}" title="{{app.user.username}}" class="nav-right" >{{ 'Profile' | trans }}</a>
-                {% else %}
-                <a href="{{path('fos_user_security_login')}}" class="nav-right">{% trans %}Login{%endtrans%}</a>
-                {% endif %}
-                </nav>
-        </div>
+            <nav role="navigation">
+                {{ knp_menu_render('AnyxCrosswordBundle:Builder:topMenu', {'template' : 'AnyxCrosswordBundle:Default:menu.html.twig', 'rootClass' : 'top-menu' }) }}
+                
+                    <div class="relative nav-right">
+                    {% if app.user %}
+                    <a href="{{path('user_profile')}}" title="{{ 'Profile' | trans }}" >{{app.user.username}}</a>
+                    {% else %}
+                    <a href="{{path('fos_user_security_login')}}">{% trans %}Login{%endtrans%}</a>
+                    {% endif %}
+                    </div>
+            </nav>
         </header>
+        </div>
         
         <div class="container logo-container">
-            <div id="logo"></div>
-            <div id="site-name">{%trans%}Crosswords editor{%endtrans%}</div>
+            <a href="{{ path('new_crosswords') }}">
+                <div id="logo"></div>
+                <div id="site-name" class="thin">{%trans%}Crosswords editor{%endtrans%}</div>
+            </a>
         </div>
             
 		<div class="container content">
@@ -85,7 +90,7 @@
             </div>
 		</div>
 
-        <footer>
+        <footer class="black-gradient">
             <div class="container">
             <p>&copy; Company 2012</p>
             </div>
