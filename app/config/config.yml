@@ -73,6 +73,7 @@ doctrine_mongodb:
         default:
             mappings:
                 AnyxCrosswordBundle: ~
+                AnyxPageBundle: ~
                 FOSUserBundle: ~
                 AnyxSocialUserBundle: 
                   prefix: Anyx\SocialUserBundle\Model
@@ -85,7 +86,11 @@ fos_user:
         user_manager: anyx_social_user.user.manager
     firewall_name: main
     user_class: Anyx\CrosswordBundle\Document\User
-
+    profile:
+      form:
+        type: anyx_user_profile
+        handler: anyx_user.form.handler.registration
+    
 foq_elastica:
     clients:
         default: { host: localhost, port: 9200 }
@@ -132,7 +137,7 @@ sonata_block:
         sonata.admin.block.admin_list:
             contexts:   [admin]
 
-        sonata.block.service.text:
+        sonata.block.service.text: 
         sonata.block.service.action:
         sonata.block.service.rss:
 
@@ -151,10 +156,14 @@ sonata_admin:
     dashboard:
         blocks:
             # display a dashboard block
-            - { position: left, type: sonata.admin.block.admin_list }
-
+            #- { position: left, type: sonata.admin.block.admin_list }
         groups:
-            default: ~
+            sonata_page:
+                label: Pages
+                items: 
+                  - sonata.admin.page
+                
+sonata_doctrine_mongo_db_admin: ~
 
 anyx_social_user:
   fos_user:

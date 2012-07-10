@@ -1,0 +1,26 @@
+{% form_theme form 'AnyxCrosswordBundle:Form:theme.html.twig' %}
+
+{% block title %}{{ 'Account settings' | trans }}{% endblock %}
+
+{#
+<a href="{{path('fos_user_change_password')}}">{{ 'Change password' | trans }}</a>
+#}
+
+<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST">
+    {{ form_errors(form) }}
+    <div class="margin-bottom">
+    {{ form_label(form.username) }}
+    {{ form_widget(form.username, { 'attr': { 'class' : 'input full-width' } }) }}
+    {{ form_errors(form.username) }}
+    </div>
+    <div class="margin-bottom">
+    {{ form_label(form.email) }}
+    {{ form_widget(form.email, { 'attr': { 'class' : 'input full-width' } }) }}
+    {{ form_errors(form.email) }}
+    </div>
+
+    {{ form_rest(form) }}
+    <div>
+        <input type="submit" class="button blue-gradient" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" />
+    </div>
+</form>

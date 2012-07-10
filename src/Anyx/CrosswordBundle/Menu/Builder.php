@@ -39,8 +39,8 @@ class Builder extends ContainerAware
     {
         $menu = $factory->createItem('root');
         $menu->addChild('Crosswords', array('route' => 'new_crosswords'));
-        //$menu->addChild('News', array('route' => 'news'));
-        $menu->addChild('About', array('route' => 'page'));        
+        $menu->addChild('News', array('route' => 'page', 'routeParameters' => array('slug' => 'news')));
+        $menu->addChild('About', array('route' => 'page', 'routeParameters' => array('slug' => 'about')));        
         return $menu;
     }
     

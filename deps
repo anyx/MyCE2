@@ -84,10 +84,10 @@
 [FOSUserBundle]
     git=git://github.com/FriendsOfSymfony/FOSUserBundle.git
     target=bundles/FOS/UserBundle
+    version=1.2.0
 
 [Buzz]
     git=https://github.com/kriswallsmith/Buzz.git
-    version=v0.5
 
 [BuzzBundle]
     git=https://github.com/sensio/SensioBuzzBundle.git
@@ -115,6 +115,7 @@
 [SonataBlockBundle]
     git=http://github.com/sonata-project/SonataBlockBundle.git
     target=/bundles/Sonata/BlockBundle
+    version=origin/2.0
 
 [SonatajQueryBundle]
     git=https://github.com/sonata-project/SonatajQueryBundle.git
@@ -123,6 +124,12 @@
 [SonataAdminBundle]
     git=git://github.com/sonata-project/SonataAdminBundle.git
     target=/bundles/Sonata/AdminBundle
+    version=origin/2.0
+
+[SonataDoctrineMongoDBAdminBundle]
+    git=git://github.com/sonata-project/SonataDoctrineMongoDBAdminBundle.git
+    target=/bundles/Sonata/DoctrineMongoDBAdminBundle
+    version=origin/2.0
 
 [Elastica]
     git=git://github.com/ruflin/Elastica.git

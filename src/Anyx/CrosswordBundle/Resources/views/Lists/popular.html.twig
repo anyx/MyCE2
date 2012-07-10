@@ -9,13 +9,19 @@
 	{% endstylesheets %}
 {% endblock %}
 
+{% set title = 'Popular crosswords' | trans %}
+
 {% block page_title %}
-    {{ 'Popular crosswords' | trans }}
+    {{ title }}
 {% endblock %}
 
+{% block title %}
+    {{ title }}
+{% endblock %}
+        
 {% block page_subtitle %}
 <div class="menu-subtitle">
-    {{ knp_menu_render('AnyxCrosswordBundle:Builder:crosswordsMenu') }}
+    {{ knp_menu_render('AnyxCrosswordBundle:Builder:crosswordsMenu', {'template' : 'AnyxCrosswordBundle:Default:menu.html.twig', 'rootClass' : 'bullets margin-right' }) }}
 </div>
 {% endblock %}
         

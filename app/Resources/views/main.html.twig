@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>{% block title %}Tests{% endblock %}</title>
+        <title>Редактор кроссвордов | {% block title %}{% endblock %}</title>
 
 		{% block stylesheets %}
 			{% stylesheets
@@ -46,6 +46,7 @@
                     <div class="relative nav-right">
                     {% if app.user %}
                     <a href="{{path('user_profile')}}" title="{{ 'Profile' | trans }}" >{{app.user.username}}</a>
+                    <a href="{{ path('fos_user_security_logout') }}">[{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}]</a>
                     {% else %}
                     <a href="{{path('fos_user_security_login')}}">{% trans %}Login{%endtrans%}</a>
                     {% endif %}
@@ -78,7 +79,7 @@
 
 			{% for key, flash in app.session.getFlashes() %}
             
-            {% set classes = { 'message' : 'blue-gradient', 'error' : 'red-gradient' } %}
+            {% set classes = { 'message' : 'blue-gradient', 'error' : 'red-gradient', 'fos_user_success' : 'blue-gradient' } %}
 
             <p><div class="message {% if key in classes|keys %} {{classes[key]}} {% endif %}">
 					{{ flash | trans }}

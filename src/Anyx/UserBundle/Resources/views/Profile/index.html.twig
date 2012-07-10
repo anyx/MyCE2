@@ -61,7 +61,6 @@
                 routeNames  : {
                     solved    : '{{ 'Solved' | trans }}',
                     created   : '{{ 'Created' | trans }}',
-                    settings  : '{{ 'Settings' | trans }}'
                 },
                 menuView    : new Anyx.View.ProfileMenu({
                     el			: $('#i-profile-menu'),
@@ -116,7 +115,13 @@
 {% block page_title %}
 	{%trans%}User profile{%endtrans%}
 {% endblock %}
-	
+
+{% block page_subtitle %}
+<div class="menu-subtitle">
+    <a href="{{path('fos_user_profile_edit')}}">{{'Account settings' | trans}}</a>
+</div>
+{% endblock %}
+    
 {% block body %}
 
     <div id="i-profile-menu" class="standard-tabs margin-bottom tabs-active profile-container">
@@ -126,7 +131,6 @@
     </div>
     <div id="i-crosswords" class="with-padding">
     </div>
-	
 	<script type="text/template" id="t-profile-menu">
 		<ul class="tabs">
 			<% _.each(links, function( name, route ) { %>

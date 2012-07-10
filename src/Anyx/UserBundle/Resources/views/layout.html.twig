@@ -1,9 +1,5 @@
 {% extends '::main.html.twig' %}
 
-{% block page_title %}
-    {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
-{% endblock %}
-
 {% block stylesheets %}
 	{{ parent() }}
 	{% stylesheets
@@ -13,38 +9,18 @@
 	{% endstylesheets %}
 {% endblock %}
 
+{% block title %}
+{% block page_title %}{% endblock %}
+{% endblock%}
+        
+        
 {% block body %}
 <div class="columns">
     <div class="seven-columns">
         <div>
-            {#
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                <a href="{{ path('fos_user_security_logout') }}">
-                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                </a>
-            {% else %}
-                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-            {% endif %}
-            #}
-        </div>
-
-        {% for key, message in app.session.getFlashes() %}
-        <div class="{{ key }}">
-            {{ message|trans({}, 'FOSUserBundle') }}
-        </div>
-        {% endfor %}
-
-        {% render "AnyxCrosswordBundle:Default:listAuthServices"  %}
-        <p>{% trans %}or use your account on site{% endtrans %}:</p>
-        <div>
             {% block fos_user_content %}{% endblock fos_user_content %}
         </div>
     </div>
-    <div class="four-columns ">
-        <div class="wrapped relative hint">
-            {{ 'Authorized users can create own crosswords. For solving crosswords authorization not required' | trans }}
-        </div>
-    </div>
+    {% block right_hint %}{% endblock right_hint %}
 </div>
 {% endblock %}

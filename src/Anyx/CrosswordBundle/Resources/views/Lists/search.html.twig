@@ -1,7 +1,13 @@
 {% extends '::main.html.twig' %}
 
+{% set title = 'Search' | trans %}
+
 {% block page_title %}
-    {{ 'Search' | trans }}
+    {{ title }}
+{% endblock %}
+
+{% block title %}
+    {{ title }}
 {% endblock %}
 
 {% block stylesheets %}

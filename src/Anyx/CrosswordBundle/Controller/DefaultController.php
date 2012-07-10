@@ -40,14 +40,6 @@ class DefaultController extends Controller {
 		);
 	}
 	
-	/**
-	 * @Route("/page", name="page")urn 
-	 * @Template
-	 */
-    public function pageAction() {
-        return array();
-    }
-
     /**
 	 * 
 	 * @Template("AnyxCrosswordBundle:Crossword:list.html.twig")

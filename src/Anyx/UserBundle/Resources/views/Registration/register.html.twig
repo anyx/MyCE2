@@ -1,0 +1,17 @@
+{% extends "AnyxUserBundle::layout.html.twig" %}
+
+{% block page_title %}
+{{ 'Registration' | trans }}
+{% endblock%}
+
+{% block right_hint %}
+    <div class="four-columns ">
+        <div class="wrapped relative hint">
+            {{ 'Registered users can create own crosswords' | trans }}
+        </div>
+    </div>
+{% endblock right_hint %}
+
+{% block fos_user_content %}
+{% include "AnyxUserBundle:Registration:register_content.html.twig" %}
+{% endblock fos_user_content %}

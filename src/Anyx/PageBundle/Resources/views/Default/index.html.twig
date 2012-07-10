@@ -1,0 +1,20 @@
+{% extends '::main.html.twig' %}
+
+{% set title = page.title %}
+        
+{% block page_title %}
+    {{ title }}
+{% endblock %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+        
+{% block body %}
+
+<div class="results clear">
+    <div class="page-content">
+        {{ page.text | raw }}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "AnyxUserBundle::layout.html.twig" %}
+
+{% block page_title %}
+    {{ 'Account settings'|trans }}
+{% endblock %}
+
+{% block page_subtitle %}
+<div class="menu-subtitle">
+    <a href="{{path('user_profile')}}">{{ 'Profile' | trans }}</a>
+</div>
+{% endblock %}
+
+{% block fos_user_content %}
+{% include "FOSUserBundle:Profile:edit_content.html.twig" %}
+{% endblock fos_user_content %}

@@ -32,7 +32,9 @@ class AppKernel extends Kernel
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             //
             new Sonata\CacheBundle\SonataCacheBundle(),
+            new Sonata\jQueryBundle\SonatajQueryBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
+            new Sonata\DoctrineMongoDBAdminBundle\SonataDoctrineMongoDBAdminBundle(),
             new Sonata\AdminBundle\SonataAdminBundle(),
             //
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
@@ -43,6 +45,7 @@ class AppKernel extends Kernel
             new Anyx\UserBundle\AnyxUserBundle(),
             new Anyx\SocialBundle\AnyxSocialBundle(),
             new Anyx\SocialUserBundle\AnyxSocialUserBundle(),
+            new Anyx\PageBundle\AnyxPageBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

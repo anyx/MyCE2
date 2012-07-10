@@ -2,18 +2,23 @@
 
 namespace Anyx\UserBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use FOS\UserBundle\Controller as BaseController;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use Anyx\UserBundle\Virtual;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class ProfileController extends Controller {
+use FOS\UserBundle\Model\UserInterface;
+
+/**
+ * 
+ */
+class ProfileController extends BaseController\ProfileController {
 
     /**
      * @Route("/profile/", name="user_profile")
@@ -21,28 +26,36 @@ class ProfileController extends Controller {
      */
     public function indexAction()
     {
-        /*
-        $skip = 0;
-        $securityContext = $this->get('security.context');
-		$currentUser = $securityContext->getToken()->getUser();
-		
-		$crosswordsRepository = $this->get('anyx.dm')->getRepository('Anyx\CrosswordBundle\Document\Solution');
-		*/
-		//$crosswords = $crosswordsRepository->getUserCrosswords( $currentUser, 20, $skip );
-        
-        //var_dump($crosswordsRepository->getUserSolutionsCount( $currentUser)->count());
-        //die();
-        
-        /*
-        $serializer = $this->get('serializer');
-		
-		var_dump( '|', $serializer->serialize( $crosswords->toArray(), 'json' ) );
-        die();
-        */
         return array();
-		
     }
 
+   /**
+     * Edit the user
+     */
+    public function editAction()
+    {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
+
+        $form = $this->container->get('fos_user.profile.form');
+        $formHandler = $this->container->get('fos_user.profile.form.handler');
+
+        $process = $formHandler->process($user);
+
+        if ( $process ) {
+            $this->setFlash('fos_user_success', 'profile.flash.updated');
+
+            return new RedirectResponse($this->container->get('router')->generate('fos_user_profile_edit'));
+        }
+        return $this->container->get('templating')->renderResponse(
+            'FOSUserBundle:Profile:edit.html.'.$this->container->getParameter('fos_user.template.engine'),
+            array('form' => $form->createView(), 'theme' => $this->container->getParameter('fos_user.template.theme'))
+        );
+    }
+    
+    
     /**
      * @Route("/profile/created-crosswords/") 
      */
@@ -50,7 +63,7 @@ class ProfileController extends Controller {
 
         $skip = (int) $request->get('skip', 0);
         
-		$securityContext = $this->get('security.context');
+		$securityContext = $this->container->get('security.context');
 		
 		if ( !$securityContext->isGranted('ROLE_USER') ) {
 			throw new AccessDeniedException;
@@ -58,7 +71,7 @@ class ProfileController extends Controller {
 		
 		$currentUser = $securityContext->getToken()->getUser();
 		
-		$crosswordsRepository = $this->get('anyx.dm')->getRepository('Anyx\CrosswordBundle\Document\Crossword');
+		$crosswordsRepository = $this->container->get('anyx.dm')->getRepository('Anyx\CrosswordBundle\Document\Crossword');
 		
 		$crosswords = $crosswordsRepository->getUserCrosswords( $currentUser, 20, $skip );
 
@@ -67,7 +80,7 @@ class ProfileController extends Controller {
             'totalCount'    => $crosswordsRepository->getUserCrosswordsCount( $currentUser )
         );
         
-		return new Response( $this->get('serializer')->serialize( $response, 'json' ) );       
+		return new Response( $this->container->get('serializer')->serialize( $response, 'json' ) );       
 	}
 
 	/**
@@ -77,7 +90,7 @@ class ProfileController extends Controller {
 
         $skip = (int) $request->get('skip', 0);
         
-		$securityContext = $this->get('security.context');
+		$securityContext = $this->container->get('security.context');
 		
 		if ( !$securityContext->isGranted('ROLE_USER') ) {
 			throw new AccessDeniedException;
@@ -85,7 +98,7 @@ class ProfileController extends Controller {
 		
 		$currentUser = $securityContext->getToken()->getUser();
 		
-		$solutionsRepository = $this->get('anyx.dm')->getRepository('Anyx\CrosswordBundle\Document\Solution');
+		$solutionsRepository = $this->container->get('anyx.dm')->getRepository('Anyx\CrosswordBundle\Document\Solution');
 		
 		$solutions = $solutionsRepository->getUserSolutions( $currentUser, 20, $skip );
 		
@@ -94,7 +107,7 @@ class ProfileController extends Controller {
             'totalCount'    => $solutionsRepository->getUserSolutionsCount( $currentUser )
         );
         
-		return new Response( $this->get('serializer')->serialize( $response, 'json' ) );
+		return new Response( $this->container->get('serializer')->serialize( $response, 'json' ) );
 	}
     
 	/**
@@ -105,16 +118,16 @@ class ProfileController extends Controller {
         $result = false;
         $message = '';
        
-        $dm = $this->get('anyx.dm');
+        $dm = $this->container->get('anyx.dm');
         
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->container->get('security.context')->getToken()->getUser();
         
 		$crosswordsRepository = $dm->getRepository('Anyx\CrosswordBundle\Document\Crossword');
 		
 		$crossword = $crosswordsRepository->getUserCrossword( $currentUser, $id);
         
         if ( empty($crossword) ) {
-            $message = $this->get('translator')->trans('Crossword not found');
+            $message = $this->container->get('translator')->trans('Crossword not found');
         } else {
             $dm->remove($crossword);
             $dm->flush();

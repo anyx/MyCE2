@@ -1,5 +1,19 @@
 {% extends "AnyxUserBundle::layout.html.twig" %}
+
+{% set title = 'layout.login'|trans({}, 'FOSUserBundle') %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block page_title %}
+    {{ title }}
+{% endblock %}
+
 {% block fos_user_content %}
+
+{% render "AnyxCrosswordBundle:Default:listAuthServices"  %}
+<p>{% trans %}or use your account on site{% endtrans %}:</p>
 
 <form action="{{ path("fos_user_security_check") }}" method="post" class="login-form seven-columns">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
@@ -29,3 +43,11 @@
     </p>
 </form>
 {% endblock fos_user_content %}
+
+{% block right_hint %}
+    <div class="four-columns ">
+        <div class="wrapped relative hint">
+            {{ 'Authorized users can create own crosswords. For solving crosswords authorization not required' | trans }}
+        </div>
+    </div>
+{% endblock right_hint %}

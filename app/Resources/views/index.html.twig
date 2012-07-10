@@ -75,9 +75,9 @@
             <a href="{{path('fos_user_security_login')}}" class="nav-right">{% trans %}Login{%endtrans%}</a>
             {% endif %}
             
-			<a href="#" title="{{ 'Creation and solution crosswords' | trans }}" >{%trans%}Crosswords{%endtrans%}</a>
-			<a href="#features" title="{{ 'About' | trans }}">{{ 'About' | trans }}</a>
-			<a href="#links" title="{{ 'Wanna talk?' | trans}}">{%trans%}Contatcs{%endtrans%}</a>
+			<a href="{{ path('new_crosswords') }}" title="{{ 'Creation and solution crosswords' | trans }}" >{%trans%}Crosswords{%endtrans%}</a>
+			<a href="{{ path('page') }}" title="{{ 'About' | trans }}">{{ 'About' | trans }}</a>
+			<a href="{{ path('page') }}" title="{{ 'Wanna talk?' | trans}}">{%trans%}Contatcs{%endtrans%}</a>
 		</nav>
 
 		<hgroup>
