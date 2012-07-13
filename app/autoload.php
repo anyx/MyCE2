@@ -30,6 +30,7 @@ $loader->registerNamespaces(array(
     //
     'Buzz'             => __DIR__.'/../vendor/Buzz/lib',
     'Sonata'           => __DIR__.'/../vendor/bundles',
+    'Application'      => __DIR__,
     'FOQ'              => __DIR__.'/../vendor/bundles',
 	'Anyx'			   => __DIR__.'/../vendor/bundles',
 ));

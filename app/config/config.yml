@@ -156,14 +156,18 @@ sonata_admin:
     dashboard:
         blocks:
             # display a dashboard block
-            #- { position: left, type: sonata.admin.block.admin_list }
+            - { position: left, type: sonata.admin.block.admin_list }
         groups:
             sonata_page:
-                label: Pages
+                label: Documents
                 items: 
                   - sonata.admin.page
-                
+                  - sonata.admin.user
+
 sonata_doctrine_mongo_db_admin: ~
+
+sonata_user:
+  manager_type: mongodb                
 
 anyx_social_user:
   fos_user:

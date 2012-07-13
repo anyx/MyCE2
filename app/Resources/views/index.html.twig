@@ -11,10 +11,10 @@
 	<!-- Use the .htaccess and remove these lines to avoid edge case issues.
 			 More info: h5bp.com/i/378 -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-	<title>{% block title %}Tests{% endblock %}</title>
-	<meta name="description" content="Building a web app for desktop and mobile devices? Developr is for you. Write your code once, and let it handle the magic of responsive webdesign.">
-	<meta name="author" content="Display:inline">
+    <title>{% block title %}{% endblock %}</title>
+    {% set description = 'Crossword editor. Service for creating and solving crosswords' | trans %}
+	<meta name="description" content="{{ description }}" />
+	<meta name="keywords" content="{{ 'site.keywords' | trans }}" />
 
     {% block stylesheets %}
         {% stylesheets
@@ -51,7 +51,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ url('homepage') }}" />
     <meta property="og:site_name" content="{{ 'Crossword editor' | trans }}" />
-	<meta property="og:description" content="{{ 'Crossword editor. Service for creating and solving crosswords' | trans }}" />
+	<meta property="og:description" content="{{ description }}" />
 	<meta property="og:image" content="{{baseUrl}}{{ asset('img/logo.png') }}" />
 
 	<!-- All JavaScript at the bottom, except this Modernizr build.
@@ -76,8 +76,8 @@
             {% endif %}
             
 			<a href="{{ path('new_crosswords') }}" title="{{ 'Creation and solution crosswords' | trans }}" >{%trans%}Crosswords{%endtrans%}</a>
-			<a href="{{ path('page') }}" title="{{ 'About' | trans }}">{{ 'About' | trans }}</a>
-			<a href="{{ path('page') }}" title="{{ 'Wanna talk?' | trans}}">{%trans%}Contatcs{%endtrans%}</a>
+			<a href="{{ path('page', {'slug' : 'about'}) }}" title="{{ 'About' | trans }}">{{ 'About' | trans }}</a>
+			<a href="{{ path('page', {'slug' : 'links'}) }}" title="{{ 'Wanna talk?' | trans}}">{%trans%}Contatcs{%endtrans%}</a>
 		</nav>
 
 		<hgroup>

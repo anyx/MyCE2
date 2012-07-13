@@ -100,7 +100,7 @@ Crossword saved successfully: Кроссворд успешно сохранен
 Crossword can be published if he contains more than one word: Кроссворд может быть опубликован, если он содержит более одного слова
 Go to constructor: Перейти к конструктору
 Crossword editor: Редактор кроссвордов
-Crossword editor. Service for creating and solving crosswords: Редактор кроссвордов. Сервис для создания и решения кроссвордов.
+Crossword editor. Service for creating and solving crosswords: Редактор кроссвордов. Сервис для создания и решения кроссвордов
 About: О проекте
 Wanna talk?: Хотите поговорить?
 Creation and solution crosswords: Создание и решение кроссвордов
@@ -118,7 +118,8 @@ Popular crosswords: Популярные кроссворды
 all: все
 Welcome to crossword editor: Редактор кроссвордов | Добро пожаловать
 Account settings: Настройки аккаунта
-
+site:
+  keywords: 'Кроссворды, редактор кроссвордов, конструктор кроссвордов, коллекция кроссвордов, новые кроссворды, кроссворды по ЕГЭ'
 # Group
 group:
     edit:

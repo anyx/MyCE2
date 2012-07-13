@@ -14,3 +14,8 @@ services:
     anyx.document.factory:
         class: %anyx.document.factory.class%
         arguments: [ "@doctrine.odm.mongodb.document_manager", %anyx.document.aliases%]
+    sonata.admin.user:
+        class: Anyx\CrosswordBundle\Admin\Document\User
+        tags:
+            - { name: sonata.admin, manager_type: doctrine_mongodb, label: Users }
+        arguments: [null, Anyx\CrosswordBundle\Document\User, SonataAdminBundle:CRUD]
