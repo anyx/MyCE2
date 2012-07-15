@@ -94,7 +94,6 @@
 {% block stylesheets %}
 	{{ parent() }}
 	{% stylesheets
-        '@AnyxCrosswordBundle/Resources/public/css/styles/form.css'
 		'@AnyxCrosswordBundle/Resources/public/css/styles/modal.css'
 		'@AnyxCrosswordBundle/Resources/public/css/editor.css'
 	%}
@@ -102,6 +101,7 @@
 	{% endstylesheets %}
 {% endblock %}
 
+        
 {% block page_title %}
     {%trans%}Construct crossword{%endtrans%} &laquo;{{crossword.title}}&raquo;
 {% endblock %}
@@ -111,6 +111,9 @@
     <a href="{{ path('crossword_edit', {'id' : crossword.id} )}}">{%trans%}Edit{%endtrans%}</a>
 </div>
 {% endblock %}
+
+    
+{% block title %}{%trans%}Construct crossword{%endtrans%} &laquo;{{crossword.title}}&raquo;{%endblock%}
     
 {% block body %}
 <div class="columns">

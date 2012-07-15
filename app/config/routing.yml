@@ -25,10 +25,6 @@ admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
     prefix: /admin
 
-soanata_user:
-    resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
-    prefix: /admin
- 
 sonata_user_impersonating:
     pattern: /
     defaults: { _controller: SonataPageBundle:Page:catchAll }

@@ -1,3 +1,7 @@
+HTML {
+  width:100%;
+  height:100%
+}
 HTML BODY {
     background: rgb(0,3,43); /* Old browsers */
     background: -moz-linear-gradient(-45deg,  rgba(0,3,43,1) 0%, rgba(7,226,234,1) 100%); /* FF3.6+ */
@@ -7,19 +11,64 @@ HTML BODY {
     background: -ms-linear-gradient(-45deg,  rgba(0,3,43,1) 0%,rgba(7,226,234,1) 100%); /* IE10+ */
     background: linear-gradient(-45deg,  rgba(0,3,43,1) 0%,rgba(7,226,234,1) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00032b', endColorstr='#07e2ea',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    min-height: 100%;
+    height: auto !important;
     height: 100%;
+    position: relative;
 }
 
 .container {
   width: 940px;
   margin: 0 auto;
 }
-.container .columns:last-child {
-    margin-bottom: 0px;
+
+.content {
+    background: #fff;
+    padding: 20px;
+    -webkit-box-shadow: 0 2px 5px black;
+    -moz-box-shadow: 0 2px 5px black;
+    box-shadow: 0 2px 5px black;
+    min-height: 300px;
+    margin-bottom: 40px;
+}
+
+.dummy {
+    height: 130px;
+}
+
+BODY FOOTER {
+    display: block;
+    height: 130px;
+    width: 100%;
+    margin-top: -130px;
+    padding: 20px 10px;
+    position: absolute;
+    bottom: 0;
 }
 
 header {
     height: 2.9em;
+}
+
+.footer-menu a {
+    color: #999;
+}
+.footer-menu li {
+  list-style: none;
+  padding-right: 10px;
+  display: inline;
+}
+
+.copyright {
+    padding-top: 45px;
+    text-align: right;
+    color: #bfbfbf;
+}
+.copyright a {
+    color: #777;
+}
+.container .columns:last-child {
+    margin-bottom: 0px;
 }
 
 .header-container {
@@ -91,6 +140,9 @@ header {
     -moz-opacity: 1;
     opacity: 1;
 }
+.header-container .user-menu a {
+    padding: 0;   
+}
 .ie8 .header-container li a:hover:after {
     display: block;
 }
@@ -98,7 +150,13 @@ header {
     padding-bottom: 4px;
     border-bottom: 4px solid #66ccff;
 }
-
+.header-container .header-form {
+    display: inline;
+}
+.header-container .header-form .search-input {
+    padding-bottom: 3px;
+    padding-top: 6px;
+}
 
 #logo {
     width: 159px;
@@ -118,20 +176,6 @@ header {
     left: 145px;
     width: 60px;
     line-height: 24px;
-}
-
-.content {
-    background: #fff;
-    padding: 20px;
-    -webkit-box-shadow: 0 2px 5px black;
-    -moz-box-shadow: 0 2px 5px black;
-    box-shadow: 0 2px 5px black;    
-}
-
-BODY FOOTER {
-    height: 250px;
-    margin-top: 40px;
-    padding: 20px 10px;
 }
 
 BODY FOOTER.black-gradient {

@@ -1,14 +1,5 @@
 {% extends '::main.html.twig' %}
 
-{% block stylesheets %}
-	{{ parent() }}
-	{% stylesheets
-        '@AnyxCrosswordBundle/Resources/public/css/styles/form.css'
-	%}
-        <link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
-	{% endstylesheets %}
-{% endblock %}
-
 {% block title %}
 {% block page_title %}{% endblock %}
 {% endblock%}

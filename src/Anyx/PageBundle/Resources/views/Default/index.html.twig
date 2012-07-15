@@ -10,9 +10,9 @@
     {{ page.description }}
 {% endblock %}
 
-{% block page_keywords %}
-    {{ page.keywords }}
-{% endblock %}
+{% block page_keywords %}{% spaceless %}
+{{ page.keywords }}
+{% endspaceless %}{% endblock %}
 
 
 {% block title %}

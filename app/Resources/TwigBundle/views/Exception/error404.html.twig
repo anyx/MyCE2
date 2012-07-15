@@ -1,0 +1,29 @@
+{% extends '::main.html.twig' %}
+
+{% set title = 'Page not found' | trans %}
+        
+{% block page_title %}
+    {{ title }}
+{% endblock %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+        
+{% block body %}
+
+
+<div class="margin-bottom"></div>
+<div class="columns">
+    <div class="four-columns h">
+        <div class="red" style="line-height: 140px; font-size: 140px;">404</div>
+    </div>
+    <div class="six-columns">
+        <p class="margin-bottom" style="padding-top: 30px">{{ 'site.error.not_found' | trans }}</p>
+        
+        <p><a href="{{ path('report') }}">{{ 'Report a bug' | trans }}</a>
+        </p>
+    </div>
+</div>
+
+{% endblock %}

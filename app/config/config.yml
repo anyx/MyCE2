@@ -142,7 +142,7 @@ sonata_block:
         sonata.block.service.rss:
 
 sonata_admin:
-    title:      Sonata Project
+    title:     Editor
     title_logo: /bundles/sonataadmin/logo_title.png
     templates:
         # default global templates
@@ -165,9 +165,6 @@ sonata_admin:
                   - sonata.admin.user
 
 sonata_doctrine_mongo_db_admin: ~
-
-sonata_user:
-  manager_type: mongodb                
 
 anyx_social_user:
   fos_user:
@@ -199,7 +196,7 @@ anyx_social:
       secret:            jpIAY6YiK2JnIxIbSbTH
       scope:             notify,offline
       user_fields:            uid, first_name, last_name, nickname, screen_name, sex, bdate (birthdate), city, country, timezone, photo, photo_medium, photo_big, has_mobile, rate, contacts, education, online, counters
-      
+
 #aliases
 services:
     anyx.dm: "@doctrine.odm.mongodb.document_manager"
@@ -219,4 +216,5 @@ services:
       class: Anyx\CrosswordBundle\Listener\SolutionListener
       tags:
         - { name: doctrine.odm.mongodb.default_event_listener, event: postPersist, method: postPersist}
+        
         

@@ -27,6 +27,10 @@
         
 {% block body %}
 <div class="results clear">
-    {% include 'AnyxCrosswordBundle:Lists:list.html.twig' with {'result': result}  %}
+    {% if result is not empty %}
+        {% include 'AnyxCrosswordBundle:Lists:list.html.twig' with {'result': result}  %}
+    {% else %}
+        <div>{{ 'Crosswords not found' | trans }}</div>
+    {% endif %}    
 </div>
 {% endblock %}

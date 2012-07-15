@@ -16,6 +16,9 @@
           <argument />
           <argument>Anyx\PageBundle\Document\Page</argument>
           <argument>SonataAdminBundle:CRUD</argument>
+          <call method="setTranslationDomain">
+            <argument>AnyxPageBundle</argument>
+          </call>
       </service>        
     </services>
 </container>

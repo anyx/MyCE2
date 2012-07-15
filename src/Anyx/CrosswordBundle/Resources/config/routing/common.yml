@@ -17,10 +17,11 @@ solving:
 lists:
     resource: "@AnyxCrosswordBundle/Controller/ListsController.php"
     type:     annotation
-  
-#words_save:
-#    pattern:  /constructor/{id}/save
-#    defaults: { _controller: AnyxCrosswordBundle:Constructor:save }
+
+#todo  
+report:
+    pattern:  /report
+    defaults: { _controller: AnyxPageBundle:Default:index, slug : 'report' }
 
 crossword_edit:
     pattern:  /crossword/edit/{id}

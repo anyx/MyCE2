@@ -111,11 +111,17 @@
 
 	{% endjavascripts %}    
 {% endblock %}        
-        
+
+{% set title = 'User profile' | trans %}
 {% block page_title %}
-	{%trans%}User profile{%endtrans%}
+	{{ title }}
 {% endblock %}
 
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+    
 {% block page_subtitle %}
 <div class="menu-subtitle">
     <a href="{{path('fos_user_profile_edit')}}">{{'Account settings' | trans}}</a>
@@ -181,7 +187,7 @@
 			<tr>
 				<td colspan="3">
 					{%trans%}Solutions not found{%endtrans%}
-					<a href="#">{%trans%}Want now?{%endtrans%}</a>
+					<a href="{{ path('new_crosswords')}}">{%trans%}Want now?{%endtrans%}</a>
 				</td>
 			</tr>
 		<% } %>

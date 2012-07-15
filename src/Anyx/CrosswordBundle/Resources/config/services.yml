@@ -6,7 +6,7 @@ parameters:
         Solution: Anyx\CrosswordBundle\Document\Solution
         Answer: Anyx\CrosswordBundle\Document\Answer
         User: Anyx\CrosswordBundle\Document\User
-        
+    exception.recipients : ['alx.devel@gmail.com']
     anyx.mapping.types:
           Point: Anyx\CrosswordBundle\Doctrine\Type\Point
     
@@ -19,3 +19,8 @@ services:
         tags:
             - { name: sonata.admin, manager_type: doctrine_mongodb, label: Users }
         arguments: [null, Anyx\CrosswordBundle\Document\User, SonataAdminBundle:CRUD]
+    exceptions.listener:
+      class: Anyx\CrosswordBundle\Listener\KernelExceptionListener
+      arguments: [ %exception.recipients%, @service_container]
+      tags:
+        - { name: kernel.event_listener, event: kernel.exception, method: onKernelException}  

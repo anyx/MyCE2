@@ -1,6 +1,7 @@
 Username: Имя
 Welcome: Добро пожаловать
 This is another service for solving and creating crosswords: Это сервис для решения и создания кроссвордов
+All rights must be reserved: Все права должны быть защищены
 Learn more: Узнать больше
 Popular crosswords: Популярные кроссворды
 Last crosswords: Свежие кроссворды
@@ -70,6 +71,7 @@ free!: бесплатно!
 Share: Поделиться
 Try: Попробовать
 Crosswords editor: Редактор кроссвордов
+Crosswords not found: Кроссворды не найдены
 Login through social services: Вы можете войти на сайт, используя аккаунт в социальных сервисах
 or use your account on site: или использовать зарегистрированный на сайте аккаунт
 Bad credentials: Неверная пара логин/пароль
@@ -95,6 +97,10 @@ Create: Создать
 More: Еще
 Error: Ошибка
 Close: Закрыть
+Crosswords not found: Кроссворды не найдены
+Solutions not found: Решения не найдены
+Want create now?: Хотите создать сейчас?
+Want now?: Хотите разгадать что-нибудь? 
 Type crossword title and description. After save you can start adding words.: Введите название о описание кроссворда. После сохранения вы сможете приступить к добавлению слов к кроссворду.
 Crossword saved successfully: Кроссворд успешно сохранен
 Crossword can be published if he contains more than one word: Кроссворд может быть опубликован, если он содержит более одного слова
@@ -118,8 +124,14 @@ Popular crosswords: Популярные кроссворды
 all: все
 Welcome to crossword editor: Редактор кроссвордов | Добро пожаловать
 Account settings: Настройки аккаунта
+Page not found: Страница не найдена
+Report a bug: Сообщить об ошибке
+Find crosswords: Поиск кроссвордов
 site:
   keywords: 'Кроссворды, редактор кроссвордов, конструктор кроссвордов, коллекция кроссвордов, новые кроссворды, кроссворды по ЕГЭ'
+  error:
+    not_found: 'К сожалению, страница, на которую вы пытались попасть, не найдена. Если вы уверены, что то произошло по нашей ошибке, сообщите об этом.'
+    internal: 'К сожалению, произошла внутренняя ошибка сервера. Если вы видите это страницу, то мы уже в курсе проблемы и работаем над исправлением. Однако, вы можете помочь нам, описав, при каких условиях произошла ошибка, или написать любые пожелания'
 # Group
 group:
     edit:

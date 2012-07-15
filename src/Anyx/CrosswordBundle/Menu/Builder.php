@@ -39,9 +39,17 @@ class Builder extends ContainerAware
     {
         $menu = $factory->createItem('root');
         $menu->addChild('Crosswords', array('route' => 'new_crosswords'));
-        $menu->addChild('News', array('route' => 'page', 'routeParameters' => array('slug' => 'news')));
-        $menu->addChild('About', array('route' => 'page', 'routeParameters' => array('slug' => 'about')));        
         return $menu;
     }
     
+    public function bottomMenu(FactoryInterface $factory, array $options)
+    {
+        $menu = $factory->createItem('root');
+        $menu->addChild('Crosswords', array('route' => 'new_crosswords'));
+        $menu->addChild('News', array('route' => 'page', 'routeParameters' => array('slug' => 'news')));
+        $menu->addChild('About', array('route' => 'page', 'routeParameters' => array('slug' => 'about')));        
+        $menu->addChild('Report a bug', array('route' => 'report'));        
+
+        return $menu;
+    }
 }

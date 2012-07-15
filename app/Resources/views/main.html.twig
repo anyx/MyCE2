@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>{{ 'Crosswords editor' | trans }} | {% block title %}{% endblock %}</title>
+        <title>{% block title %}{% endblock %} | {{ 'Crosswords editor' | trans }}</title>
 
 		{% block stylesheets %}
 			{% stylesheets
@@ -10,6 +10,7 @@
 				'@AnyxCrosswordBundle/Resources/public/css/reset.css'
 				'@AnyxCrosswordBundle/Resources/public/css/style.css'
 				'@AnyxCrosswordBundle/Resources/public/css/colors.css'
+                '@AnyxCrosswordBundle/Resources/public/css/styles/form.css'
 			%}
 				<link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
 			{% endstylesheets %}
@@ -47,7 +48,11 @@
             <nav role="navigation">
                 {{ knp_menu_render('AnyxCrosswordBundle:Builder:topMenu', {'template' : 'AnyxCrosswordBundle:Default:menu.html.twig', 'rootClass' : 'top-menu' }) }}
                 
-                    <div class="relative nav-right">
+                    <form action="{{ path('search_crosswords') }}" method="GET" class="header-form">
+                    <input class="input search-input" name="form[term]" placeholder="{{ 'Find crosswords' | trans }}"/>
+                    <button type="submit" class="button icon-search compact blue-gradient" title="{{ 'Search' | trans }}"></button>
+                    </form>
+                    <div class="relative nav-right user-menu">
                     {% if app.user %}
                     <a href="{{path('user_profile')}}" title="{{ 'Profile' | trans }}" >{{app.user.username}}</a>
                     <a href="{{ path('fos_user_security_logout') }}">[{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}]</a>
@@ -94,10 +99,16 @@
 
             </div>
 		</div>
-
+            
+        <div class="dummy"></div>
+        
         <footer class="black-gradient">
             <div class="container">
-            <p>&copy; Company 2012</p>
+            <div class="columns">
+                    {{ knp_menu_render('AnyxCrosswordBundle:Builder:bottomMenu', {'template' : 'AnyxCrosswordBundle:Default:menu.html.twig', 'rootClass' : 'footer-menu' }) }}
+            </div>
+            <div class="float-right copyright">
+                <p>{{ 'All rights must be reserved' | trans }} <br />&copy; <a href="http://anyx.me">anyx</a> {{ "now"|date("Y") }}</p>
             </div>
         </footer>            
     </body>
