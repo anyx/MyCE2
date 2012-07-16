@@ -22,6 +22,9 @@ monolog:
 assetic:
     use_controller: true
 
+swiftmailer:
+    transport: null
+
 jms_serializer:
     metadata:
         auto_detection: true
