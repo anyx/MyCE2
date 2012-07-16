@@ -71,8 +71,6 @@ class KernelExceptionListener {
             ->setBody( $this->renderBody( $exception ) )
         ;
         
-        echo($message->getBody());
-        die();
         $mailer->send( $message );
     }
     
