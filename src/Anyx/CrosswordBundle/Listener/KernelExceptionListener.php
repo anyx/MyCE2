@@ -14,12 +14,43 @@ class KernelExceptionListener {
      */
     private $recipients = array();
 
+    /**
+     *
+     * @var Container
+     */
     private $container;
 
+    /**
+     *
+     */
+    private $messageTemplate;
 
-    public function __construct( array $recipients, Container $container ) {
+    /**
+     *
+     * @param array $recipients
+     * @param string $messageTemplate
+     * @param Container $container 
+     */
+    public function __construct( array $recipients, $messageTemplate, Container $container ) {
         $this->recipients = $recipients;
         $this->container = $container;
+        $this->messageTemplate = $messageTemplate;
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function getRecipients() {
+        return $this->recipients;
+    }
+    
+    /**
+     *
+     * @return string
+     */
+    public function getMessageTemplate() {
+        return $this->messageTemplate;
     }
 
     /**
@@ -27,17 +58,34 @@ class KernelExceptionListener {
      * @param GetResponseForExceptionEvent $event
      */
     public function onKernelException(GetResponseForExceptionEvent $event) {
+        
         $exception = $event->getException();
         
         $mailer = $this->container->get('mailer');
-        var_dump( $mailer );
-        die();
-        $response = new Response();
-        // setup the Response object based on the caught exception
-        $event->setResponse($response);
 
-        // you can alternatively set a new Exception
-        // $exception = new \Exception('Some special exception');
-        // $event->setException($exception);
+        $message = $mailer->createMessage()
+            ->setSubject('Unhandled exception')
+            ->setTo( $this->getRecipients() )
+            ->setFrom('no-reply@anyx.me')
+            ->setContentType('text/html')
+            ->setBody( $this->renderBody( $exception ) )
+        ;
+        
+        echo($message->getBody());
+        die();
+        $mailer->send( $message );
+    }
+    
+    private function renderBody( \Exception $exception ) {
+        return $this->container
+                ->get('templating')
+                ->render(
+                        $this->getMessageTemplate(),
+                        array(
+                            'class'     => get_class($exception),
+                            'exception' => $exception,
+                            'token'     => $this->container->get('security.context')->getToken()
+                        )
+                );
     }
 }

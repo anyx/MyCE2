@@ -6,7 +6,8 @@ parameters:
         Solution: Anyx\CrosswordBundle\Document\Solution
         Answer: Anyx\CrosswordBundle\Document\Answer
         User: Anyx\CrosswordBundle\Document\User
-    exception.recipients : ['alx.devel@gmail.com']
+    anyx.exception.recipients: ['alx.devel@gmail.com']
+    anyx.exception.template: 'AnyxCrosswordBundle:Exception:mail.html.twig'
     anyx.mapping.types:
           Point: Anyx\CrosswordBundle\Doctrine\Type\Point
     
@@ -21,6 +22,6 @@ services:
         arguments: [null, Anyx\CrosswordBundle\Document\User, SonataAdminBundle:CRUD]
     exceptions.listener:
       class: Anyx\CrosswordBundle\Listener\KernelExceptionListener
-      arguments: [ %exception.recipients%, @service_container]
+      arguments: [ %anyx.exception.recipients%, %anyx.exception.template%,"@service_container"]
       tags:
         - { name: kernel.event_listener, event: kernel.exception, method: onKernelException}  

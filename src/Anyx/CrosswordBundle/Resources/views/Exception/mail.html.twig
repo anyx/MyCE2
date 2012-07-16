@@ -1,0 +1,28 @@
+<div>
+    <b>Message:</b> {{ exception.message }}
+</div>
+<div>
+    <b>Class:</b> {{class}}
+</div>
+<div>
+    <b>Code:</b> {{exception.code}}
+</div>
+<div>
+    <b>File:</b> {{exception.file}}({{exception.line}})
+</div>
+<div>
+    <b>Stack:</b> <pre>{{ exception.traceAsString }}</pre>
+</div>
+<div>
+    <b>Token:</b> {{ token }}
+</div>
+<div>
+    <b>Uri:</b> {% debug app.request.requestUri %}
+</div>
+<div>
+    <b>Server:</b> {% debug app.request.server %}
+</div>
+<div>
+    <b>Session:</b> {% debug app.request.session %}
+</div>
+
