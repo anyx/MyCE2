@@ -32,11 +32,12 @@ class DefaultController extends Controller {
         $popularCrosswords->setMaxPerPage(5);
 
         return array(
-			'crosswords' => array(
+			'crosswords'=> array(
 				'popular'	=> $popularCrosswords,
 				'new'		=> $newCrosswords,
 			), 
-            'baseUrl'   => $request->getScheme() . '://' . $request->getHttpHost()
+            'baseUrl'   => $request->getScheme() . '://' . $request->getHttpHost(),
+            'vkOptions'    => $this->container->get('anyx_social.provider.factory')->getProviderOptions('vkontakte')
 		);
 	}
 	
