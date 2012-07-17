@@ -184,18 +184,18 @@ anyx_social_user:
 anyx_social:
   services:
     facebook:
-      client_id:         114949468588006
-      secret:            15266750e6ae656f3fab05a807c405f5
+      client_id:         204794436315935
+      secret:            696828e5efec599af84e2c9d65318216
       scope:             email,user_about_me
     twitter:
-      client_id:         7EpGiK7VCRTnLzEoELme2w
-      secret:            rM3NuRHI2v8I9AKKOgIZnMTxwsYck4VyhmlLe7ip8
+      client_id:         eIuU85pDoKrou9YahB2hZQ
+      secret:            rxeR7cd5Sw57OSidJ0GhQNEYbaowSNjHtO74zYxwjP0
       scope:             email,user_about_me
     vkontakte:
-      client_id:         2399701
-      secret:            jpIAY6YiK2JnIxIbSbTH
+      client_id:         3039748
+      secret:            r2O6bBlGGBO9eybDHarx
       scope:             notify,offline
-      user_fields:            uid, first_name, last_name, nickname, screen_name, sex, bdate (birthdate), city, country, timezone, photo, photo_medium, photo_big, has_mobile, rate, contacts, education, online, counters
+      user_fields:       uid, first_name, last_name, nickname, screen_name, sex, bdate (birthdate), city, country, timezone, photo, photo_medium, photo_big, has_mobile, rate, contacts, education, online, counters
 
 #aliases
 services:
