@@ -1,7 +1,6 @@
 .crossword-solver {
 	position: relative;
-	width:600px;
-	height:600px;
+    height: 100%;
 }
 /* Word */
 TABLE.solver-word-table, .solver-word-table TD {
@@ -24,4 +23,9 @@ TABLE.solver-word-table, .solver-word-table TD {
 	text-align: center;
 	padding: 0px;
 	margin-bottom: 0px;
+}
+.definitions-panel ul {
+    list-style: none;
+    margin-left: 0px;
+    padding-left: 0px;
 }

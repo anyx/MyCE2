@@ -53,8 +53,8 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 
 		this.initKeysEvents();
 
-        if ( !_.isEmpty(this.options.answers) ) {
-            this.setAnswers( this.options.answers );
+        if ( !_.isEmpty(this.options.solution) ) {
+            this.setAnswers( this.options.solution.answers );
         }
 
         /**
@@ -323,7 +323,13 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
      */
     setAnswers  : function( answers ) {
         _.each(answers, function( answer ) {
-            var wordElement = this.options.el.find('DIV[data-id=' + answer.wordId + ']');
+            var wordElement = this.options.el.find('DIV[data-id=' + answer.word_id + ']');
+            var cells = wordElement.find('TD INPUT');
+            if ( cells.length > 0 ) {
+                cells.each(function(i){
+                    $(this).val(answer.text[i]);
+                });
+            }
         }, this);
     }
 });

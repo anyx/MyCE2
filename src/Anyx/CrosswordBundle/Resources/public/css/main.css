@@ -287,7 +287,7 @@ div.hint {
 }
 
 ul.form-errors {
-    margin-left: 0px;
+    margin: 16px 0px;
 }
 .form-errors li {
     list-style: none;

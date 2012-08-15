@@ -30,7 +30,6 @@
 				el			: $('.i-crossword'),
 				cellSize	: 19,
 				words		: {{ crossword.wordsForSolving | serialize | raw }},
-                answers     : {{ answers | serialize | raw }},
 				selectors	: {
 					verticalPanel	: '.i-vertical-container',
 					horizontalPanel : '.i-horizontal-container',
@@ -46,7 +45,8 @@
                                     {
                                         id : '{{ crossword.id }}'
                                     }
-                )
+                ),
+                solution    : {{ solution | raw }}
 			});
 		});	
 	</script>
@@ -66,12 +66,11 @@
 {% block page_title %}{%trans%}Solving crossword{%endtrans%} &laquo;{{crossword.title}}&raquo; {% endblock %}
 
 {% block body %}
-
-<div class="row">
-	<div class="span7">
+<div class="columns">
+	<div class="eight-columns">
 		<div class="i-crossword crossword-solver"></div>
 	</div>
-	<div class="span4">
+	<div class="four-columns definitions-panel">
 		<h4>{%trans%}Horizontal{%endtrans%}</h4>
 		<ul class="i-horizontal-container">
 		</ul>
@@ -79,7 +78,7 @@
 		<ul class="i-vertical-container">
 		</ul>
 		
-		<input type="button" class="btn btn-primary i-save-button" value="{% trans %}Save{% endtrans %}" />	
+		<input type="button" class="button blue-gradient i-save-button" value="{% trans %}Save{% endtrans %}" />	
 	</div>	
 </div>	
 

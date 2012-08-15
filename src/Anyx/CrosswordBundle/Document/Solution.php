@@ -19,10 +19,11 @@ class Solution {
 
 	/**
 	 * @MongoDB\Id
+     * @Serializer\Groups({"solving","profile"})
 	 */
 	protected $id;
 
-	/**
+    /**
 	 * @MongoDB\ReferenceOne(targetDocument="User")
 	 * 
 	 * @Serializer\Exclude
@@ -31,26 +32,36 @@ class Solution {
 
 	/**
 	 * @MongoDB\ReferenceOne(targetDocument="Crossword")
+     * @Serializer\Groups({"profile"})
 	 */
 	protected $crossword;
 
 	/**
 	 * @MongoDB\Date
+     * @Serializer\Groups({"solving","profile"})
 	 */
 	protected $createdAt;
 
 	/**
 	 * @MongoDB\Date
+     * @Serializer\Groups({"solving","profile"})
 	 */
 	protected $updatedAt;
 
 	/**
 	 * @MongoDB\EmbedMany(targetDocument="Answer")
 	 * 
-	 * @Serializer\Exclude
+     * @Serializer\Groups({"solving"})
 	 */
 	protected $answers;
 
+    /**
+     *
+     */
+    public function getId() {
+        return $this->id;
+    }
+        
 	/**
 	 * Events
 	 */
@@ -118,8 +129,94 @@ class Solution {
 	/**
 	 * @Serializer\VirtualProperty
      * @Serializer\SerializedName("is_correct")
+     * @Serializer\Groups({"solving","profile"})
 	 */
 	public function isCorrect() {
+        
+        foreach( $this->getCrossword()->getWords() as $word ) {
+            
+            $answer = $this->findAnswerByWordId($word->getId());
+            if( !empty($answer) && $answer->getText() == $word->getText() ) {
+                continue;
+            }
+            return false;
+        }
+                
+		return true;
+	}
+
+    /**
+	 *
+	 */
+	public function addAnswer( $answer ) {
+		$this->answer[] = $answer;
+	}   
+
+    /**
+     *
+     * @param string $id 
+     */
+    protected function findAnswerByWordId( $id ) {
+        
+        foreach( $this->getAnswers() as $answer ) {
+            if ( $answer->getWordId() == $id ) {
+                return $answer;
+            }
+        }
+        
+        return null;
+    } 
+
+    /**
+     * 
+     */
+    protected function updateAnswers( $answers ) {
+
+		foreach ( $this->getAnswers() as $answerIndex => $existAnswer ) {
+			$foundAnswer = null;
+			foreach ( $answers as $key => $answer ) {
+				if ( $answer->getWordId() == $existAnswer->getWordId() ) {
+					$foundAnswer = $answer;
+					unset($answers[$key]);
+				}
+			}
+			
+			if ( empty( $foundAnswer ) ) {
+				$this->removeAnswer( $existAnswer );
+				continue;
+			}
+
+			$this->updateAnswer( $answerIndex, $foundAnswer );
+		}
+		
+		if ( count( $answers ) > 0 ) {
+			foreach ( $answers as $answer ) {
+				$this->addAnswer($answer);
+			}
+		}
+    }
+    
+	/**
+	 *
+	 */
+	private function removeAnswer( $answerToRemove ) {
+		foreach ( $this->answers as $key => $answer ) {
+			if ( $answerToRemove->getId() == $answer->getId() ) {
+				unset( $this->answers[$key] );
+				return true;
+			}
+		}
 		return false;
+	}
+	
+	/**
+	 *
+	 */
+	private function updateAnswer( $index,  $answer ) {
+		$existAnswer = $this->answers[$index];
+		$existAnswer->setWordId( $answer->getWordId() );
+		$existAnswer->setText( $answer->getText() );
+		
+		$this->answers[$index] = $existAnswer;
 	}
 }

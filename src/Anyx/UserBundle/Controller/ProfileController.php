@@ -107,7 +107,10 @@ class ProfileController extends BaseController\ProfileController {
             'totalCount'    => $solutionsRepository->getUserSolutionsCount( $currentUser )
         );
         
-		return new Response( $this->container->get('serializer')->serialize( $response, 'json' ) );
+        $serializer = $this->container->get('serializer');
+        $serializer->setGroups(array('profile'));
+        
+		return new Response( $serializer->serialize( $response, 'json' ) );
 	}
     
 	/**

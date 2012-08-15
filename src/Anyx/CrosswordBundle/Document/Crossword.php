@@ -19,28 +19,32 @@ class Crossword {
 
     /**
      * @MongoDB\Id
+     * @Serializer\Groups({"profile","edit"})
      */
 	protected $id;
 	
 	/**
 	 * @MongoDB\String
+     * @Serializer\Groups({"profile","edit"})
 	 */
 	protected $title;
 
 	/**
 	 * @MongoDB\String
      * @Serializer\Accessor(getter="getTruncatedDescription")
+     * @Serializer\Groups({"profile","edit"})
 	 */
 	protected $description;
 
 	/**
 	 * @MongoDB\EmbedMany(targetDocument="Word")
-	 * @Serializer\Exclude
+     * @Serializer\Groups({"edit"})
 	 */
 	protected $words;
 	
 	/**
 	 * @MongoDB\Boolean
+     * @Serializer\Groups({"edit"})
 	 */
 	protected $public;
 
@@ -57,7 +61,7 @@ class Crossword {
 
 	/**
 	 * @MongoDB\Date
-     * @Serializer\Type("DatdeTime")
+     * @Serializer\Type("DateTime")
 	 */
 	protected $updatedAt;
 
@@ -155,7 +159,13 @@ class Crossword {
     public function getUpdatedAt() {
         return $this->updatedAt;
     }
-        
+    
+    /**
+     *
+     * @param int $length
+     * @param string $separator
+     * @return string 
+     */
     public function getTruncatedDescription( $length = 100, $separator = '...' ) {
         
         $description = $this->description;

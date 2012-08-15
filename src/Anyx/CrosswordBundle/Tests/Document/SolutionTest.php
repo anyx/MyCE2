@@ -39,12 +39,13 @@ class SolutionTest extends BaseTest\TestCase
         );
         
         $this->assertEquals( $crossword->getCountSolving(), 0, 'Wrong default solving count' );
-        
+        $this->getContainer()->get('anyx.dm')->flush();
+         
         $answer = $this->createDocument(
                         'Answer',
                         array(
-                            'word'      => $word,
-                            'answer'    => 'wrong answer'
+                            'wordId'    => $word->getId(),
+                            'text'      => 'wrong answer'
                         ),
                         false,
                         false
@@ -56,9 +57,38 @@ class SolutionTest extends BaseTest\TestCase
             'answers'       => array(
                 $answer
             )
-        ));
-        $this->getContainer()->get('anyx.dm')->flush();
+        ), true, false);
         
+        $this->getContainer()->get('anyx.dm')->flush();
         $this->assertEquals( $crossword->getCountSolving(), 1, 'Solving count is not updated' );
+
+        return $solution;
+    }
+    
+    /**
+     * @depends testUpdatingCountSolving
+     */
+    public function testCheckingSolutionCorrectness( $solution ) {
+        
+        $crossword = $solution->getCrossword();
+        
+        $this->assertFalse($solution->isCorrect(), 'Wrong checking solution correctness');
+        
+        $rightAnswers = array();
+
+		$factory = $this->getContainer()->get('anyx.document.factory');
+
+        
+		foreach( $crossword->getWords() as $word ) {
+            $rightAnswers[]	= $factory->create('Answer', array(
+                'wordId'    => $word->getId(),
+                'text'      => $word->getText()
+            ), false);
+		}        
+        
+        $solution->setAnswers($rightAnswers);
+
+        $this->getContainer()->get('anyx.dm')->flush();
+        $this->assertTrue($solution->isCorrect(), 'Wrong checking solution correctness');
     }
 }

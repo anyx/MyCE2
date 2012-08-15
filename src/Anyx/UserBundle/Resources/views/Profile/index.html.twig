@@ -173,7 +173,7 @@
 			<% _.each(collection.models, function( solution ) { %>
 			<tr>
 				<td class="seven-columns">
-					<a href="#"><%=solution.get('crossword').title%></a>
+					<a href="<%=Routing.generate('crossword_solve', { id: solution.get('crossword').id })%>"><%=solution.get('crossword').title%></a>
                     <br />
                     <small>
 						<%=solution.get('crossword').description%>
@@ -202,7 +202,6 @@
             </span>
             {{ 'Create' | trans }}
         </a>
-        <a href="" class=""></a>
         
 		<table class="simple-table responsive-table responsive-table-on">
 		<thead>

@@ -17,19 +17,21 @@ class Answer {
 
 	/**
 	 * @MongoDB\Id
+     * @Serializer\Groups({"solving"})
 	 */
 	protected $id;
 
 	/**
-	 * @MongoDB\ReferenceOne(targetDocument="Word")
-     * @Serializer\Exclude
+	 * @MongoDB\String
+     * @Serializer\Groups({"solving"})
 	 */
-	protected $word;
+	protected $wordId;
 
 	/**
 	 * @MongoDB\String
+     * @Serializer\Groups({"solving"})
 	 */
-	protected $answer;
+	protected $text;
 
 	/**
 	 * @return mixed
@@ -39,38 +41,30 @@ class Answer {
 	}
 
 	/**
-	 * @param $answer
+	 * @param $text
 	 */
-	public function setAnswer($answer) {
-		$this->answer = $answer;
+	public function setText($text) {
+		$this->text = $text;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getAnswer() {
-		return $this->answer;
+	public function getText() {
+		return $this->text;
 	}
 
-	/**
-	 * @param Word $word
-	 */
-	public function setWord( Word $word) {
-		$this->word = $word;
-	}
-
-	/**
-	 * @return Word
-	 */
-	public function getWord() {
-		return $this->word;
-	}
-    
     /**
-     * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("wordId")
+     * 
      */
     public function getWordId() {
-        return $this->getWord()->getId();
+        return $this->wordId;
     }
+    
+    /**
+     * 
+     */
+    public function setWordId( $wordId ) {
+        $this->wordId = $wordId;
+    }    
 }

@@ -20,7 +20,7 @@ Anyx.View.Crosswords = Anyx.View.Collection.extend({
         var crosswordId = $(event.currentTarget).data('id');
         var crossword = this.model.get( crosswordId );
 
-        var questionText = this.options.messages.removingConfirm + ' <em>&laquo;' + crossword.get('title') +'&raquo;</em>?';
+        var questionText = Anyx.Utils.Translator.translate('removingConfirm') + ' <em>&laquo;' + crossword.get('title') +'&raquo;</em>?';
 
         var buttons = {};
         
@@ -42,19 +42,19 @@ Anyx.View.Crosswords = Anyx.View.Collection.extend({
                 }
             });
         };
-        buttons[this.options.messages.remove] =  {
+        buttons[Anyx.Utils.Translator.translate('remove')] =  {
                                 classes     : 'red-gradient',
                                 click       : removeCallback
         }
         
-        buttons[this.options.messages.cancel] =  {
+        buttons[Anyx.Utils.Translator.translate('cancel')] =  {
                                 classes     : 'glossy',
-                                click       : function(modal) { modal.closeModal(); }
+                                click       : function(modal) {modal.closeModal();}
         };        
 
        $.modal(
             {
-                title: this.options.messages.removing,
+                title: Anyx.Utils.Translator.translate('removing'),
                 content: questionText,
                 buttons: buttons
             }

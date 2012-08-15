@@ -37,7 +37,6 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 
 		this.getWidget( 'wordForm').bind( 'create', this.initWordDraggable, this );
 		
-		
 		this.initEvents();
 	},
 
@@ -75,7 +74,7 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 		var _this = this;
 		
 		var grid = this.getWidget( 'grid' );
-	   
+
 		var crosswordStartPoint = $( grid.el ).offset();
 	   
 		var cellSize = grid.getCellSize(); 
@@ -142,6 +141,8 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 				}
 			}
 		});
+        
+        wordView.getElement().css('position', 'absolute');
 	},
 	
 	/**
@@ -297,7 +298,6 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 
 		if ( !this.inGrid( wordView ) ) {
 			$( this.getWidget('grid').el ).append( wordView.getElement() );
-			this.initWordDraggable( wordView );
 		}
 
 		var position = wordView.model.get('position');
