@@ -160,24 +160,33 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 
 		var _this = this;
 
-		this.options.el.find('INPUT').on(
-			'keypress',
-			function( event ) {
+		this.options.el.find('INPUT')
+            .on(
+                'keydown',
+                function( event ) {
+                    var keyCode = event.keyCode;
 
-				var charCode = event.charCode;
-				var keyCode = event.keyCode;
+                    if ( event.altKey || event.clientY || event.shiftKey ) {
+                        return true;
+                    }
 
-				if ( _this._moveCursor( keyCode, $( this ) ) ) {
-					return false;
-				}
+                    if ( _this._moveCursor( keyCode, $( this ) ) ) {
+                        return false;
+                    }
+                }
+            )
+            .on(
+                'keypress',
+                function( event ) {
+                    var charCode = event.which || event.keyCode;
+                
+                    if ( _this._setLetter( charCode, $( this ) ) ) {
+                        return false;
+                    }
 
-				if ( _this._setLetter( charCode, $( this ) ) ) {
-					return false;
-				}
-
-				return false;
-			}
-		);
+                    return false;
+                }
+            );
 	},
 	/**
 	 *
@@ -257,7 +266,7 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 
 	_setLetter	: function( charCode, activeInput ) {
 
-		var letter = String.fromCharCode( charCode );
+		var letter = String.fromCharCode( charCode ).toLowerCase();
 
 		var currentViewCid = activeInput.closest('DIV').eq(0).data( 'view-cid' );
 		var currentView = this.getLocator().locateByID( currentViewCid );
@@ -271,21 +280,22 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 		var nextPosition = _.clone( activeInput.data('position') );
 		var typeDirection = currentView.model.horizontal ? 'x' : 'y';
 		var previousDirection = this.lastDirection;
+        var nextInput = null;
 
 		if ( previousDirection != null && previousDirection != typeDirection ) {
 
 			var nextPos = _.clone( nextPosition );
 			nextPos[previousDirection]++;
-			var nextInput = this.getInputByPosition( nextPos );
+			nextInput = this.getInputByPosition( nextPos );
 			if ( !_.isEmpty( nextInput ) ) {
 				nextInput.focus();
 				return true;
-			};
+			}
 		}
 
 		nextPosition[typeDirection]++;
 
-		var nextInput = this.getInputByPosition( nextPosition );
+		nextInput = this.getInputByPosition( nextPosition );
 		if ( !_.isEmpty( nextInput ) ) {
 			nextInput.focus();
 		}

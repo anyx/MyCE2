@@ -1,3 +1,5 @@
+username: "Логин"
+password: "Пароль"
 Username: Имя
 Welcome: Добро пожаловать
 This is another service for solving and creating crosswords: Это сервис для решения и создания кроссвордов
@@ -25,14 +27,10 @@ Crossword removing: Удаление кроссворда
 Close: Закрыть
 Remove: Удалить
 Cancel: Отмена
-Internal Server Error: Внутрення ошибка приложения. Попробуйте обновить страницу или зайти позднее
+Internal Server Error: Внутренняя ошибка приложения. Попробуйте обновить страницу или зайти позднее
 Error: Ошибка
 Saving error: Ошибка сохранения кроссворда. Попробуйте позже
 Saving...: Сохранение
-security:
-  login:
-    username: Логин
-    password: Пароль
 Register: Регистрация
 Registration: Регистрация
 #Errors
@@ -262,3 +260,6 @@ fos_user:
         long: Название группы слишком длинное
 First: Пароль
 Second: Подтверждение пароля
+The presented password is invalid.: "Неверный пароль"
+The presented password cannot be empty.: "Пароль не может быть пустым"
+The credentials were changed from another session.: "Учетная запись была изменена в другой сессии"
