@@ -16,10 +16,14 @@
 
 		'@AnyxCrosswordBundle/Resources/public/js/views/View.js'
 		'@AnyxCrosswordBundle/Resources/public/js/views/SolverWord.js'
+        '@AnyxCrosswordBundle/Resources/public/js/views/SuccessSolvedMessage.js'
 		'@AnyxCrosswordBundle/Resources/public/js/views/WordDefinition.js'
 		
 		'@AnyxCrosswordBundle/Resources/public/js/presenters/Presenter.js'		
 		'@AnyxCrosswordBundle/Resources/public/js/presenters/Solver.js'
+
+		'@AnyxCrosswordBundle/Resources/public/js/theme/libs/modernizr.custom.js'
+        'http://vkontakte.ru/js/api/share.js?9'
 	%}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
@@ -38,7 +42,8 @@
 				},
 				templates	: {
 					word	: 't-solver-word',
-					definition	: 't-solver-word-definition'
+					definition	: 't-solver-word-definition',
+                    successSolved : 't-solver-saving-success'
 				},
                 savePath    : Routing.generate(
                                     'crossword_save_solution',
@@ -46,7 +51,13 @@
                                         id : '{{ crossword.id }}'
                                     }
                 ),
-                solution    : {{ solution | raw }}
+                solution    : {{ solution | raw }},
+                messages    : {
+                    saveSuccessfully: '{{ 'Save successfully' | trans }}',
+                    saveError       : '{{ 'Saving error' | trans }}',
+                    saving          : '{{ 'Saving...' | trans }}',
+                    congratulatons  : '{{ 'Congratulations!' | trans }}'
+                }
 			});
 		});	
 	</script>
@@ -54,10 +65,23 @@
 	<script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback" : "fos.Router.setData"}) }}"></script>
 {% endblock %}	
 
+{% block inlineJavascripts %} 
+	{{ parent() }}
+
+	{% javascripts
+		'@AnyxCrosswordBundle/Resources/public/js/theme/setup.js'
+		'@AnyxCrosswordBundle/Resources/public/js/theme/developr.modal.js'
+	%}
+	<script type="text/javascript" src="{{ asset_url }}"></script>
+
+	{% endjavascripts %}    
+{% endblock %}
+    
 {% block stylesheets %}
 	{{ parent() }}
 	{% stylesheets
 		'@AnyxCrosswordBundle/Resources/public/css/solver.css'
+        '@AnyxCrosswordBundle/Resources/public/css/styles/modal.css'
 	%}
 		<link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
 	{% endstylesheets %}
@@ -100,9 +124,42 @@
 </div>	
 </script>
 
-
 <script type="text/template" id="t-solver-word-definition">
 	<li><%=number+1%>. <%=definition%>.</li>
 </script>
+
+<div id="t-solver-saving-success" style="display:none;">
+    <div class="congratulations-block">
+        <h3 class="thin">{% trans %}Your solving is correct!{% endtrans %}</h4>
+        <p>{{ 'Tell about this!' | trans }}</p>
+        <p>
+            <span class="share-button">
+            <a href="https://twitter.com/share" class="twitter-share-button" data-lang="ru" data-hashtags="Кроссворды">{{'Tweet about this' | trans}}</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+            </span>
+                
+            <span class="share-button">
+                <div id="fb-root"></div>
+                <script>(function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=114949468588006";
+                fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));</script>
+
+                <span class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false">
+                </span>
+            </span>
+                
+            <span class="share-button">
+                <span id="j-share-button"></span>
+                <script type="text/javascript">
+                document.getElementById('j-share-button').innerHTML = VK.Share.button(window.location, {type: 'button'});
+                </script>
+            </span>
+        </p>
+    </div>
+</div>
 
 {% endblock %}

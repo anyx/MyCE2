@@ -62,7 +62,31 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 		 */
 		var _this = this;
 
+        var successView = new Anyx.View.SuccessSolvedMessage({
+            template: _this.options.templates.successSolved
+        });
+        successView.render();
+        
+        modal = $.modal({
+                content: $( successView.el ),
+                title: _this.options.messages.congratulatons,
+                buttons: {},
+                resizable: false,
+                actions: {},
+        });
+                        
+
 		$( this.options.selectors.saveButton ).click(function(){
+            
+            var modal = $.modal({
+                    content: '<span class="loader big waiting"></span><span class="saving-message">' + _this.options.messages.saving + '...</span>',
+                    title: false,
+                    titleBar: false,
+                    buttons: {},
+                    resizable: false,
+                    actions: {},
+            });
+            
 			$.ajax(
 				_this.options.savePath,
 				{
@@ -72,12 +96,27 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 						solution    : _this.getSolution()
 					},
 					success     : function( data ) {
-						console.log('success', data);
+                        
+                        var successView = new Anyx.View.SuccessSolvedMessage({
+                            template: _this.options.templates.successSolved
+                        });
+                        successView.render();
+                        
+                        modal.closeModal();
+                        
+                        modal = $.modal({
+                                content: $( successView.el ),
+                                title: false,
+                                titleBar: false,
+                                buttons: {},
+                                resizable: false,
+                                actions: {},
+                        });
 
 					},
 					error      : function() {
 						console.log('error', arguments);
-
+                        modal.closeModal();
 					}
 				}
 			)

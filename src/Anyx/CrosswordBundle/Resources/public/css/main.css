@@ -354,3 +354,15 @@ div .pagerfanta .current {
     margin-top: -4px;
     background: url(/img/sprites.png) no-repeat -712px -35px;
 }
+
+.saving-message {
+    padding-left: 35px;
+}
+
+.congratulations-block {
+    width: 500px;
+}
+.share-button {
+    float: left;
+    width: 110px;
+}
