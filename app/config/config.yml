@@ -4,18 +4,18 @@ imports:
 
 framework:
     #esi:             ~
-    translator:      { fallback: %locale% }
+    #translator:      { fallback: %locale% }
     secret:          %secret%
-    charset:         UTF-8
-    router:          { resource: "%kernel.root_dir%/config/routing.yml" }
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: %kernel.debug%
     form:            true
     csrf_protection: true
     validation:      { enable_annotations: true }
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
-    session:
-        default_locale: %locale%
-        auto_start:     true
-
+    default_locale:  %locale%
+    trust_proxy_headers: false # Whether or not the Request object should trust proxy headers (X_FORWARDED_FOR/HTTP_CLIENT_IP)
+    session:         ~
 # Twig Configuration
 twig:
     debug:            %kernel.debug%
@@ -26,7 +26,24 @@ twig:
             next_message:     '&raquo;'
             dots_message:     '...'
 
-    
+jms_serializer:
+    handlers:
+        datetime:
+            default_format: "d.m.Y" 
+
+doctrine:
+    dbal:
+        default_connection:   default
+        connections:
+            default:
+                driver:   %database_driver%
+                host:     %database_host%
+                port:     %database_port%
+                dbname:   %database_name%
+                user:     %database_user%
+                password: %database_password%
+                charset:  UTF8
+                
 # Assetic Configuration
 assetic:
     debug:          %kernel.debug%
@@ -46,39 +63,21 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
 
-jms_security_extra:
-    secure_controllers:  true
-    secure_all_services: false
-
-jms_serializer:
-    handlers:
-        object_based: false
-        datetime:
-            format: "d.m.Y" 
-
-sensio_framework_extra:
-    router:  { annotations: true }
-    request: { converters: true }
-    view:    { annotations: true }
-    cache:   { annotations: true }
+#jms_serializer:
+#    handlers:
+#        object_based: false
+#        datetime:
+#            format: "d.m.Y" 
 
 doctrine_mongodb:
     connections:
         default:
-            server: mongodb://127.0.0.1:27017
-            options:
-                connect: true
+            server: mongodb://localhost:27017
+            options: {}
     default_database: crosswords_%kernel.environment%
     document_managers:
         default:
-            mappings:
-                AnyxCrosswordBundle: ~
-                AnyxPageBundle: ~
-                FOSUserBundle: ~
-                AnyxSocialUserBundle: 
-                  prefix: Anyx\SocialUserBundle\Model
-                  
-    auto_generate_hydrator_classes: false
+            auto_mapping: true
 
 fos_user:
     db_driver: mongodb
@@ -90,46 +89,43 @@ fos_user:
       form:
         type: anyx_user_profile
         handler: anyx_user.form.handler.registration
-    
-foq_elastica:
-    clients:
-        default: { host: localhost, port: 9200 }
-    indexes:
-        website:
-            client: default
-            settings:
-                index:
-                  analysis:
-                    analyzer: 
-                      ru_snowball:
-                        type : snowball
-#                        tokenizer: standart
-                        language: Russian
-                        filter: [standart, lowercase, ru_snowball_filter]
-                    filter:
-                      ru_snowball_filter:
-                        type: snowball
-                        language: Russian
-            types:
-                crossword:
-                  mappings:
-                    title: {boost: 5, analyzer: ru_snowball}
-                    description: {boost: 4, analyzer: ru_snowball}
-                    countSolving: {boost: 3}
-                  persistence:
-                      driver: mongodb
-                      model: Anyx\CrosswordBundle\Document\Crossword
-                      provider: 
-                      listener:
-                      finder:
-sonata_cache:
-    caches:
-        mongo:
-            database:   cache
-            collection: cache
-            servers:
-                - {host: 127.0.0.1, port: 27017, user: username, password: pASS'}
-                - {host: 127.0.0.2}
+
+anyx_social_user:
+  db_driver: mongodb
+  accounts:
+    map:
+      facebook:
+        accountId: id
+        userName: name
+        avatar: picture.data.url
+        link: link
+      twitter:
+        accountId: id
+        userName: name
+        avatar: profile_image_url
+        link: screen_name
+      vkontakte:
+        accountId: response.0.uid
+        userName: response.0.first_name + response.0.last_name
+        avatar: response.0.photo
+        link: response.0.screen_name
+
+anyx_social:
+  services:
+    facebook:
+      client_id:         204794436315935
+      secret:            696828e5efec599af84e2c9d65318216
+      scope:             email,user_about_me
+    twitter:
+      client_id:         eIuU85pDoKrou9YahB2hZQ
+      secret:            rxeR7cd5Sw57OSidJ0GhQNEYbaowSNjHtO74zYxwjP0
+      scope:             email,user_about_me
+    vkontakte:
+      client_id:         3039748
+      secret:            r2O6bBlGGBO9eybDHarx
+      scope:             notify,offline
+      user_fields:       uid, first_name, last_name, nickname, screen_name, sex, bdate (birthdate), city, country, timezone, photo, photo_medium, photo_big, has_mobile, rate, contacts, education, online, counters
+
 
 sonata_block:
     default_contexts: [cms]
@@ -163,40 +159,6 @@ sonata_admin:
                 items: 
                   - sonata.admin.page
                   - sonata.admin.user
-
-sonata_doctrine_mongo_db_admin: ~
-
-anyx_social_user:
-  fos_user:
-    db_driver: mongodb
-  accounts:
-    map:
-      facebook: 
-        accountId: id
-        userName: name
-      twitter:
-        accountId: id
-        userName: name
-      vkontakte:
-        accountId: response.0.uid
-        userName: response.0.first_name
-        
-anyx_social:
-  services:
-    facebook:
-      client_id:         204794436315935
-      secret:            696828e5efec599af84e2c9d65318216
-      scope:             email,user_about_me
-    twitter:
-      client_id:         eIuU85pDoKrou9YahB2hZQ
-      secret:            rxeR7cd5Sw57OSidJ0GhQNEYbaowSNjHtO74zYxwjP0
-      scope:             email,user_about_me
-    vkontakte:
-      client_id:         3039748
-      secret:            r2O6bBlGGBO9eybDHarx
-      scope:             notify,offline
-      user_fields:       uid, first_name, last_name, nickname, screen_name, sex, bdate (birthdate), city, country, timezone, photo, photo_medium, photo_big, has_mobile, rate, contacts, education, online, counters
-
 #aliases
 services:
     anyx.dm: "@doctrine.odm.mongodb.document_manager"

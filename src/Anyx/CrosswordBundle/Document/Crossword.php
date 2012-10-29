@@ -55,7 +55,7 @@ class Crossword {
 	
 	/**
 	 * @MongoDB\Date
-     * @Serializer\Type("DateTime",format="Y")
+     * @Serializer\Type("DateTime<Y>")
 	 */
 	protected $createdAt;
 

@@ -13,36 +13,39 @@ class AppKernel extends Kernel
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
-            new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
-
-			new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new JMS\AopBundle\JMSAopBundle(),
+            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-			//
-			new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
-			new JMS\SerializerBundle\JMSSerializerBundle($this),
-			//
-			//new FOS\RestBundle\FOSRestBundle(),
-			new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-			//
-			new FOS\UserBundle\FOSUserBundle(),
-			//
-			new Sensio\Bundle\BuzzBundle\SensioBuzzBundle(),
             //
-            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
+            /*
             //
-            new Sonata\CacheBundle\SonataCacheBundle(),
-            new Sonata\jQueryBundle\SonatajQueryBundle(),
-            new Sonata\BlockBundle\SonataBlockBundle(),
-            
-            new Sonata\DoctrineMongoDBAdminBundle\SonataDoctrineMongoDBAdminBundle(),
-            new Sonata\AdminBundle\SonataAdminBundle(),
+            //new FOS\RestBundle\FOSRestBundle(),
             //
-            new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
-			//
+            //
+            //
+            //
+
+            //
+            //
             new FOQ\ElasticaBundle\FOQElasticaBundle(),
             //
-			new Anyx\CrosswordBundle\AnyxCrosswordBundle(),
+            */
+            new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle($this),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Sonata\DoctrineMongoDBAdminBundle\SonataDoctrineMongoDBAdminBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Sonata\CacheBundle\SonataCacheBundle(),
+            new Sonata\jQueryBundle\SonatajQueryBundle(),
+            new Sonata\AdminBundle\SonataAdminBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new Sensio\Bundle\BuzzBundle\SensioBuzzBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new Anyx\CrosswordBundle\AnyxCrosswordBundle(),
             new Anyx\UserBundle\AnyxUserBundle(),
             new Anyx\SocialBundle\AnyxSocialBundle(),
             new Anyx\SocialUserBundle\AnyxSocialUserBundle(),
