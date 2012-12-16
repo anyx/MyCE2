@@ -7,12 +7,12 @@
 
 {% form_theme form 'AnyxCrosswordBundle:Form:theme.html.twig' %}
 
-<form action="{{action}}" method="POST" {{ form_enctype(form) }} class="form relative">
+<form action="{{action}}" method="POST" {{ form_enctype(form) }} class="form relative" novalidate>
     {{ form_errors(form) }}
 
     <div class="margin-bottom">
     {{ form_label(form.title) }}
-    {{ form_widget(form.title, { 'attr': { 'class' : 'input eleven-columns' } }) }}
+    {{ form_widget(form.title, { 'attr': { 'class' : 'input eleven-columns', 'required' : 'requireds' } }) }}
     {{ form_errors(form.title) }}
     </div>
 

@@ -28,7 +28,7 @@ class ProfileController extends BaseController\ProfileController {
     {
         return array();
     }
-
+    
    /**
      * Edit the user
      */

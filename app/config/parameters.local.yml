@@ -1,0 +1,23 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     localhost
+    database_port:     ~
+    database_name:     symfony
+    database_user:     root
+    database_password: ~
+
+    mailer_transport:  gmail
+    mailer_user:       crosswords.editor
+    mailer_password:   &|J#p%bdgyVK9{a50X~^zif'w
+    
+    locale:            ru
+    secret:            ThisTokenVerySecretString
+
+    vkontakte_client_id: 2399701
+    vkontakte_secret: jpIAY6YiK2JnIxIbSbTH
+    
+    twitter_client_id: eIuU85pDoKrou9YahB2hZQ
+    twitter_secret: rxeR7cd5Sw57OSidJ0GhQNEYbaowSNjHtO74zYxwjP0
+    
+    facebook_client_id: 204794436315935
+    facebook_secret: 696828e5efec599af84e2c9d65318216

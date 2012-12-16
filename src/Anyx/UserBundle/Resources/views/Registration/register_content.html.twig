@@ -1,10 +1,10 @@
 {% form_theme form 'AnyxCrosswordBundle:Form:theme.html.twig' %}
 
-<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="six-columns  fos_user_registration_register">
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="six-columns  fos_user_registration_register" novalidate>
     {{ form_errors(form) }}
     <div class="margin-bottom">
     {{ form_label(form.username) }}
-    {{ form_widget(form.username, { 'attr': { 'class' : 'input full-width' } }) }}
+    {{ form_widget(form.username, { 'attr': { 'class' : 'input full-width'} }) }}
     {{ form_errors(form.username) }}
     </div>
     <div class="margin-bottom">

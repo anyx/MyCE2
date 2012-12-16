@@ -23,14 +23,6 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
             /*
             //
-            //new FOS\RestBundle\FOSRestBundle(),
-            //
-            //
-            //
-            //
-
-            //
-            //
             new FOQ\ElasticaBundle\FOQElasticaBundle(),
             //
             */

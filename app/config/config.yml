@@ -4,7 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: %locale% }
+    translator:      { fallback: %locale% }
     secret:          %secret%
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -93,6 +93,7 @@ fos_user:
 anyx_social_user:
   db_driver: mongodb
   accounts:
+    class: Anyx\SocialUserBundle\Document\SocialAccount
     map:
       facebook:
         accountId: id
@@ -113,16 +114,16 @@ anyx_social_user:
 anyx_social:
   services:
     facebook:
-      client_id:         204794436315935
-      secret:            696828e5efec599af84e2c9d65318216
-      scope:             email,user_about_me
+      client_id:         %facebook_client_id%
+      secret:            %facebook_secret%
+      user_fields:       picture,email,name,link
     twitter:
-      client_id:         eIuU85pDoKrou9YahB2hZQ
-      secret:            rxeR7cd5Sw57OSidJ0GhQNEYbaowSNjHtO74zYxwjP0
+      client_id:         %twitter_client_id%
+      secret:            %twitter_secret%
       scope:             email,user_about_me
     vkontakte:
-      client_id:         3039748
-      secret:            r2O6bBlGGBO9eybDHarx
+      client_id:         %vkontakte_client_id%
+      secret:            %vkontakte_secret%
       scope:             notify,offline
       user_fields:       uid, first_name, last_name, nickname, screen_name, sex, bdate (birthdate), city, country, timezone, photo, photo_medium, photo_big, has_mobile, rate, contacts, education, online, counters
 
@@ -173,7 +174,8 @@ services:
     user.listener:
       class: Anyx\CrosswordBundle\Listener\UserListener
       tags:
-        - { name: kernel.event_listener, event: users.merge, method: onMergeUsers}
+        - { name: kernel.event_listener, event: anyx_social_users.merge, method: onMergeUsers}
+        - { name: kernel.event_listener, event: anyx_social_users.create, method: onCreateUser}
     solution.listener:
       class: Anyx\CrosswordBundle\Listener\SolutionListener
       tags:
