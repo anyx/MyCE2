@@ -43,7 +43,8 @@
 				templates	: {
 					word	: 't-solver-word',
 					definition	: 't-solver-word-definition',
-                    successSolved : 't-solver-saving-success'
+                    successSolved : 't-solver-saving-success',
+                    solveSaved: 't-solver-saving-incorrect'
 				},
                 savePath    : Routing.generate(
                                     'crossword_save_solution',
@@ -88,6 +89,7 @@
 {% endblock %}
 
 {% block page_title %}{%trans%}Solving crossword{%endtrans%} &laquo;{{crossword.title}}&raquo; {% endblock %}
+{% block title %}{%trans%}Solving crossword{%endtrans%} &laquo;{{crossword.title}}&raquo; {% endblock %}
 
 {% block body %}
 <div class="columns">
@@ -128,16 +130,21 @@
 	<li><%=number+1%>. <%=definition%>.</li>
 </script>
 
+<div id="t-solver-saving-incorrect" style="display:none;">
+    <div class="incorrect-solving-block">
+        <h3 class="thin">{{'Solving saved' | trans}}</h3>
+        <p>{{'Unfortunately, your solving incorrect. You may try solve this crossword later'|trans}}</p>
+        <p style="text-align: center; margin-top: 30px;">
+            <input type="button" class="button blue-gradient i-close-modal" value="{{"Close"|trans}}"/>
+        </p>
+    </div>
+</div>
+
 <div id="t-solver-saving-success" style="display:none;">
     <div class="congratulations-block">
         <h3 class="thin">{% trans %}Your solving is correct!{% endtrans %}</h4>
         <p>{{ 'Tell about this!' | trans }}</p>
         <p>
-            <span class="share-button">
-            <a href="https://twitter.com/share" class="twitter-share-button" data-lang="ru" data-hashtags="Кроссворды">{{'Tweet about this' | trans}}</a>
-            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-            </span>
-                
             <span class="share-button">
                 <div id="fb-root"></div>
                 <script>(function(d, s, id) {
@@ -151,13 +158,23 @@
                 <span class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false">
                 </span>
             </span>
-                
+            <br />
+            
+            <span class="share-button">
+            <a href="https://twitter.com/share" class="twitter-share-button" data-lang="ru" data-hashtags="Кроссворды">{{'Tweet about this' | trans}}</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+            </span>
+            
             <span class="share-button">
                 <span id="j-share-button"></span>
                 <script type="text/javascript">
                 document.getElementById('j-share-button').innerHTML = VK.Share.button(window.location, {type: 'button'});
                 </script>
             </span>
+        </p>
+        
+        <p style="text-align: center; margin-top: 100px;">
+            <input type="button" class="button blue-gradient i-close-modal" value="{{"Close"|trans}}"/>
         </p>
     </div>
 </div>

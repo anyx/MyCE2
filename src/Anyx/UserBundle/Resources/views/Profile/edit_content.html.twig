@@ -1,18 +1,27 @@
 {% form_theme form 'AnyxCrosswordBundle:Form:theme.html.twig' %}
 
 {#
+<p>
 <a href="{{path('fos_user_change_password')}}">{{ 'Change password' | trans }}</a>
+</p>
 #}
 
 <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST">
     {{ form_errors(form) }}
     <div class="margin-bottom">
-    {{ form_label(form.username) }}
+    {{ form_label(form.name) }}:
+    {{ form_widget(form.name, { 'attr': { 'class' : 'input full-width' } }) }}
+    {{ form_errors(form.name) }}
+    </div>
+
+    <div class="margin-bottom">
+    {{ form_label(form.username) }}:
     {{ form_widget(form.username, { 'attr': { 'class' : 'input full-width' } }) }}
     {{ form_errors(form.username) }}
     </div>
+
     <div class="margin-bottom">
-    {{ form_label(form.email) }}
+    {{ form_label(form.email) }}:
     {{ form_widget(form.email, { 'attr': { 'class' : 'input full-width' } }) }}
     {{ form_errors(form.email) }}
     </div>

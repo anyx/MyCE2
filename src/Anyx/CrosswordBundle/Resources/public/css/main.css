@@ -358,11 +358,16 @@ div .pagerfanta .current {
 .saving-message {
     padding-left: 35px;
 }
-
+.incorrect-solving-block {
+    height: 120px;
+}
 .congratulations-block {
     width: 500px;
+    height: 280px;
+    position: relative;
 }
 .share-button {
-    float: left;
+    display: block;
     width: 110px;
+    margin: 5px;
 }

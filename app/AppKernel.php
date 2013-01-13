@@ -21,11 +21,9 @@ class AppKernel extends Kernel
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             //
             new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
-            /*
-            //
+            
             new FOQ\ElasticaBundle\FOQElasticaBundle(),
-            //
-            */
+            
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle($this),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
@@ -57,4 +55,12 @@ class AppKernel extends Kernel
     {
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
     }
+    
+    public function init()
+    {
+        parent::init();
+        
+        umask(0002);
+    }
+
 }

@@ -7,7 +7,7 @@
 
 {% form_theme form 'AnyxCrosswordBundle:Form:theme.html.twig' %}
 
-<form action="{{action}}" method="POST" {{ form_enctype(form) }} class="form relative" novalidate>
+<form action="{{action}}" method="POST" {{ form_enctype(form) }} class="form relative">
     {{ form_errors(form) }}
 
     <div class="margin-bottom">
@@ -29,8 +29,6 @@
     </div>
     {% endif %}
 
-    {{ form_widget(form.id) }}
-    
     {{ form_rest(form) }}
         
     <div class="submit-container">

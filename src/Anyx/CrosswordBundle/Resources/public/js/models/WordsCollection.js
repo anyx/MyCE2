@@ -73,7 +73,7 @@ Crossword.Model.WordsCollection = Backbone.Collection.extend({
 		startNeighbour[directionCoord]--;
 		
 		var endNeighbour = word.getEndPoint();
-		endNeighbour[perpendicularCoord]++;
+		endNeighbour[directionCoord]++;
 		
 		var wordInPoint = false;
 		_.each( this.getWords(), function( anotherWord ) {

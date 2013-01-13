@@ -140,7 +140,6 @@
 	<script type="text/template" id="t-profile-menu">
 		<ul class="tabs">
 			<% _.each(links, function( name, route ) { %>
-            
 			<li rel="<%=route%>" <% if ( activeLink && activeLink == route) { %> class="active" <% }%>>
                 <a href="#/<%=route%>/"><%=name%></a>
             </li>
@@ -154,7 +153,7 @@
 		<thead>
 			<th>{%trans%}Crossword{%endtrans%}</th>
 			<th>{%trans%}Solution date{%endtrans%}</th>
-			<th>{%trans%}Correct{%endtrans%}</th>
+            <th class="td-center">{%trans%}Correct{%endtrans%}</th>
 		</thead>
 		<tfoot>
 			<tr>
@@ -180,7 +179,13 @@
 					</small>
 				</td>
 				<td class="three-columns"><%=solution.get('updated_at')%></td>
-				<td class="two-columns"><%=solution.get('is_correct')%></td>
+                <td class="two-columns td-center">
+                    <% if(solution.get('is_correct')) { %>
+                    <i class="icon-tick icon-size2" title="{{'Correct' | trans}}"></i>
+                    <% } else { %>
+                    <i class="icon-cross icon-size2" title="{{'Incorrect' | trans}}"></i>
+                    <% } %>
+                </td>
 			</tr>
 			<% }); %>
 		<% } else { %>

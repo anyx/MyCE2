@@ -62,20 +62,6 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 		 */
 		var _this = this;
 
-        var successView = new Anyx.View.SuccessSolvedMessage({
-            template: _this.options.templates.successSolved
-        });
-        successView.render();
-        
-        modal = $.modal({
-                content: $( successView.el ),
-                title: _this.options.messages.congratulatons,
-                buttons: {},
-                resizable: false,
-                actions: {},
-        });
-                        
-
 		$( this.options.selectors.saveButton ).click(function(){
             
             var modal = $.modal({
@@ -84,7 +70,7 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
                     titleBar: false,
                     buttons: {},
                     resizable: false,
-                    actions: {},
+                    actions: {}
             });
             
 			$.ajax(
@@ -95,27 +81,23 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 					data        : {
 						solution    : _this.getSolution()
 					},
-					success     : function( data ) {
-                        
+					success     : function(data) {
+                        var template = null;
+                        if (_.isObject(data) && data.correct) {
+                            template = _this.options.templates.successSolved;
+                        } else {
+                            template = _this.options.templates.solveSaved;
+                        }
+
                         var successView = new Anyx.View.SuccessSolvedMessage({
-                            template: _this.options.templates.successSolved
+                            template: template,
+                            messages: _this.options.messages
                         });
                         successView.render();
-                        
                         modal.closeModal();
-                        
-                        modal = $.modal({
-                                content: $( successView.el ),
-                                title: false,
-                                titleBar: false,
-                                buttons: {},
-                                resizable: false,
-                                actions: {},
-                        });
-
+                        successView.showModal();
 					},
 					error      : function() {
-						console.log('error', arguments);
                         modal.closeModal();
 					}
 				}

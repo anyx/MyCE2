@@ -33,6 +33,7 @@ Saving error: Ошибка сохранения кроссворда. Попро
 Saving...: Сохранение
 Register: Регистрация
 Registration: Регистрация
+#Change password: Сменить пароль
 #Errors
 constructor:
   message:
@@ -267,3 +268,8 @@ Second: Подтверждение пароля
 The presented password is invalid.: "Неверный пароль"
 The presented password cannot be empty.: "Пароль не может быть пустым"
 The credentials were changed from another session.: "Учетная запись была изменена в другой сессии"
+Solving saved: "Решение сохранено"
+Unfortunately, your solving incorrect. You may try solve this crossword later: "К сожалению, ваше решение неверно. Вы сможете вернуться к решению позже."
+Correct: Верно
+Incorrect: Неверно
+This value should not be blank.: Значение не должно быть пустым 

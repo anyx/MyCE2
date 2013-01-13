@@ -43,7 +43,7 @@
 		$(function(){
 			var editor = new Constructor.Presenter.Editor({
 				id			: '{{crossword.getId()}}',
-				words		: {{crossword.words | serialize | raw}},
+				words		: {{ words | raw}},
 				selectors	: {
 					grid				: '.i-grid',
 					form				: '.i-word-form',

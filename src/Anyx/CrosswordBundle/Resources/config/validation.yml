@@ -3,3 +3,5 @@ Anyx\CrosswordBundle\Document\Crossword:
     title:
       - NotBlank: ~
       - Regex: { 'pattern' : "/^[0-9a-zA-Zа-яА-ЯЁё_\- ]+$/u", 'message' : 'Wrong symbols in title' }
+    description:
+      - NotBlank: ~

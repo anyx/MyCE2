@@ -28,6 +28,7 @@ Constructor.View.WordForm = Backbone.Presenter.extend({
 			})
 		});
 		
+        var _this = this;
 		//events
 		$( this.getWidget('wordInput').el )
 			.add( $( this.getWidget('definitionInput').el ) )
@@ -36,6 +37,7 @@ Constructor.View.WordForm = Backbone.Presenter.extend({
 						event.data.view.buildWord();
 					},
 					keyup	: function( event ) {
+                        var charCode = event.which || event.keyCode;
 						event.data.view.buildWord();
 					}
 				},
@@ -97,6 +99,34 @@ Constructor.View.WordForm = Backbone.Presenter.extend({
 		this.getWidget( 'directionChooser' ).setDirection( values.horizontal );
 	},
 	
+    _checkWord  : function() {
+        
+    },
+    
+    /**
+	 *
+	 */
+	isAllowCharCode	: function(code) {
+
+		if ( code >= 1040 /*А*/ && code <= 1103 /*я*/  ) {
+			return true;
+		}
+
+		if ( code == 1025 || code == 1105 /*ё*/  ) {
+			return true;
+		}
+
+		if ( code >= 65 /*A*/ && code <= 90 /*Z*/  ) {
+			return true;
+		}
+
+		if ( code >= 97 /*a*/ && code <= 122 /*z*/  ) {
+			return true;
+		}
+
+		return false;
+	},
+    
 	/**
 	 * 
 	 */

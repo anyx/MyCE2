@@ -9,7 +9,7 @@ namespace Anyx\CrosswordBundle\Document;
  */
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-use JMS\SerializerBundle\Annotation as Serializer;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @MongoDB\Document(repositoryClass="Anyx\CrosswordBundle\Repository\SolutionRepository")
