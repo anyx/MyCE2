@@ -252,7 +252,6 @@ class Crossword
      */
     public function getWordsForSolving()
     {
-
         $result = array();
         $words = $this->getWords()->toArray();
 
@@ -338,6 +337,15 @@ class Crossword
     }
 
     /**
+     * 
+     * @return bool
+     */
+    public function isAccessible()
+    {
+        return $this->isPublic() && $this->hasWords();
+    }
+
+    /**
      *
      */
     public function incCountSolving()
@@ -380,6 +388,26 @@ class Crossword
     public function getWordsAsArray()
     {
         return $this->getWords()->toArray();
+    }
+
+    /**
+     * 
+     * @return array
+     */
+    public function getWordsDefinitions()
+    {
+        return array_map(function($word) {
+            return $word->getDefinition();
+        }, $this->getWordsAsArray());
+    }
+
+    /**
+     * 
+     * @return string
+     */
+    public function getWordsDefinitionsAsString()
+    {
+        return implode(' ', $this->getWordsDefinitions());
     }
 
     /**

@@ -127,7 +127,6 @@ anyx_social:
       scope:             notify,offline
       user_fields:       uid, first_name, last_name, nickname, screen_name, sex, bdate (birthdate), city, country, timezone, photo, photo_medium, photo_big, has_mobile, rate, contacts, education, online, counters
 
-
 foq_elastica:
     clients:
         default: { host: localhost, port: 9200 }
@@ -136,28 +135,32 @@ foq_elastica:
             client: default
             settings:
                 index:
-                  analysis:
-                    analyzer: 
-                      ru_snowball:
-                        type : snowball
-                        language: Russian
-                        filter: [standart, lowercase, ru_snowball_filter]
-                    filter:
-                      ru_snowball_filter:
-                        type: snowball
-                        language: Russian
+                    analysis:
+                        analyzer:
+                            ru_snowball:
+                                type : snowball
+                                language: Russian
             types:
                 crossword:
-                  mappings:
-                    title: {boost: 5, analyzer: ru_snowball}
-                    description: {boost: 4, analyzer: ru_snowball}
-                    countSolving: {boost: 3}
-                  persistence:
-                      driver: mongodb
-                      model: Anyx\CrosswordBundle\Document\Crossword
-                      provider: 
-                      listener:
-                      finder:
+                    mappings:
+                        title: 
+                            boost: 10,
+                            analyzer: ru_snowball
+                        description: 
+                            boost: 7,
+                            analyzer: ru_snowball
+                        words_definitions_as_string:
+                            boost: 5,
+                            analyzer: ru_snowball
+                    persistence:
+                        driver: mongodb
+                        model: Anyx\CrosswordBundle\Document\Crossword
+                        listener:
+                            is_indexable_callback: "isAccessible"
+                        finder:
+                        provider:
+                            batch_size: 100
+                            query_builder_method: getPublicCrosswordsQueryBuilder
 
 sonata_block:
     default_contexts: [cms]

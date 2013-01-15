@@ -123,12 +123,11 @@ class CrosswordRepository extends DocumentRepository
     /**
      *
      */
-    protected function getPublicCrosswordsQueryBuilder()
+    public function getPublicCrosswordsQueryBuilder()
     {
         return $this->createQueryBuilder()
                         ->field('public')->equals(true)
                         ->field('deleted')->equals(false)
         ;
     }
-
 }
