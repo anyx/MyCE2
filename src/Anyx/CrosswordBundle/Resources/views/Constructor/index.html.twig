@@ -61,7 +61,7 @@
 					wordTable	: 'word-table'
 				},
                 messages    : {
-                    {% for message in ['definition_required', 'definition_minlength', 'text_required', 'text_minlength','word_valid'] %}
+                    {% for message in ['definition_required', 'definition_minlength', 'text_required', 'text_minlength', 'text_maxlength', 'word_valid'] %}
                     {% set transMessage = 'constructor.message.' ~ message %}
                     {{message}}     : '{{transMessage | trans}}',
                     {% endfor %}    
@@ -136,10 +136,11 @@
                 <button class="button blue-active" rel="vertical">{% trans %}Vertical{% endtrans %}</button>
 			</div>
             
-			<div class="i-word-preview word-preview wrapped relative">
+			<div class="wrapped relative word-preview-container">
                 <span class="ribbon tiny">
                     <span class="ribbon-inner blue-gradient">{{ 'Preview' | trans }}</span>
                 </span>
+                <div class="i-word-preview word-preview"></div>
 			</div>
 		</form>
 

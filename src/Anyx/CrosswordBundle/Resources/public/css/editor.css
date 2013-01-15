@@ -44,8 +44,6 @@ TABLE.word-table {
 	text-align: center;
 }
 .word-preview {
-    margin: 5px 0px;
-	width: 260px;
 	height: 260px;
 	position: relative;
 	z-index: 2;
@@ -58,6 +56,11 @@ TABLE.word-table {
     cursor: pointer;
     position: relative;
 }
+
+.word-preview-container {
+    margin: 10px 0;
+    width: 256px;
+}
 .status-text {
     position: absolute;
     right: 0px;
@@ -65,7 +68,7 @@ TABLE.word-table {
     width: 253px;
 }
 .direction-selector {
-    width: 100%;
+    width: 281px;
 }
 .direction-selector .button {
     width: 41%;

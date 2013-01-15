@@ -33,12 +33,15 @@ Constructor.View.WordForm = Backbone.Presenter.extend({
 		$( this.getWidget('wordInput').el )
 			.add( $( this.getWidget('definitionInput').el ) )
 			.on({
-					change	: function( event ) {
-						event.data.view.buildWord();
-					},
-					keyup	: function( event ) {
+                    keypress: function(event) {
                         var charCode = event.which || event.keyCode;
-						event.data.view.buildWord();
+                        return _this.isAllowCharCode(charCode);
+                    },
+					keyup	: function(event) {
+                        var target = $(event.target);
+                        target.val(_this.prepareWord(target.val()));
+                        
+                        _this.buildWord();
 					}
 				},
 				{
@@ -58,7 +61,7 @@ Constructor.View.WordForm = Backbone.Presenter.extend({
 	buildWord	: function() {
 		
 		var word = new Crossword.Model.Word({
-			text			: $( this.getWidget( 'wordInput' ).el ).val(),
+			text			: this.prepareWord($(this.getWidget( 'wordInput' ).el ).val()),
 			definition		: $( this.getWidget( 'definitionInput' ).el ).val(),
 			horizontal		: this.getWidget( 'directionChooser' ).getDirection()
 		});
@@ -78,7 +81,9 @@ Constructor.View.WordForm = Backbone.Presenter.extend({
 			this.getWidget( 'wordPreview' ).showWord( word );
 			this.trigger( 'create', this.getWidget( 'wordPreview' ).getCurrentView() );
 			this.getWidget( 'statusBar').showMessage( 'word_valid' );
-		}
+		} else {
+            this.getWidget( 'wordPreview' ).clear();
+        }
 	},
 	
 	/**
@@ -112,7 +117,7 @@ Constructor.View.WordForm = Backbone.Presenter.extend({
 			return true;
 		}
 
-		if ( code == 1025 || code == 1105 /*ё*/  ) {
+		if ( code == 1025/*Ё*/ || code == 1105 /*ё*/  ) {
 			return true;
 		}
 
@@ -126,6 +131,16 @@ Constructor.View.WordForm = Backbone.Presenter.extend({
 
 		return false;
 	},
+
+    prepareWord: function(word) {
+        var result = '';
+        for(var i = 0; i < word.length; i++) {
+            if (this.isAllowCharCode(word.charCodeAt(i))) {
+                result = result + word.charAt(i);
+            }
+        }
+        return result;
+    },
     
 	/**
 	 * 
