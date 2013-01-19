@@ -52,7 +52,9 @@
                                         id : '{{ crossword.id }}'
                                     }
                 ),
+                {% if solution is not empty %}
                 solution    : {{ solution | raw }},
+                {% endif %}
                 messages    : {
                     saveSuccessfully: '{{ 'Save successfully' | trans }}',
                     saveError       : '{{ 'Saving error' | trans }}',

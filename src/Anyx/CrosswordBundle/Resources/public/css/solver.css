@@ -1,5 +1,6 @@
 .crossword-solver {
 	position: relative;
+    min-height: 580px;
     height: 100%;
 }
 /* Word */
@@ -13,7 +14,7 @@ TABLE.solver-word-table, .solver-word-table TD {
 	text-align: center;
 }
 .crossword-solver .word-container {
-	position: absolute
+	position: absolute;
 }
 .solver-word-table INPUT {
 	border: none;
@@ -28,4 +29,9 @@ TABLE.solver-word-table, .solver-word-table TD {
     list-style: none;
     margin-left: 0px;
     padding-left: 0px;
+}
+
+.definitions-panel li:hover {
+    background-color: #06CBD6;
+    color: #fff;
 }

@@ -17,6 +17,9 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 	},
 
 	words   : [],
+    
+	wordsViews   : [],
+    
 
 	inputs	: {},
 
@@ -147,7 +150,8 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 		var wordDefintion = new Anyx.View.WordDefinition({
 			definition	: word.definition,
 			number		: word.number,
-			wordCid		: solverWord.cid,
+            word        : solverWord,
+            solver      : this,
 			template	: this.options.templates.definition
 		});
 
@@ -159,8 +163,13 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 
 		this.words[this.words.length] = word;
 		this.solution[word.id] = '';
+        this.wordsViews[this.wordsViews.length] = solverWord;
 	},
 
+    getWordsViews: function() {
+        return this.wordsViews;
+    },
+    
 	/**
 	 *
 	 */

@@ -1,0 +1,36 @@
+{% extends '::main.html.twig' %}
+
+{% set title = "О проекте" %}
+        
+{% block page_title %}
+    {{ title }}
+{% endblock %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block page_description %}
+О конструкторе кроссвордов
+{% endblock %}
+
+{% block page_keywords %}{% spaceless %}
+Конструктор кроссвордов, редактор кроссвордов
+{% endspaceless %}{% endblock %}
+
+
+{% block body %}
+
+<div class="results clear">
+    <div class="page-content">
+        <p>
+        Перед вами бесплатный сервис, позволяющий создавать и решать кроссворды. 
+        Изначально проект задумываылся, как образовательный, а во что он проевратится - посмотрим.
+        </p>
+        <p>
+        Мы всячески приветствуем общение с пользователями. Ждем ваших замечаний и продлежений.
+        </p>
+        <p>Команда <a href="{{path('homepage')}}">Редактора кроссвордов</a></p>
+    </div>
+</div>
+{% endblock %}

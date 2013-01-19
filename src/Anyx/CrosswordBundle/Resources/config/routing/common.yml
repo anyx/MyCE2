@@ -21,7 +21,7 @@ lists:
 #todo  
 report:
     pattern:  /report
-    defaults: { _controller: AnyxPageBundle:Default:index, slug : 'report' }
+    defaults: { _controller: AnyxPageBundle:Page:index, slug : 'report' }
 
 crossword_edit:
     pattern:  /crossword/edit/{id}

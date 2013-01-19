@@ -37,6 +37,12 @@ Anyx.View.SolverWord = Anyx.View.extend({
 	 */
 	getInputs	: function() {
 		return this.$('INPUT');
-	}
+	},
+    
+    setBorderColor   : function(color) {
+        this.$('td').css({
+            borderColor : color
+        });
+    }
 });
 

@@ -1,0 +1,36 @@
+{% extends '::main.html.twig' %}
+
+{% set title = "Сообщить об ошибке" %}
+        
+{% block page_title %}
+    {{ title }}
+{% endblock %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block page_description %}
+Новости проекта конструктор кроссвордов
+{% endblock %}
+
+{% block page_keywords %}{% spaceless %}
+Конструктор кроссвордов, редактор кроссвордов
+{% endspaceless %}{% endblock %}
+
+
+{% block body %}
+
+<div class="results clear">
+    <div class="page-content">
+        <p>
+        Если вы заметили ошибки в работе сайта, сообщите об этом и мы всё исправим!
+        </p>
+        <p>Связаться с нами можно любым вам удобным способом. Например, можно использовать виджет обратной связи, расположенный в правой части страницы.</p>
+        <p>
+            <a href="https://twitter.com/crosswordeditor" class="twitter-follow-button" data-show-count="false" data-lang="ru">Читать @crosswordeditor</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </p>
+    </div>
+</div>
+{% endblock %}

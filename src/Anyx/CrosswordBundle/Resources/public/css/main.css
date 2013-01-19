@@ -107,31 +107,9 @@ header {
 .header-container a:hover {
     color: #FEFFBC;
 }
-.header-container a:after {
-    position: absolute;
-    content: ' ';
-    left: 4px;
-    right: 4px;
-    bottom: 1px;
-    height: 1px;
-    background: #fff;
-    border-bottom: 1px solid #fff;
-    -webkit-box-shadow: 0 0 5px 2px rgb(255, 255, 255), 0 -2px 10px rgba(255, 255, 255, 0.75);
-    -moz-box-shadow: 0 0 5px 2px rgb(255, 255, 255), 0 -2px 10px rgba(255, 255, 255, 0.75);
-    box-shadow: 0 0 5px 2px rgb(255, 255, 255), 0 -2px 10px rgba(255, 255, 255, 0.75);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    filter: alpha(opacity=0);
-    -khtml-opacity: 0;
-    -moz-opacity: 0;
-    opacity: 0;
-}
-.ie8 .header-container a:after {
-    display: none;
-}
 .header-container li a:hover {
     padding-top: 0;
     padding-bottom: 8px;
-    color: white;
 }
 .header-container li a:hover:after {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
@@ -195,7 +173,7 @@ TEXTAREA {
 }
 .menu-subtitle {
     float: left;
-    margin-top: -10px;
+    margin-top: -5px;
     margin-left: 2px;
 }
 
