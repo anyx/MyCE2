@@ -23,7 +23,7 @@ Anyx.View.WordDefinition = Anyx.View.extend({
         _.each(this.getSolver().getWordsViews(), function(word) {
             word.setBorderColor('black');
         });
-        this.options.word.setBorderColor('#06CBD6');
+        this.options.word.setBorderColor('#005fb4');
     },
     
     dehighlightWords: function() {

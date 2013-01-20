@@ -30,8 +30,16 @@ TABLE.solver-word-table, .solver-word-table TD {
     margin-left: 0px;
     padding-left: 0px;
 }
-
-.definitions-panel li:hover {
-    background-color: #06CBD6;
-    color: #fff;
+.definitions-panel li span {
+    cursor: default;
+}
+.definitions-panel li span:hover {
+    color: #005fb4;
+}
+.word-number {
+    font-size: 10px;
+    position: absolute;
+    display: block;
+    left: 2px;
+    top: -1px;
 }

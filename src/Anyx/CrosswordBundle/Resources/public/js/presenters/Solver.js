@@ -20,7 +20,6 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
     
 	wordsViews   : [],
     
-
 	inputs	: {},
 
 	solution   : {},

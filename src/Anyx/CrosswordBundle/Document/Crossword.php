@@ -428,9 +428,9 @@ class Crossword
 
         $cmpFunction = function( $word1, $word2 ) {
                     $position1 = $word1->getPosition();
-                    $position2 = $word1->getPosition();
+                    $position2 = $word2->getPosition();
 
-                    if ($position1['y'] > $position2['y']) {
+                    if ($position1['y'] < $position2['y']) {
                         return -1;
                     } elseif ($position1['y'] == $position2['y']) {
                         return $position1['x'] > $position2['x'] ? -1 : 1;

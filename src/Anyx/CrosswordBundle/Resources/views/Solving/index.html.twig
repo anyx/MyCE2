@@ -113,14 +113,17 @@
 <script type="text/template" id="t-solver-word">
 <div class="word-container" data-id="<%=word.id%>">
 	<table class="solver-word-table">
-		<% if ( word.horizontal ) { %>
+        <% if (_.isEmpty(word.number)) { %>
+            <span class="word-number"><%-(word.number+1)%></span>
+        <% } %>
+		<% if (word.horizontal) { %>
 			<tr>
-			<% for( var i = 0; i < word.length; i++ ) { %>
+			<% for(var i = 0; i < word.length; i++) { %>
 			<td rel="<%= i %>"><input maxlength="1" /></td>
 			<% } %>
 			</tr>
 		<% } else { %>
-			<% for( var i = 0; i < word.length; i++ ) { %>
+			<% for(var i = 0; i < word.length; i++) { %>
 				<tr><td rel="<%= i %>"><input maxlength="1" /></td></tr>
 			<% } %>
 		<%} %>
@@ -129,7 +132,7 @@
 </script>
 
 <script type="text/template" id="t-solver-word-definition">
-	<li><%=number+1%>. <%=definition%>.</li>
+	<li><%=number+1%>. <span><%=definition%>.</span></li>
 </script>
 
 <div id="t-solver-saving-incorrect" style="display:none;">
