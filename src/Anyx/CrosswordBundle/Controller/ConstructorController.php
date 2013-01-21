@@ -9,6 +9,7 @@ namespace Anyx\CrosswordBundle\Controller;
 use Anyx\CrosswordBundle\Document;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -29,6 +30,9 @@ class ConstructorController extends Controller
      */
     public function indexAction(Document\Crossword $crossword)
     {
+        if (!$crossword->hasOwner($this->getUser())) {
+            throw new AccessDeniedException();
+        }
         $serializer = $this->get('serializer');
         $serializer->setGroups(array('edit'));
         return array(
@@ -59,14 +63,17 @@ class ConstructorController extends Controller
 
             $dm->flush();
         }
-
+        
         $serializer = $this->get('serializer');
         $serializer->setGroups(array('edit'));
+        $router = $this->get('router');
         return new Response(
                         $serializer->serialize(
                                 array(
                                     'success'   => true,
                                     'crossword' => $crossword,
+                                    'solvingUrl'=> $router->generate('crossword_solve', array('id' => $crossword->getId())),
+                                    'editUrl'   =>$router->generate('edit_crossword', array('id' => $crossword->getId())),
                                     'words'     => array_values($crossword->getWords()->toArray())
                                     ),
                                 'json'

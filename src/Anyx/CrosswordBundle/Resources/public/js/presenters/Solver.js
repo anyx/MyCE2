@@ -91,7 +91,7 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
                             template = _this.options.templates.solveSaved;
                         }
 
-                        var successView = new Anyx.View.SuccessSolvedMessage({
+                        var successView = new Anyx.View.SuccessSavedMessage({
                             template: template,
                             messages: _this.options.messages
                         });

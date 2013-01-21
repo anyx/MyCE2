@@ -58,7 +58,7 @@ class CrosswordController extends Controller
             throw new HttpException\NotFoundHttpException('Crossword not found');
         }
 
-        if (!$crossword->hasOwner($this->get('security.context')->getToken()->getUser())) {
+        if (!$crossword->hasOwner($this->getUser())) {
             throw new SecurityException\AccessDeniedException('Wrong crossword owner');
         }
 
@@ -70,7 +70,8 @@ class CrosswordController extends Controller
         }
 
         return array(
-            'form' => $form->createView()
+            'form'      => $form->createView(),
+            'crossword' => $crossword
         );
     }
 

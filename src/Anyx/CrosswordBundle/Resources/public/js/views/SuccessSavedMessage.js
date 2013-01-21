@@ -1,5 +1,5 @@
 
-Anyx.View.SuccessSolvedMessage = Anyx.View.extend({
+Anyx.View.SuccessSavedMessage = Anyx.View.extend({
   
     _modal: null,
   
@@ -9,7 +9,7 @@ Anyx.View.SuccessSolvedMessage = Anyx.View.extend({
     
     showModal: function() {
         this._modal = $.modal({
-                content: $( this.el ),
+                content: $(this.el),
                 title: this.options.messages.congratulatons,
                 buttons: {},
                 resizable: false,

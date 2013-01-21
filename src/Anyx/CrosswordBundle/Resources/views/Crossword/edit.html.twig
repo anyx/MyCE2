@@ -12,6 +12,16 @@
 </div>    
 {% endblock %}
 
+{% block javascripts %}
+	{{ parent() }}
+
+	{% javascripts
+        'http://vkontakte.ru/js/api/share.js?9'
+	%}
+	<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+{% endblock %}
+    
 {% block body %}
 
 <div class="columns">
@@ -21,6 +31,35 @@
     <div class="four-columns wrapped hint left-icon icon-info-round">
     {{ 'Crossword can be published if he contains more than one word' | trans }}
     </div>
+    
+    {% if crossword is not empty and crossword.public %}
+    <div>
+        <span class="share-button">
+            <div id="fb-root"></div>
+            <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=114949468588006";
+            fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+            <span class="fb-like" data-send="false" data-href="{{url('crossword_solve', {'id': crossword.id})}}" data-layout="button_count" data-width="450" data-show-faces="false">
+            </span>
+        </span>
+
+        <span class="share-button">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-lang="ru" data-url="{{url('crossword_solve', {'id': crossword.id})}}" data-hashtags="Кроссворды">{{'Tweet about this' | trans}}</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </span>
+
+        <span class="share-button">
+            <span id="j-share-button"></span>
+            <script type="text/javascript">
+            document.getElementById('j-share-button').innerHTML = VK.Share.button(window.location, {type: 'button', url: "{{url('crossword_solve', {'id': crossword.id})}}"});
+            </script>
+        </span>
+    </div>
+    {% endif %}
 </div>
 
 {% endblock %}

@@ -31,7 +31,6 @@ Constructor.View.WordForm = Backbone.Presenter.extend({
         var _this = this;
 		//events
 		$( this.getWidget('wordInput').el )
-			.add( $( this.getWidget('definitionInput').el ) )
 			.on({
                     keypress: function(event) {
                         var charCode = event.which || event.keyCode;
@@ -48,6 +47,13 @@ Constructor.View.WordForm = Backbone.Presenter.extend({
 					view : this
 				}
 			);
+                
+        $(this.getWidget('definitionInput').el)
+            .on({
+                keyup	: function(event) {
+                    _this.buildWord();
+                }
+            })
 				
 		this.getWidget('directionChooser')
 			.bind('changeDirection', function( event, data ) {

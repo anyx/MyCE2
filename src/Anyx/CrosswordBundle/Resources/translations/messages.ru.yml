@@ -16,6 +16,7 @@ status: статус
 Word: Слово
 Definition: Определение
 Edit: Правка
+edit: правка
 Current status is reflected in this block: В этом блоке отображается состояние редактирования
 Construct crossword: Построение кроссворда
 Save: Сохранить
@@ -272,4 +273,7 @@ Solving saved: "Решение сохранено"
 Unfortunately, your solving incorrect. You may try solve this crossword later: "К сожалению, ваше решение неверно. Вы сможете вернуться к решению позже."
 Correct: Верно
 Incorrect: Неверно
-This value should not be blank.: Значение не должно быть пустым 
+This value should not be blank.: Значение не должно быть пустым
+Crossword was saved and published: Кроссворд успешно сохранен и опубликован
+Crossword was saved but not published: Кроссворд сохранен, но не опубликован
+For public crossword, go to url: Опубликовать ссылку на кроссворд вы можете на странице редактирования данных кроссворда

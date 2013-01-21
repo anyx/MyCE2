@@ -27,7 +27,7 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 		this.renderWords( wordsCollection );
 		//
 		this.registerWidget( 'wordForm', new Constructor.View.WordForm({
-				el			: $( this.options.selectors.form ),
+				el			: $(this.options.selectors.form),
 				selectors	: this.options.selectors.formSelectors,
                 messages    : this.options.messages
 		}));
@@ -253,7 +253,7 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
                 titleBar: false,
                 buttons: {},
                 resizable: false,
-                actions: {},
+                actions: {}
         });
         
 		var savePath = Routing.generate(
@@ -271,15 +271,24 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 				data : {
 					words : this.getWidget('grid').getWords().getData()
 				},
-				success: function( data ) {
+				success: function(data) {
                     if ( _.isObject(data) && data.success == true ) {
-                        _this.getWidget('statusBar').showMessage( _this.options.messages.saveSuccessfully, true );
                         _this.clearWordViews();
-                        _this.renderWords( _this.createWordsCollection( data.words ) );
+                        _this.renderWords(_this.createWordsCollection(data.words));
+                        modal.closeModal();
+                    
+                        var successView = new Anyx.View.SuccessSavedMessage({
+                            template: _this.options.templates.savingSuccessful,
+                            messages: _this.options.messages
+                        });
+
+                        successView.render({data:data});
+                        modal.closeModal();
+                        successView.showModal();
+                        
                     } else {
                         _this.getWidget('statusBar').showError( _this.options.messages.saveError, true );
                     }
-                    modal.closeModal();
 				},
                 error: function() {
                      _this.getWidget('statusBar').showError( _this.options.messages.saveError, true );

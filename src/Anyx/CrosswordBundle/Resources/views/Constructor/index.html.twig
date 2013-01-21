@@ -30,11 +30,14 @@
 		'@AnyxCrosswordBundle/Resources/public/js/views/WordPreview.js'
 		'@AnyxCrosswordBundle/Resources/public/js/views/DirectionChooser.js'
 		'@AnyxCrosswordBundle/Resources/public/js/views/StatusBar.js'
+        '@AnyxCrosswordBundle/Resources/public/js/views/SuccessSavedMessage.js'
 		
 		'@AnyxCrosswordBundle/Resources/public/js/presenters/WordForm.js'
 		'@AnyxCrosswordBundle/Resources/public/js/presenters/Editor.js'
 
+
 		'@AnyxCrosswordBundle/Resources/public/js/theme/libs/modernizr.custom.js'
+        'http://vkontakte.ru/js/api/share.js?9'
 	%}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
@@ -44,6 +47,9 @@
 			var editor = new Constructor.Presenter.Editor({
 				id			: '{{crossword.getId()}}',
 				words		: {{ words | raw}},
+                templates   : {
+                    savingSuccessful: 't-editor-saving-success'
+                },
 				selectors	: {
 					grid				: '.i-grid',
 					form				: '.i-word-form',
@@ -68,9 +74,9 @@
                     defaultStatus   : '{%trans%}Current status is reflected in this block{%endtrans%}',
                     wordAdded       : '{%trans%}Success. Now you can add new word{%endtrans%}',
                     wordRemoved     : '{%trans%}Word removed{%endtrans%}',
-                    saveSuccessfully: '{%trans%}Save successfully{%endtrans%}',
                     saveError       : '{%trans%}Saving error{%endtrans%}',
-                    saving          : '{%trans%}Saving...{%endtrans%}'
+                    saving          : '{%trans%}Saving...{%endtrans%}',
+                    congratulatons  : '{{ 'Congratulations!' | trans }}'
                 }
 			});            
 		});
@@ -174,5 +180,30 @@
         </span>
     </div>
 </script>
+
+<script type="text/template" id="t-editor-saving-success">
+    <div class="congratulations-block">
+        <h3 class="thin">{{ 'Save successfully' | trans }}</h4>
+        
+        <% if (data.crossword.public) { %>
+        {{ 'Crossword was saved and published' | trans}}
+        <% } else { %>
+        <p>
+        {{ 'Crossword was saved but not published' | trans}}
+        </p>
+        <% } %>
+         <p>
+        {{ 'For public crossword, go to url' | trans}}: <a href="<%-data.editUrl%>">{{'edit'| trans}}</a>
+        </p>
+        
+        <p style="text-align: center; margin-top: 100px;">
+            <input type="button" class="button blue-gradient i-close-modal" value="{{"Close"|trans}}"/>
+        </p>
+    </div>
+</script>
+
+{#
+
+#}
 
 {% endblock %}
