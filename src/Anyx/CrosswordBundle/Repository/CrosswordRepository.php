@@ -49,7 +49,7 @@ class CrosswordRepository extends DocumentRepository
     public function getPopularCrosswordsQueryBuilder()
     {
         return $this->getPublicCrosswordsQueryBuilder()
-                        ->sort('countSolving', 'desc');
+                        ->sort('countSolvings', 'desc');
     }
 
     /**
@@ -125,9 +125,25 @@ class CrosswordRepository extends DocumentRepository
      */
     public function getPublicCrosswordsQueryBuilder()
     {
-        return $this->createQueryBuilder()
-                        ->field('public')->equals(true)
-                        ->field('deleted')->equals(false)
+        $qb = $this->createQueryBuilder();
+        return $qb
+                ->field('public')->equals(true)
+                ->field('deleted')->equals(false)
+                ->field('words')->exists(true)
+                ->field('words')->not($qb->expr()->size(0))
         ;
+    }
+
+    /**
+     * 
+     * @return \Anyx\CrosswordBundle\Document\Crossword
+     */
+    public function getRandomPublicCrossword()
+    {
+        $cursor = $this->getPublicCrosswordsQueryBuilder()->getQuery()->execute();
+        $cursor->skip(mt_rand(0, $cursor->count()-1));
+        $cursor->rewind();
+
+        return $cursor->current();
     }
 }

@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Anyx\CrosswordBundle\Document;
 use Anyx\CrosswordBundle\Request\ParamConverter\DoctrineMongoDBParamConverter;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception as HttpException;
 use Symfony\Component\Security\Core\Exception as SecurityException;
 use Symfony\Component\Form\FormError;
@@ -82,6 +83,31 @@ class CrosswordController extends Controller
     public function statisticAction($id)
     {
         
+    }
+
+    /**
+     * @Route("/crossword/random/", name="random_crossword")
+     * 
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function randomCrosswordAction()
+    {
+        $crosswordsRepo = $this->get('anyx.dm')->getRepository('Anyx\CrosswordBundle\Document\Crossword');
+        $crossword = $crosswordsRepo->getRandomPublicCrossword();
+
+        if (empty($crossword)) {
+            throw $this->createNotFoundException('Crossword not found');
+        }
+
+        return new RedirectResponse(
+                $this->get('router')->generate(
+                                    'crossword_solve',
+                                    array(
+                                        'id' => $crossword->getId()
+                                    )
+                )
+        );
     }
 
     /**

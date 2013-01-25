@@ -12,7 +12,8 @@ class Builder extends ContainerAware
         $items = array(
             'New crosswords' => array('route' => 'new_crosswords'),
             'Popular crosswords' => array('route' => 'popular_crosswords'),
-            'Search' => array('route' => 'search_crosswords')
+            'Search' => array('route' => 'search_crosswords'),
+            'Random crossword' => array('route' => 'random_crossword'),
         );
 
         $menu = $factory->createItem('root');

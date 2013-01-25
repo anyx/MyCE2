@@ -49,21 +49,25 @@ class ConstructorController extends Controller
      */
     public function saveAction(Document\Crossword $crossword, Request $reguest)
     {
-
         $words = $reguest->get('words');
 
         if (!empty($words)) {
             $wordsDocuments = $this->get('anyx.document.factory')->createCollection('Word', $words, false);
-
             $crossword->updateWords($wordsDocuments);
+        } else {
+            $crossword->removeWords();
+        }
 
-            $dm = $this->get('anyx.dm');
-
-            $dm->persist($crossword);
-
-            $dm->flush();
+        if ($crossword->isPublic() && $crossword->getCountWords() == 0) {
+            $crossword->setPublic(false);
         }
         
+        $dm = $this->get('anyx.dm');
+
+        $dm->persist($crossword);
+
+        $dm->flush();
+
         $serializer = $this->get('serializer');
         $serializer->setGroups(array('edit'));
         $router = $this->get('router');

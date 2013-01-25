@@ -47,7 +47,7 @@ class Crossword
 
     /**
      * @MongoDB\Boolean
-     * @Serializer\Groups({"edit"})
+     * @Serializer\Groups({"profile", "edit"})
      */
     protected $public;
     
@@ -60,7 +60,7 @@ class Crossword
      * @MongoDB\Int
      * @Serializer\Groups({"profile","edit"})
      */
-    protected $countSolving = 0;
+    protected $countSolvings = 0;
 
     /**
      * @MongoDB\Date
@@ -331,9 +331,9 @@ class Crossword
     /**
      *
      */
-    public function getCountSolving()
+    public function getCountSolvings()
     {
-        return $this->countSolving;
+        return $this->countSolvings;
     }
 
     /**
@@ -348,9 +348,9 @@ class Crossword
     /**
      *
      */
-    public function incCountSolving()
+    public function incCountSolvings()
     {
-        return $this->countSolving++;
+        return $this->countSolvings++;
     }
 
     /**
@@ -408,6 +408,23 @@ class Crossword
     public function getWordsDefinitionsAsString()
     {
         return implode(' ', $this->getWordsDefinitions());
+    }
+
+    /**
+     * 
+     */
+    public function removeWords()
+    {
+        $this->words = array();
+    }
+
+    /**
+     * 
+     * @return int
+     */
+    public function getCountWords()
+    {
+        return count($this->getWords());
     }
 
     /**

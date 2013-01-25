@@ -22,7 +22,7 @@ class SolutionListener {
         
         if ( $document instanceof Document\Solution ) {
             $crossword = $document->getCrossword();
-            $crossword->incCountSolving();
+            $crossword->incCountSolvings();
             $dm->flush();
         }
 	}

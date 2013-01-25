@@ -7,7 +7,7 @@ use Anyx\CrosswordBundle\Tests as BaseTest;
 class SolutionTest extends BaseTest\TestCase
 {
     
-    public function testUpdatingCountSolving() {
+    public function testUpdatingCountSolvings() {
         
         $user = $this->createDocument(
                                 'User',
@@ -38,7 +38,7 @@ class SolutionTest extends BaseTest\TestCase
             )
         );
         
-        $this->assertEquals( $crossword->getCountSolving(), 0, 'Wrong default solving count' );
+        $this->assertEquals( $crossword->getCountSolvings(), 0, 'Wrong default solving count' );
         $this->getContainer()->get('anyx.dm')->flush();
          
         $answer = $this->createDocument(
@@ -60,13 +60,13 @@ class SolutionTest extends BaseTest\TestCase
         ), true, false);
         
         $this->getContainer()->get('anyx.dm')->flush();
-        $this->assertEquals( $crossword->getCountSolving(), 1, 'Solving count is not updated' );
+        $this->assertEquals( $crossword->getCountSolvings(), 1, 'Solving count is not updated' );
 
         return $solution;
     }
     
     /**
-     * @depends testUpdatingCountSolving
+     * @depends testUpdatingCountSolvings
      */
     public function testCheckingSolutionCorrectness( $solution ) {
         

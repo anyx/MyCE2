@@ -7,7 +7,9 @@
     <br>
     <small>{{ crossword.description | truncate(300)}}</small>
     <div class="crossword-info  blue-color">
-        <span class="count-solving icon-users icon-size1 color" title="{{ 'Count solving' | trans }}">{{ crossword.countSolving }}</span>
+        <span class="count-solving icon-users icon-size1 color" title="{{ 'Count solvings' | trans }}">{{ crossword.countSolvings }}</span>
+        <span class="icon-read margin-left icon-size1 color" title="{{ 'Count words' | trans }}">{{ crossword.countWords }}</span>
+        
         <small class="margin-left" title="{{ 'Date create' | trans }}">{{ crossword.createdAt.format('d.m.Y') }}</small>
     </div>
 </li>

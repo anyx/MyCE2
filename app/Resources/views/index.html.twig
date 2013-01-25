@@ -85,9 +85,10 @@
             {% endif %}
             
 			<a href="{{ path('new_crosswords') }}" title="{{ 'Creation and solution crosswords' | trans }}" >{%trans%}Crosswords{%endtrans%}</a>
+			<a href="{{ path('random_crossword') }}" title="{{ 'Random crossword' | trans }}">{{ 'Random crossword' | trans }}</a>
 			<a href="{{ path('page', {'slug' : 'about'}) }}" title="{{ 'About' | trans }}">{{ 'About' | trans }}</a>
-			<a href="{{ path('page', {'slug' : 'links'}) }}" title="{{ 'Wanna talk?' | trans}}">{%trans%}Contatcs{%endtrans%}</a>
-		</nav>
+
+        </nav>
 
 		<hgroup>
 			<div id="logo"></div>
