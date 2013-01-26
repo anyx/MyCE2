@@ -117,6 +117,7 @@ anyx_social:
       client_id:         %facebook_client_id%
       secret:            %facebook_secret%
       user_fields:       picture,email,name,link
+      scope:             email
     twitter:
       client_id:         %twitter_client_id%
       secret:            %twitter_secret%
