@@ -9,8 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
-;
-
 /**
  * 
  */
@@ -57,9 +55,10 @@ class SolvingController extends Controller
         $solutionData = $this->get('request')->get('solution');
 
         $documentManager = $this->get('anyx.dm');
+        $securityContext = $this->get('security.context');
 
         $factory = $this->get('anyx.document.factory');
-        $user = $this->get('security.context')->getToken()->getUser();
+        $user = $securityContext->getToken()->getUser();
 
         $answers = array();
         foreach ($crossword->getWords() as $word) {
@@ -71,16 +70,22 @@ class SolvingController extends Controller
             }
         }
 
-        $solution = $documentManager->getRepository('Anyx\CrosswordBundle\Document\Solution')->getUserSolution($user, $crossword);
+        if ($securityContext->isGranted('ROLE_USER')) {
+            $solution = $documentManager->getRepository('Anyx\CrosswordBundle\Document\Solution')->getUserSolution($user, $crossword);
+        }
+        
 
         if (empty($solution)) {
             $solution = $factory->create(
                     'Anyx\CrosswordBundle\Document\Solution',
                     array(
-                        'user' => $user,
                         'crossword' => $crossword
                     )
             );
+        }
+        
+        if($securityContext->isGranted('ROLE_USER')) {
+            $solution->setUser($user);
         }
 
         $solution->setAnswers($answers);
@@ -90,7 +95,7 @@ class SolvingController extends Controller
         return new Response(json_encode(array(
                             'success' => true,
                             'correct' => $solution->isCorrect()
-                        )));
+        )));
     }
 
 }

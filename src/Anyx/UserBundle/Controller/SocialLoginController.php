@@ -3,9 +3,14 @@
 namespace Anyx\UserBundle\Controller;
 
 use Anyx\SocialUserBundle\Controller\LoginController as BaseController;
+use Anyx\SocialBundle\Authentication\UserDeniedException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use \Symfony\Component\Translation\Translator;
+
 
 /**
  * @Route(service="anyx_social_user.controller.login") 
@@ -16,6 +21,12 @@ class SocialLoginController extends BaseController
      * 
      */
     protected $router;
+
+    /**
+     *
+     */
+    protected $translator;
+
 
     /**
      * 
@@ -35,6 +46,41 @@ class SocialLoginController extends BaseController
         $this->router = $router;
     }
 
+    /**
+     * 
+     * @return \Symfony\Component\Translation\Translator
+     */
+    public function getTranslator()
+    {
+        return $this->translator;
+    }
+
+    /**
+     * 
+     * @param \Symfony\Component\Translation\Translator $translator
+     */
+    public function setTranslator(Translator $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    /**
+     * 
+     * @param string $service
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function authAction($service, Request $request)
+    {
+        try {
+            return parent::authAction($service, $request);
+        } catch(UserDeniedException $exception) {
+            $request->getSession()->setFlash(
+                                'message',
+                                $this->getTranslator()->trans('You regected authorization through'). ' ' . $service);
+            return new RedirectResponse($this->getRouter()->generate('fos_user_security_login'));
+        }
+    }
+    
     /**
      * 
      * @param \Symfony\Component\HttpFoundation\Request $request

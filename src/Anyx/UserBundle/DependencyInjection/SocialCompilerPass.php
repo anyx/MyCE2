@@ -22,5 +22,9 @@ class SocialCompilerPass implements CompilerPassInterface
                     'setRouter',
                     array(new Reference('router'))
         );
+        $definition->addMethodCall(
+                    'setTranslator',
+                    array(new Reference('translator'))
+        );
     }
 }
