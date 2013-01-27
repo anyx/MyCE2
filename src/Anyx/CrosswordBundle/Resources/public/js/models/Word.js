@@ -28,7 +28,7 @@ Crossword.Model.Word = Crossword.Model.extend({
 		definition	: {
 			required	: true,
 			minlength	: 3,
-			maxlength	: 50
+			maxlength	: 100
 		}
 	},
 

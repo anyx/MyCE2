@@ -67,7 +67,7 @@
 					wordTable	: 'word-table'
 				},
                 messages    : {
-                    {% for message in ['definition_required', 'definition_minlength', 'text_required', 'text_minlength', 'text_maxlength', 'word_valid'] %}
+                    {% for message in ['definition_required', 'definition_minlength', 'definition_maxlength', 'text_required', 'text_minlength', 'text_maxlength', 'word_valid'] %}
                     {% set transMessage = 'constructor.message.' ~ message %}
                     {{message}}     : '{{transMessage | trans}}',
                     {% endfor %}    
