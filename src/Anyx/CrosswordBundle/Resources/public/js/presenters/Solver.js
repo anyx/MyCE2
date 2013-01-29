@@ -64,7 +64,7 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 		 */
 		var _this = this;
 
-		$( this.options.selectors.saveButton ).click(function(){
+		$(this.options.selectors.saveButton).click(function(){
             
             var modal = $.modal({
                     content: '<span class="loader big waiting"></span><span class="saving-message">' + _this.options.messages.saving + '...</span>',
@@ -130,12 +130,13 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 	/**
 	 *
 	 */
-	addWord		: function( word ) {
+	addWord		: function(word) {
         
 		var solverWord = new Anyx.View.SolverWord({
 			model		: word,
 			cellSize	: this.options.cellSize,
-			template	: this.options.templates.word
+			template	: this.options.templates.word,
+            solver      : this
 		});
 
 		$( this.options.el ).append( solverWord.el );
@@ -172,7 +173,7 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 	/**
 	 *
 	 */
-	mapInputs	: function( inputs ) {
+	mapInputs	: function(inputs) {
 		_.each( inputs, function( input ) {
 			var position = $( input ).data('position');
 			if ( _.isEmpty( this.inputs[position.x] ) ) {
@@ -335,8 +336,8 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 	/**
 	 *
 	 */
-	getInputByPosition	: function( position ) {
-		if ( position.x in this.inputs ) {
+	getInputByPosition	: function(position) {
+		if (position.x in this.inputs) {
 			return this.inputs[position.x][position.y];
 		}
 	},
@@ -345,12 +346,12 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 	 *
 	 */
 	getSolution    : function() {
-		_.each( this.words, function( word ) {
+		_.each( this.words, function(word) {
 			var directionCoordinate = word.horizontal ? 'x' : 'y';
-			var point = _.clone( word.position );
+			var point = _.clone(word.position);
 			this.solution[word.id] = '';
-			for ( var i = 0; i < word.length; i++ ) {
-				this.solution[word.id] += $( this.getInputByPosition(point) ).val();
+			for (var i = 0; i < word.length; i++) {
+				this.solution[word.id] += $(this.getInputByPosition(point)).val();
 				point[directionCoordinate]++;
 			}
 		}, this);
@@ -360,11 +361,11 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
     /**
      * 
      */
-    setAnswers  : function( answers ) {
-        _.each(answers, function( answer ) {
+    setAnswers  : function(answers) {
+        _.each(answers, function(answer) {
             var wordElement = this.options.el.find('DIV[data-id=' + answer.word_id + ']');
             var cells = wordElement.find('TD INPUT');
-            if ( cells.length > 0 ) {
+            if (cells.length > 0) {
                 cells.each(function(i){
                     $(this).val(answer.text[i]);
                 });

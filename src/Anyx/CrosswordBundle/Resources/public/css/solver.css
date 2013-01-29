@@ -34,7 +34,7 @@ TABLE.solver-word-table, .solver-word-table TD {
     cursor: default;
 }
 .definitions-panel li span:hover {
-    color: #005fb4;
+    color: #02506D;
 }
 .word-number {
     font-size: 10px;
@@ -42,4 +42,5 @@ TABLE.solver-word-table, .solver-word-table TD {
     display: block;
     left: 2px;
     top: -1px;
+    z-index: 10;
 }

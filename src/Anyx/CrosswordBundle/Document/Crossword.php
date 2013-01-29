@@ -450,7 +450,7 @@ class Crossword
                     if ($position1['y'] < $position2['y']) {
                         return -1;
                     } elseif ($position1['y'] == $position2['y']) {
-                        return $position1['x'] > $position2['x'] ? -1 : 1;
+                        return $position1['x'] < $position2['x'] ? -1 : 1;
                     } else {
                         return 1;
                     }

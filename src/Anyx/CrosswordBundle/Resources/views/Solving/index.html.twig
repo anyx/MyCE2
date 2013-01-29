@@ -93,6 +93,17 @@
 {% block page_title %}{%trans%}Solving crossword{%endtrans%} &laquo;{{crossword.title}}&raquo; {% endblock %}
 {% block title %}{%trans%}Solving crossword{%endtrans%} &laquo;{{crossword.title}}&raquo; {% endblock %}
 
+{% block page_description %}{{crossword.description}}{% endblock %}
+{% block page_keywords %}{{crossword.title}}{% endblock %}
+
+{% block opengraph %}
+<meta property="og:title" content="Кроссворд &laquo;{{crossword.title}}&raquo;" />
+<meta property="og:type" content="crossword" />
+<meta property="og:url" content="{{url("crossword_solve", {'id' : crossword.id})}}" />
+<meta property="og:description" content="{{crossword.description}}" />
+<meta property="og:image" content="{{app.request.scheme}}://{{app.request.httpHost}}{{asset("img/og_logo.png")}}" />
+{% endblock %}
+
 {% block body %}
 <div class="columns">
 	<div class="eight-columns">

@@ -20,6 +20,30 @@ Anyx.View.SolverWord = Anyx.View.extend({
 		this.setLettersPositions();
 	},
 	
+    /**
+     *
+     */
+    getSolver       : function() {
+        return this.options.solver;
+    },
+
+    /**
+     *
+     */
+    getSolverInputs       : function() {
+        var word = this.model;
+        var directionCoordinate = word.horizontal ? 'x' : 'y';
+        var point = _.clone(word.position);
+        var inputs = [];
+
+        for (var i = 0; i < word.length; i++) {
+            inputs[inputs.length] = this.getSolver().getInputByPosition(point);
+            point[directionCoordinate]++;
+        }
+
+        return $(inputs);
+    },
+
 	/**
 	 *
 	 */
@@ -39,9 +63,9 @@ Anyx.View.SolverWord = Anyx.View.extend({
 		return this.$('INPUT');
 	},
     
-    setBorderColor   : function(color) {
-        this.$('td').css({
-            borderColor : color
+    highlight   : function(color) {
+        this.getSolverInputs().css({
+            backgroundColor : color
         });
     }
 });

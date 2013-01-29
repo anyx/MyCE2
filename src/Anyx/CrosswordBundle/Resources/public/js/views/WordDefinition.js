@@ -21,14 +21,15 @@ Anyx.View.WordDefinition = Anyx.View.extend({
     
     highlightWord: function() {
         _.each(this.getSolver().getWordsViews(), function(word) {
-            word.setBorderColor('black');
+            word.highlight('#fff');
         });
-        this.options.word.setBorderColor('#005fb4');
+
+        this.options.word.highlight('#07DDE5');
     },
     
     dehighlightWords: function() {
         _.each(this.getSolver().getWordsViews(), function(word) {
-            word.setBorderColor('black');
+            word.highlight('#fff');
         });
     }
 });
