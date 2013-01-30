@@ -214,4 +214,4 @@ services:
     solution.listener:
       class: Anyx\CrosswordBundle\Listener\SolutionListener
       tags:
-        - { name: doctrine.odm.mongodb.default_event_listener, event: postPersist, method: postPersist}
+        - { name: doctrine_mongodb.odm.event_listener, event: postPersist, method: postPersist}
