@@ -63,12 +63,6 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
 
-#jms_serializer:
-#    handlers:
-#        object_based: false
-#        datetime:
-#            format: "d.m.Y" 
-
 doctrine_mongodb:
     connections:
         default:
@@ -88,7 +82,6 @@ fos_user:
     profile:
       form:
         type: anyx_user_profile
-#        handler: anyx_user.form.handler.registration
 
 anyx_social_user:
   db_driver: mongodb

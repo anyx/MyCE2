@@ -20,6 +20,9 @@ services:
         tags:
             - { name: sonata.admin, manager_type: doctrine_mongodb, label: Users }
         arguments: [null, Anyx\CrosswordBundle\Document\User, SonataAdminBundle:CRUD]
+    solution.session.repository:
+        class: Anyx\CrosswordBundle\Repository\SessionSolutionRepository
+        arguments: ["@session"]
     exceptions.listener:
       class: Anyx\CrosswordBundle\Listener\KernelExceptionListener
       arguments: [ %anyx.exception.recipients%, %anyx.exception.template%,"@service_container"]

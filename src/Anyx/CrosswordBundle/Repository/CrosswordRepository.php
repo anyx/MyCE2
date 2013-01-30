@@ -141,9 +141,14 @@ class CrosswordRepository extends DocumentRepository
     public function getRandomPublicCrossword()
     {
         $cursor = $this->getPublicCrosswordsQueryBuilder()->getQuery()->execute();
-        $cursor->skip(mt_rand(0, $cursor->count()-1));
-        $cursor->rewind();
+        
+        if($cursor->count() > 0) {
+            $cursor->skip(mt_rand(0, $cursor->count()-1));
+            $cursor->rewind();
 
-        return $cursor->current();
+            return $cursor->current();
+        }
+        
+        return null;
     }
 }

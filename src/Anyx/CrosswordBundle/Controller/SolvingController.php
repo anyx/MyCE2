@@ -22,10 +22,9 @@ class SolvingController extends Controller
      */
     public function indexAction(Document\Crossword $crossword)
     {
-
         $securityContext = $this->get('security.context');
 
-        $solution = null;
+        $serializedSolution = null;
 
         $serializer = $this->get('serializer');
 
@@ -34,14 +33,18 @@ class SolvingController extends Controller
             $documentManager = $this->get('anyx.dm');
             $solutionRepository = $documentManager->getRepository('Anyx\CrosswordBundle\Document\Solution');
             $solution = $solutionRepository->getUserSolution($user, $crossword);
-
-            $serializer->setGroups(array('solving'));
-            $solution = $serializer->serialize($solution, 'json');
+        } else {
+            $solution = $this->get('solution.session.repository')->findSolution($crossword);
         }
 
+        if (!empty($solution)) {
+            $serializer->setGroups(array('solving'));
+            $serializedSolution = $serializer->serialize($solution, 'json');            
+        }
+        
         return array(
             'crossword' => $crossword,
-            'solution' => $solution,
+            'solution'  => $serializedSolution,
         );
     }
 
@@ -63,10 +66,14 @@ class SolvingController extends Controller
         $answers = array();
         foreach ($crossword->getWords() as $word) {
             if (array_key_exists($word->getId(), $solutionData)) {
-                $answers[] = $factory->create('Answer', array(
-                    'wordId' => $word->getId(),
-                    'text' => $solutionData[$word->getId()]
-                        ), false);
+                $answers[] = $factory->create(
+                                'Answer',
+                                array(
+                                    'wordId' => $word->getId(),
+                                    'text' => $solutionData[$word->getId()]
+                                ),
+                                false
+                );
             }
         }
 
@@ -74,7 +81,6 @@ class SolvingController extends Controller
             $solution = $documentManager->getRepository('Anyx\CrosswordBundle\Document\Solution')->getUserSolution($user, $crossword);
         }
         
-
         if (empty($solution)) {
             $solution = $factory->create(
                     'Anyx\CrosswordBundle\Document\Solution',
@@ -84,11 +90,14 @@ class SolvingController extends Controller
             );
         }
         
+        $solution->setAnswers($answers);
+        
         if($securityContext->isGranted('ROLE_USER')) {
             $solution->setUser($user);
+        } else {
+            $this->get('solution.session.repository')->saveSolution($solution);
         }
 
-        $solution->setAnswers($answers);
 
         $documentManager->flush();
 

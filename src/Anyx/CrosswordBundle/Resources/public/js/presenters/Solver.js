@@ -351,7 +351,8 @@ Anyx.Presenter.Solver = Backbone.Presenter.extend({
 			var point = _.clone(word.position);
 			this.solution[word.id] = '';
 			for (var i = 0; i < word.length; i++) {
-				this.solution[word.id] += $(this.getInputByPosition(point)).val();
+                var letter = $(this.getInputByPosition(point)).val();
+				this.solution[word.id] += letter.length == 1 ? letter : ' ';
 				point[directionCoordinate]++;
 			}
 		}, this);

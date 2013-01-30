@@ -17,12 +17,12 @@
     <b>Token:</b> {{ token }}
 </div>
 <div>
-    <b>Uri:</b> {% debug app.request.requestUri %}
+    <b>Uri:</b> {{ requestUri }}
 </div>
 <div>
-    <b>Server:</b> {% debug app.request.server %}
+    <b>Server:</b> <pre>{{ server }}</pre>
 </div>
 <div>
-    <b>Session:</b> {% debug app.request.session %}
+    <b>Session:</b> <pre>{{ session }}</pre>
 </div>
 
