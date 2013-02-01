@@ -9,35 +9,49 @@ Constructor.Presenter = Crossword.Presenter || {};
  */
 Constructor.Presenter.Editor = Backbone.Presenter.extend({
 	
+    previewBlockArea:  {},
+
 	/**
 	 * 
 	 */
 	initialize		: function() {
+        var size = {
+            width   : 30,
+            height  : 30
+        }
 		//
 		this.registerWidget( 'grid', new Constructor.View.Grid({
 				el		: $( this.options.selectors.grid ),
-				rows	: 30,
-				cols	: 30
+				rows	: size.width,
+				cols	: size.height
 		}));
 
-        Constructor.View.Word.setClass( this.options.classes.wordTable );
+        Constructor.View.Word.setClass(this.options.classes.wordTable);
 		
-        var wordsCollection = this.createWordsCollection( this.options.words );
+        var wordsCollection = this.createWordsCollection(this.options.words);
+        wordsCollection.setSize(size);
         
-		this.renderWords( wordsCollection );
+		this.renderWords(wordsCollection);
 		//
 		this.registerWidget( 'wordForm', new Constructor.View.WordForm({
 				el			: $(this.options.selectors.form),
 				selectors	: this.options.selectors.formSelectors,
                 messages    : this.options.messages
 		}));
-		
 		//
-		this.registerWidget( 'saveButton', this.options.selectors.saveButton );
+		this.registerWidget('saveButton', this.options.selectors.saveButton);
 
-		this.getWidget( 'wordForm').bind( 'create', this.initWordDraggable, this );
+		this.getWidget('wordForm').bind('create', this.initWordDraggable, this);
 		
 		this.initEvents();
+
+        var wordPreviewElement = $(this.getWidget('wordPreview').el);
+        this.previewBlockArea = {
+            x1  : wordPreviewElement.offset().left,
+            y1  : wordPreviewElement.offset().top,
+            x2  : wordPreviewElement.offset().left + wordPreviewElement.width(),
+            y2  : wordPreviewElement.offset().top + wordPreviewElement.height()
+        }
 	},
 
     /**
@@ -62,20 +76,36 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 	/**
 	 *
 	 */
-	inGrid		: function( wordView ) {
+	inGrid		: function(wordView) {
 		return wordView.getElement().parent().get(0) == this.getWidget( 'grid' ).el.get(0);	
 	},
-	
+
+    /**
+     *
+     */
+    isWordOnPreviewBlock: function(wordView) {
+        var wordElement = wordView.getElement();
+        var wordArea = {
+            x1  : wordElement.offset().left,
+            y1  : wordElement.offset().top,
+            x2  : wordElement.offset().left + wordElement.width(),
+            y2  : wordElement.offset().top + wordElement.height()
+        };
+
+        return wordArea.x1 >= this.previewBlockArea.x1 && wordArea.x2 <= this.previewBlockArea.x2 &&
+            wordArea.y1 >= this.previewBlockArea.y1 && wordArea.y2 <= this.previewBlockArea.y2 ;
+    },
+
 	/**
 	 * 
 	 */
-	initWordDraggable	: function( wordView ) {
+	initWordDraggable	: function(wordView) {
 		
 		var _this = this;
 		
-		var grid = this.getWidget( 'grid' );
+		var grid = this.getWidget('grid');
 
-		var crosswordStartPoint = $( grid.el ).offset();
+		var crosswordStartPoint = $(grid.el).offset();
 	   
 		var cellSize = grid.getCellSize(); 
 		
@@ -109,11 +139,11 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 				ui.helper.appendTo( grid.el ).css( 'position', 'absolute' );
 			},
 			drag		: function( event, ui ) {
-				
-				var x = Math.ceil( ( event.originalEvent.pageX - crosswordStartPoint.left ) / cellSize ) - 1;
+
+                var x = Math.ceil( ( event.originalEvent.pageX - crosswordStartPoint.left ) / cellSize ) - 1;
 				var y = Math.ceil( ( event.originalEvent.pageY - crosswordStartPoint.top ) / cellSize ) - 1;
 				
-				if ( wordView.model.isHorizontal() ) {
+				if (wordView.model.isHorizontal()) {
 					x -= activeCell;
 				} else {
 					y -= activeCell;
@@ -125,10 +155,10 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 						y : y
 				}});
 
-				if ( !grid.getWords().canAddWord( wordView.model ) ) {
-					wordView.setBorderColor( '#c00' );
+				if (!_this.isWordOnPreviewBlock(wordView) && !grid.getWords().canAddWord(wordView.model)) {
+					wordView.setBorderColor('#c00');
 				} else {
-					wordView.setBorderColor( '#000' );
+					wordView.setBorderColor('#000');
 				}
 
 				if ( _this.inGrid( wordView ) ) {

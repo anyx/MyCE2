@@ -3,11 +3,23 @@
  */
 Crossword.Model.WordsCollection = Backbone.Collection.extend({
 
+    size : {
+        width: 10,
+        height: 10
+    },
+
 	/**
 	 *
 	 */
 	model	: Crossword.Model.Word,
 	
+    /**
+     *
+     */
+    setSize: function(size) {
+        this.size = size;
+    },
+
 	/**
 	 * 
 	 */
@@ -51,7 +63,15 @@ Crossword.Model.WordsCollection = Backbone.Collection.extend({
 	/**
 	 * @param word
 	 */
-	canAddWord	: function( word ) {
+	canAddWord	: function(word) {
+
+        var startPoint = word.getStartPoint();
+        var endPoint = word.getEndPoint();
+
+        if (startPoint.x < 0 || startPoint.y < 0 || endPoint.x > this.size.width -1 || endPoint.y > this.size.height - 1) {
+            return false;
+        }
+
 		var parrallelWords = this.getWordsByDirection( word.isHorizontal() );
 		var perpendicularWords = this.getWordsByDirection( !word.isHorizontal() );
 		
@@ -69,10 +89,10 @@ Crossword.Model.WordsCollection = Backbone.Collection.extend({
 			return false;
 		}
 		//крайние точки
-		var startNeighbour = word.getStartPoint();
+		var startNeighbour = startPoint;
 		startNeighbour[directionCoord]--;
 		
-		var endNeighbour = word.getEndPoint();
+		var endNeighbour = endPoint;
 		endNeighbour[directionCoord]++;
 		
 		var wordInPoint = false;

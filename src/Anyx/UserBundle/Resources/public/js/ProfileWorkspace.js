@@ -162,5 +162,5 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
 	defaultRoute: function( action, params ) {
 		var action = action || this.defaultAction;
 		this.callAction( action, params, this.getActionView( action ) );
-	},
+	}
 });

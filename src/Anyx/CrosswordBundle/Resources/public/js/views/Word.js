@@ -81,16 +81,18 @@ Constructor.View.Word = Anyx.View.extend({
 	setBorderColor	: function( color ) {
 		this.getElement().find( 'td' ).css( 'border-color', color );
 	},
-	
+
+	/**
+	 *
+	 */
 	getClass		: function() {
 		if ( _.isUndefined( Constructor.View.Word._class ) ) {
 			Constructor.View.Word._class = 'word';
 		}
-
 		return Constructor.View.Word._class;
 	}
 });
 
-Constructor.View.Word.setClass = function( className ) {
+Constructor.View.Word.setClass = function(className) {
     Constructor.View.Word._class = className;
 };
