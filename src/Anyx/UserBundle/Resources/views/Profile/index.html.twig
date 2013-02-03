@@ -246,7 +246,7 @@
                     <span class="icon-minus-round icon-size1" title="{%trans%}Under construction{%endtrans%}"></span>
                     <% } %>
                 </td>
-                <td class="td-center one-column"><%=crossword.get('count_solving')%></td>
+                <td class="td-center one-column"><%=crossword.get('count_solvings')%></td>
                 <td class="align-right vertical-center two-column">
                     <span class="button-group compact">
                         <a class="button icon-pencil" href="<%=Routing.generate('edit_crossword', { id: crossword.get('id') })%>">{%trans%}Edit{%endtrans%}</a>
