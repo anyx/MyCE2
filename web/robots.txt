@@ -1,4 +1,4 @@
 
 User-agent: *
 Allow: /
-Sitemap: http://crosswords-editor.ru/sitemaps.xml
+Sitemap: http://crosswords-editor.ru/sitemap.xml
