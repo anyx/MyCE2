@@ -50,7 +50,7 @@ class SolvingController extends Controller
 
     /**
      * @ParamConverter("crossword", class="Anyx\CrosswordBundle\Document\Crossword")
-     * @Route("/crossword/{id}/solve/save", name="crossword_save_solution", options={"expose" = true})
+     * @Route("/solve/{id}/save", name="crossword_save_solution", options={"expose" = true})
      * @Method({"POST"})
      */
     public function saveAction(Document\Crossword $crossword)
