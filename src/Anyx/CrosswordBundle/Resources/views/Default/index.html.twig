@@ -39,7 +39,7 @@
 		{% for crossword in crosswords.popular %}
 			<li>
 				<a href="{{ path( 'crossword_solve', { 'id' : crossword.id })}}">{{ crossword.title }}</a>
-				<p class="description">{{crossword.description | truncate(20)}}</p>
+				<p class="description">{{crossword.description | truncate(200)}}</p>
 			</li>
 		{% endfor %}
 		</ul>
@@ -54,7 +54,7 @@
 		{% for crossword in crosswords.new%}
 			<li>
 				<a href="{{ path( 'crossword_solve', { 'id' : crossword.id })}}">{{ crossword.title }}</a>
-				<p class="description">{{crossword.description | truncate(20)}}</p>
+				<p class="description">{{crossword.description | truncate(200)}}</p>
 			</li>
 		{% endfor %}
 		</ul>
