@@ -86,7 +86,7 @@ class CrosswordController extends Controller
     }
 
     /**
-     * @Route("/crossword/random/", name="random_crossword")
+     * @Route("/random/crossword", name="random_crossword")
      * 
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException

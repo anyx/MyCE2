@@ -23,8 +23,9 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
-        - { path: ^/constructor/, role: ROLE_USER }
         - { path: ^/profile/, role: ROLE_USER }
+        - { path: ^/constructor/, role: ROLE_USER }
+        - { path: ^/crossword/, role: ROLE_USER }
         
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
