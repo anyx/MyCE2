@@ -1,4 +1,3 @@
-
 {% if form.vars.value.getId() == null %}
 	{% set action = path('create_crossword') %}
 {% else %}
@@ -12,7 +11,7 @@
 
     <div class="margin-bottom">
     {{ form_label(form.title) }}
-    {{ form_widget(form.title, { 'attr': { 'class' : 'input eleven-columns', 'required' : 'requireds' } }) }}
+    {{ form_widget(form.title, { 'attr': { 'class' : 'input eleven-columns' } }) }}
     {{ form_errors(form.title) }}
     </div>
 
@@ -22,6 +21,16 @@
     {{ form_errors(form.description) }}
     </div>
 
+    <div class="margin-bottom">
+    {{ form_label(form.tags) }}
+    <div class="b-tags">
+        {{ form_widget(form.tags, { 'attr': { 'class' : 'input j-tags' } }) }}
+    </div>
+    {{ form_errors(form.tags) }}
+    </div>
+     
+    <div style="clear: both"></div>
+        
     {% if form.public is defined %}
     <div class="margin-bottom">
         {{ form_widget(form.public) }}

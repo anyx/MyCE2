@@ -55,8 +55,9 @@ class ListsController extends Controller
         if ($isValid) {
 
             $data = $form->getData();
-            $query = $this->buildSearchQuery($data['term']);
-            
+            $tags = explode(',', $data['tags']);
+            $query = $this->buildSearchQuery($data['term'], array_filter($tags, function($tag) { return !empty($tag); }));
+
             $result = $this->get('foq_elastica.finder.website.crossword')->findPaginated($query);
             $result->setMaxPerPage(25);
 
@@ -72,6 +73,17 @@ class ListsController extends Controller
             'isValid' => $isValid
         );
     }
+    
+    /**
+     * 
+     * @Template
+     */
+    public function tagsAction()
+    {
+        return array(
+            'tags'  => $this->get('anyx.dm')->getRepository('Anyx\CrosswordBundle\Document\Tag')->getPopularTags()
+        );
+    }
 
     /**
      *
@@ -85,19 +97,25 @@ class ListsController extends Controller
                                             new Validator\MinLength(3),
                                             new Validator\NotBlank(array('message' => ''))
                                         ),
+                                        'tags'  => array()
                                     )
         );
 
         $formBuilder = $this->createFormBuilder(
                 null,
                 array(
-                    'csrf_protection' => false,
+                    'csrf_protection'       => false,
                     'validation_constraint' => $searchValidators
                 )
         );
 
         $formBuilder->add('term', 'text', array('required' => false));
-
+        $formBuilder->add(
+                'tags',
+                'tags',
+                array('required' => false)
+        );
+        
         return $formBuilder->getForm();
     }
     
@@ -106,7 +124,7 @@ class ListsController extends Controller
      * @param string $text
      * @return \Elastica_Query_Bool
      */
-    private function buildSearchQuery($text)
+    private function buildSearchQuery($text, $tags = array())
     {
         $titleQuery = new \Elastica_Query_Text();
         $titleQuery->setFieldQuery('title', $text);
@@ -124,7 +142,17 @@ class ListsController extends Controller
         $query->addShould($titleQuery);
         $query->addShould($descriptionQuery);
         $query->addShould($definitionsQuery);
-        
+
+        $tagsQuery = new \Elastica_Query_Terms();
+        if (empty($tags)) {
+            $tagsQuery->setTerms('tags', array(mb_strtolower($text)));            
+            $query->addShould($tagsQuery);
+        } else {
+            $tagsQuery->setTerms('tags', array_map(function($tag) {return mb_strtolower($tag);}, $tags));          
+            $tagsQuery->setMinimumMatch(count($tags));
+            $query->addMust($tagsQuery);
+        }
+
         return $query;
     }
 }

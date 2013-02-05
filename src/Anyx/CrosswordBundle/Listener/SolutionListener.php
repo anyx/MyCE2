@@ -8,22 +8,24 @@ use Anyx\CrosswordBundle\Document;
 /**
  * 
  */
-class SolutionListener {
+class SolutionListener
+{
 
     /**
-	 * 
-	 * @param Event\MergeUsersEvent $event 
-	 */
-	public function postPersist( LifecycleEventArgs $args ) {
-  
+     * 
+     * @param Event\MergeUsersEvent $event 
+     */
+    public function postPersist(LifecycleEventArgs $args)
+    {
+
         $dm = $args->getDocumentManager();
-        
+
         $document = $args->getDocument();
-        
-        if ( $document instanceof Document\Solution ) {
+
+        if ($document instanceof Document\Solution) {
             $crossword = $document->getCrossword();
             $crossword->incCountSolvings();
             $dm->flush();
         }
-	}
+    }
 }

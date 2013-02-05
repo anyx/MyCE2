@@ -25,19 +25,65 @@
 </div>
 {% endblock %}
 
+{% block javascripts %}
+	{{ parent() }}
+
+	{% javascripts
+        '@AnyxCrosswordBundle/Resources/public/js/jquery.min.js'
+        '@AnyxCrosswordBundle/Resources/public/js/jquery.tagcloud.js'
+	%}
+	<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+    <script type="text/javascript">
+        $(function(){
+            $('.j-tag').click(function() {
+                var tag = $(this).text();
+                var selectedTags = $('.j-tags-input').val().split(',');
+                var newTags = [];
+                var needRemoveTag = false;
+                
+                for( var i = 0; i < selectedTags.length; i++) {
+                    if ( selectedTags[i] == tag ) {
+                        needRemoveTag = true;
+                        continue;
+                    }
+                    if ($.trim(selectedTags[i]) !== '') {
+                        newTags[newTags.length] = selectedTags[i];
+                    }
+                }
+                
+                if (!needRemoveTag) {
+                    newTags[newTags.length] = tag;
+                }
+
+                $('.j-tags-input').val(newTags.join(','));
+                $('.j-main-search-form').submit();
+            });
+        });
+    </script>
+{% endblock %}
+        
 {% block body %}
 
-{% include 'AnyxCrosswordBundle:Lists:form.html.twig' with {'form': form} %}
+<div class="columns">
+    <div class="seven-columns">
+        {% include 'AnyxCrosswordBundle:Lists:form.html.twig' with {'form': form} %}
 
-<div class="results clear">
-    {% if result is empty %}
-        {% if isValid %}
-            <span class="results-info margin-bottom">{{ 'Unfortunately nothing found' | trans }}</span>
-        {% endif %}
-    {% else %}
-        <span class="results-info margin-bottom">{{ 'Total found crosswords' | trans }}: {{ result.count }}</span>
-        {% include 'AnyxCrosswordBundle:Lists:list.html.twig' with {'result': result}  %}
-    {% endif %}
+        <div class="results clear">
+            {% if result is empty %}
+                {% if isValid %}
+                    <span class="results-info margin-bottom">{{ 'Unfortunately nothing found' | trans }}</span>
+                {% endif %}
+            {% else %}
+                <span class="results-info margin-bottom">{{ 'Total found crosswords' | trans }}: {{ result.count }}</span>
+                {% include 'AnyxCrosswordBundle:Lists:list.html.twig' with {'result': result}  %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="four-columns">
+        <h3>{{'Popular tags' | trans}}</h3>
+        {% render 'AnyxCrosswordBundle:Lists:tags' %}
+    </div>
 </div>
 
 {% endblock %}

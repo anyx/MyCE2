@@ -1,11 +1,16 @@
 {% form_theme form 'AnyxCrosswordBundle:Form:theme.html.twig' %}
-<div class="relative">
-<form action="{{ path('search_crosswords') }}" {{ form_enctype(form) }} class="form block-label columns full-width">
-<div class="seven-columns">
+<div class="relative wrapped white-gradient">
+<form action="{{ path('search_crosswords') }}" {{ form_enctype(form) }} class="j-main-search-form form block-label full-width">
+    {{ form_errors(form) }}
+    <div class="row">
     {{ form_label(form.term, 'Search term', { 'attr': { 'class' : 'label' } }) }}:<br />
     {{ form_widget(form.term, { 'attr': { 'class' : 'input ten-columns'} }) }}
     <input type="submit" class="button blue-gradient"  value="{{ 'Go search' | trans }}"/>
-    {{ form_errors(form.term) }}
-</div>
+    </div>
+
+    <div class="row">
+    {{ form_label(form.tags, 'Tags', { 'attr': { 'class' : 'label' } }) }}:<br />
+    {{ form_widget(form.tags, { 'attr': { 'class' : 'j-tags-input'} }) }}
+    </div>
 </form>
 </div>

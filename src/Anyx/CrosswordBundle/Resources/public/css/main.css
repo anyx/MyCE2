@@ -349,3 +349,26 @@ div .pagerfanta .current {
     width: 110px;
     margin: 5px;
 }
+.b-tags .b-tag {
+    padding: 7px 5px;
+    display: block;
+    float: left;
+    margin: 0px 5px 5px 0px;
+}
+
+.b-tags a {
+    color: #F2DEDE;
+}
+.b-tags a:hover {
+    color: #F79992;
+}
+.b-tags-list {
+    padding: 7px 0px;
+}
+.b-tags-list .tag, .b-input-tags-list .tag {
+    cursor: pointer;
+}
+
+.b-input-tags-list .tag {
+    margin-right: 5px;
+}

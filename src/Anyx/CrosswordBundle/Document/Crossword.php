@@ -52,6 +52,12 @@ class Crossword
     protected $public;
     
     /**
+     * @MongoDB\Hash
+     * @Serializer\Groups({"profile", "edit"})
+     */
+    protected $tags = array();
+
+    /**
      * @MongoDB\Boolean
      */
     protected $deleted = false;
@@ -198,6 +204,57 @@ class Crossword
     public function setDeleted($deleted)
     {
         $this->deleted = (bool)$deleted;
+    }
+
+    /**
+     * 
+     * @return array
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+    
+    /**
+     * 
+     * @param array $tags
+     */
+    public function setTags(array $tags)
+    {
+        $this->tags = array_filter(
+                            $tags,
+                            function($tag) {
+                                $tag = trim($tag);
+                                return !empty($tag);
+                            }
+        );
+    }
+
+    /**
+     * 
+     * @return bool
+     */
+    public function hasTags()
+    {
+        return count($this->getTags()) > 0;
+    }
+
+    /**
+     * 
+     * @param string $tags
+     */
+    public function setTagsAsString($tags)
+    {
+        $this->setTags(explode(',', $tags));
+    }
+
+    /**
+     * 
+     * @return string
+     */
+    public function getTagsAsString()
+    {
+        return implode(',', $this->getTags());
     }
 
     /**

@@ -1,11 +1,15 @@
-{% block field_errors %}
+{% block tags_widget %}
 {% spaceless %}
-    {% if errors|length > 0 %} 
-    <ul class="errors form-errors red">
-        {% for error in errors %}
-            <li>{{ error.messageTemplate|trans(error.messageParameters) }}</li>
-        {% endfor %}
-    </ul>
+
+<div class="b-input-tags-list">
+{% for tag in value|split(',') %}
+    {% if tag is not empty %}
+    <span class="tag j-tag">{{tag}}</span>
     {% endif %}
+{% endfor %}
+</div>
+
+<input type="hidden" name="{{full_name}}" value="{{value}}" class="{{attr.class|default('')}}" />
+
 {% endspaceless %}
-{% endblock field_errors %}
+{% endblock tags_widget %}

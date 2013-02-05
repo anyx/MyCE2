@@ -25,6 +25,9 @@ twig:
             previous_message: '&laquo;'
             next_message:     '&raquo;'
             dots_message:     '...'
+    form:
+        resources:
+            - 'AnyxCrosswordBundle:Form:fields.html.twig'
 
 jms_serializer:
     handlers:
@@ -146,6 +149,8 @@ foq_elastica:
                         words_definitions_as_string:
                             boost: 5,
                             analyzer: ru_snowball
+                        tags:
+                            boost: 7
                     persistence:
                         driver: mongodb
                         model: Anyx\CrosswordBundle\Document\Crossword
@@ -208,3 +213,12 @@ services:
       class: Anyx\CrosswordBundle\Listener\SolutionListener
       tags:
         - { name: doctrine_mongodb.odm.event_listener, event: postPersist, method: postPersist}
+    tags.listener:
+      class: Anyx\CrosswordBundle\Listener\TagsSubscriber
+      tags:
+        - { name: doctrine_mongodb.odm.event_subscriber}
+        
+    form.type.tags:
+      class: Anyx\CrosswordBundle\Form\Extension\Type\TagsType
+      tags:
+        -  { name: form.type, alias: tags }

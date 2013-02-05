@@ -17,10 +17,32 @@
 
 	{% javascripts
         'http://vkontakte.ru/js/api/share.js?9'
+        '@AnyxCrosswordBundle/Resources/public/js/jquery.min.js'
+        '@AnyxCrosswordBundle/Resources/public/js/jquery.tagsinput.js'
 	%}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
+    <script type="text/javascript">
+        $(function(){
+            $('.j-tags').tagsInput({
+                minChars    : 3,
+                inputClass  : 'input',
+                defaultText : '',
+                width       : null,
+                height      : null
+            });
+        });
+    </script>
 {% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{% stylesheets
+		'@AnyxCrosswordBundle/Resources/public/css/jquery.tagsinput.css'
+	%}
+	<link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
+{% endblock %}    
     
 {% block body %}
 

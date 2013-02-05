@@ -119,6 +119,11 @@ class CrosswordController extends Controller
         $formBuilder = $this->createFormBuilder($crossword)
                 ->add('title', 'text')
                 ->add('description', 'textarea')
+                ->add('tags', 'text', array(
+                    'label' => 'Tags',
+                    'property_path' => 'tagsAsString',
+                    'required' => false
+                ))
         ;
 
         if ($crossword->hasWords()) {

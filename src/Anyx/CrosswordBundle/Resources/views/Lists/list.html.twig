@@ -6,10 +6,18 @@
     <a href="{{path('crossword_solve', {'id' : crossword.id })}}">{{ crossword.title }}</a>
     <br>
     <small>{{ crossword.description | truncate(300)}}</small>
+
+    {% if (crossword.hasTags()) %}
+    <div class="b-tags-list">
+        {% for tag in crossword.tags %}
+            <span class="tag j-tag">{{tag}}</span>
+        {% endfor %}
+    </div>                
+    {% endif%}
+    
     <div class="crossword-info  blue-color">
         <span class="count-solving icon-users icon-size1 color" title="{{ 'Count solvings' | trans }}">{{ crossword.countSolvings }}</span>
         <span class="icon-read margin-left icon-size1 color" title="{{ 'Count words' | trans }}">{{ crossword.countWords }}</span>
-        
         <small class="margin-left" title="{{ 'Date create' | trans }}">{{ crossword.createdAt.format('d.m.Y') }}</small>
     </div>
 </li>

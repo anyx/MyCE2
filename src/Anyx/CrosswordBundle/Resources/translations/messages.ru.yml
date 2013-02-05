@@ -15,6 +15,7 @@ Solving crossword: Кроссворд
 status: статус
 Word: Слово
 Definition: Определение
+Tags: Теги
 Edit: Правка
 edit: правка
 Current status is reflected in this block: В этом блоке отображается состояние редактирования
@@ -281,3 +282,5 @@ Random crossword: Случайный кроссворд
 Count words: Количество слов
 Internal Server Error: Внутренняя ошибка сервера
 You regected authorization through: Вы отменили регистрацию через
+You may clarify your query with help tags: Вы можете уточнить ваш запрос с помощью тегов
+Popular tags: Популярные тэги
