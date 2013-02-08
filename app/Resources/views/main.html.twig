@@ -108,7 +108,7 @@
                     </form>
                     <div class="relative nav-right user-menu">
                     {% if app.user %}
-                    <a href="{{path('user_profile')}}" title="{{ 'Profile' | trans }}" >{{app.user.name}}</a>
+                    <a href="{{path('user_profile')}}" title="{{ 'Profile' | trans }}" >{{app.user.name ? app.user.name : app.user.username}}</a>
                     <a href="{{ path('fos_user_security_logout') }}">[{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}]</a>
                     {% else %}
                     <a href="{{path('fos_user_security_login')}}">{% trans %}Login{%endtrans%}</a>
