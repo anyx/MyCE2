@@ -1,27 +1,79 @@
-{% include 'AnyxCrosswordBundle:Lists:pagination.html.twig' with {'result': result}  %}
+{% extends '::main.html.twig' %}
 
-<ul class="eight-columns bullets">
-{% for crossword in result %}
-<li class="margin-bottom margin-top">
-    <a href="{{path('crossword_solve', {'id' : crossword.id })}}">{{ crossword.title }}</a>
-    <br>
-    <small>{{ crossword.description | truncate(300)}}</small>
+{% block stylesheets %}
+	{{ parent() }}
+	{% stylesheets
+        '@WhiteOctoberPagerfantaBundle/Resources/public/css/pagerfantaDefault.css'
+	%}
+		<link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
+{% endblock %}
 
-    {% if (crossword.hasTags()) %}
-    <div class="b-tags-list">
-        {% for tag in crossword.tags %}
-            <span class="tag j-tag">{{tag}}</span>
-        {% endfor %}
-    </div>                
-    {% endif%}
-    
-    <div class="crossword-info  blue-color">
-        <span class="count-solving icon-users icon-size1 color" title="{{ 'Count solvings' | trans }}">{{ crossword.countSolvings }}</span>
-        <span class="icon-read margin-left icon-size1 color" title="{{ 'Count words' | trans }}">{{ crossword.countWords }}</span>
-        <small class="margin-left" title="{{ 'Date create' | trans }}">{{ crossword.createdAt.format('d.m.Y') }}</small>
+{% set title = 'List crosswords' | trans %}
+        
+{% block page_title %}
+    {{ title }}
+{% endblock %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+        
+{% block page_subtitle %}
+<div class="menu-subtitle">
+    {{ knp_menu_render('AnyxCrosswordBundle:Builder:crosswordsMenu', {'template' : 'AnyxCrosswordBundle:Default:menu.html.twig', 'rootClass' : 'bullets margin-right' }) }}
+</div>
+{% endblock %}
+        
+{% block javascripts %}
+	{{ parent() }}
+    <script type="text/javascript">
+        $(function(){
+            $('.j-tags-cloud a').click(function() {
+                var selectedTags = $('.j-top-tags-input').val($(this).text())
+                $('.j-top-search-form').submit();
+                return false;
+            });
+            
+            $('.j-sort-link').click(function(){
+                $('.j-sort-value').val($(this).data('sort'));
+                $('.j-main-search-form').submit();
+                return false;
+            });
+        });
+    </script>
+{% endblock %}
+
+        
+{% block body %}
+<div class="columns">
+    <div class="seven-columns">
+        <p>
+            {{ 'Sort by' | trans}}:
+            {% for sortField in allowedSortFields %}
+                {% if sortField == currentSort %}
+                    <span class="b-sort-selected">
+                        {{ ('sortBy_' ~ sortField) | trans }}
+                    </span>
+                {% else %}
+                    <a href="{{path('list_crosswords', {'sort' : sortField})}}">
+                        {{ ('sortBy_' ~ sortField) | trans }}
+                    </a>
+                {%endif%}
+                {{ loop.last ? '' : '|' }}
+            {% endfor %}
+        </p>
+        <div class="results clear">
+            {% if result is not empty %}
+                {% include 'AnyxCrosswordBundle:Lists:_list.html.twig' with {'result': result}  %}
+            {% else %}
+                <div>{{ 'Crosswords not found' | trans }}</div>
+            {% endif %}    
+        </div>
     </div>
-</li>
-{% endfor %}
-</ul>
-
-{% include 'AnyxCrosswordBundle:Lists:pagination.html.twig' with {'result': result}  %}
+    <div class="four-columns">
+        <h3 class="thin">{{'Tags' | trans}}</h3>
+        {% render 'AnyxCrosswordBundle:Lists:tags' with {'sort' : 'new'} %}
+    </div>
+</div>
+{% endblock %}

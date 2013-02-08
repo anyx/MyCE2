@@ -52,10 +52,9 @@ class Crossword
     protected $public;
     
     /**
-     * @MongoDB\Hash
-     * @Serializer\Groups({"profile", "edit"})
+     * @MongoDB\ReferenceMany(targetDocument="Tag", cascade="persist")
      */
-    protected $tags = array();
+    protected $tags;
 
     /**
      * @MongoDB\Boolean
@@ -73,7 +72,7 @@ class Crossword
      * @Serializer\Groups({"profile","edit"})
      */
     protected $createdAt;
-
+    
     /**
      * @MongoDB\Date
      * @Serializer\Groups({"profile","edit"})
@@ -81,9 +80,31 @@ class Crossword
     protected $updatedAt;
 
     /**
+     * @MongoDB\Date
+     * @Serializer\Groups({"profile","edit"})
+     */
+    protected $publishedAt;
+    
+    /**
      * @MongoDB\ReferenceOne(targetDocument="User")
      */
     protected $owner;
+
+    /**
+     * @MongoDB\Float
+     * @Serializer\Groups({"profile","edit"})
+     */
+    protected $rating;
+
+    /**
+     * @MongoDB\Int
+     */
+    protected $ratesCount;
+
+    /**
+     * @MongoDB\Float
+     */
+    protected $estimatesCount;
 
     /**
      * 
@@ -91,6 +112,7 @@ class Crossword
     public function __construct()
     {
         $this->words = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -214,20 +236,14 @@ class Crossword
     {
         return $this->tags;
     }
-    
+
     /**
      * 
-     * @param array $tags
+     * @return array
      */
-    public function setTags(array $tags)
+    public function setTags($tags)
     {
-        $this->tags = array_filter(
-                            $tags,
-                            function($tag) {
-                                $tag = trim($tag);
-                                return !empty($tag);
-                            }
-        );
+        return $this->tags = $tags;
     }
 
     /**
@@ -250,12 +266,18 @@ class Crossword
 
     /**
      * 
-     * @return string
+     * @return array
      */
-    public function getTagsAsString()
+    public function getTagsTexts()
     {
-        return implode(',', $this->getTags());
+        return array_values(array_map(
+                        function($tag) {
+                            return $tag->getText();
+                        },
+                        $this->getTags()->toArray()
+        ));
     }
+
 
     /**
      *
@@ -294,6 +316,9 @@ class Crossword
     public function setPublic($public)
     {
         $this->public = $public;
+        if ($public && empty($this->publishedAt)) {
+            $this->setPublishedAt(new \DateTime());
+        }
     }
 
     /**
@@ -482,6 +507,46 @@ class Crossword
     public function getCountWords()
     {
         return count($this->getWords());
+    }
+
+    public function getPublishedAt()
+    {
+        return $this->publishedAt;
+    }
+
+    public function setPublishedAt($publishedAt)
+    {
+        $this->publishedAt = $publishedAt;
+    }
+
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+    }
+
+    public function getRatesCount()
+    {
+        return $this->ratesCount;
+    }
+
+    public function setRatesCount($ratesCount)
+    {
+        $this->ratesCount = $ratesCount;
+    }
+
+    public function getEstimatesCount()
+    {
+        return $this->estimatesCount;
+    }
+
+    public function setEstimatesCount($estimatesCount)
+    {
+        $this->estimatesCount = $estimatesCount;
     }
 
     /**

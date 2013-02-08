@@ -8,9 +8,28 @@
     <input type="submit" class="button blue-gradient"  value="{{ 'Go search' | trans }}"/>
     </div>
 
-    <div class="row">
-    {{ form_label(form.tags, 'Tags', { 'attr': { 'class' : 'label' } }) }}:<br />
+    <div class="row b-search-form-row">
+    {% if form.vars.value.tags is not empty %}
+    {{ form_label(form.tags, 'Tags', { 'attr': { 'class' : 'label ' } }) }}:<br />
+    {% endif %}
     {{ form_widget(form.tags, { 'attr': { 'class' : 'j-tags-input'} }) }}
+    </div>
+
+    <div class="b-search-form-row">
+    {{ 'Sort by' | trans}}:
+    {% for sortField in allowedSortFields %}
+        {% if sortField == currentSort %}
+            <span class="b-sort-selected">
+                {{ ('sortBy_' ~ sortField) | trans }}
+            </span>
+        {% else %}
+            <a class="j-sort-link" href="#" data-sort="{{sortField}}">
+                {{ ('sortBy_' ~ sortField) | trans }}
+            </a>
+        {%endif%}
+        {{ loop.last ? '' : '|' }}
+    {% endfor %}
+    <input type="hidden" class="j-sort-value" value="{{currentSort}}" name="sort"/>
     </div>
 </form>
 </div>

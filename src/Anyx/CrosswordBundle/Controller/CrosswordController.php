@@ -17,7 +17,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception as HttpException;
 use Symfony\Component\Security\Core\Exception as SecurityException;
-use Symfony\Component\Form\FormError;
+use Anyx\CrosswordBundle\Form\DataTransformer\TagsTransformer;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * 
@@ -111,6 +112,21 @@ class CrosswordController extends Controller
     }
 
     /**
+     * @Route("/tags/autocomplete", name="tags_autocomplete")
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function tagsAutocompleteAction(Request $request) {
+    
+        if (!$request->isXmlHttpRequest()) {
+            return $this->createNotFoundException();
+        }
+        
+        
+        $tags = array();
+        return new Response(json_encode($tags));
+    }
+
+    /**
      *
      * @param Document\Crossword $crossword 
      */
@@ -118,13 +134,17 @@ class CrosswordController extends Controller
     {
         $formBuilder = $this->createFormBuilder($crossword)
                 ->add('title', 'text')
-                ->add('description', 'textarea')
-                ->add('tags', 'text', array(
+                ->add('description', 'textarea');
+        
+        $tagsRepository = $this->get('anyx.dm')->getRepository('Anyx\CrosswordBundle\Document\Tag');
+        $tagsTransformer = new TagsTransformer($tagsRepository);
+        
+        $formBuilder->add(
+                $formBuilder->create('tags', 'text', array(
                     'label' => 'Tags',
-                    'property_path' => 'tagsAsString',
                     'required' => false
-                ))
-        ;
+                ))->addModelTransformer($tagsTransformer)
+        );
 
         if ($crossword->hasWords()) {
             $formBuilder->add('public', 'checkbox', array('required' => false));

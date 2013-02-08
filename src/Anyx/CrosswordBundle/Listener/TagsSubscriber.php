@@ -90,8 +90,25 @@ class TagsSubscriber implements EventSubscriber
             }
             
             if ($args->hasChangedField('tags')) {//если кроссворд были изменены теги
-                $result = array_diff($crossword->getTags(), (array)$args->getOldValue('tags'));
+                $oldTags = $args->getOldValue('tags');
+                if(is_null($oldTags)) {
+                    $oldTags = array();
+                } else {
+                    $oldTags = $oldTags->toArray();
+                }
                 
+                $oldTagTexts = array_map(
+                        function($tag) {
+                            return $tag->getText();
+                        },
+                        $oldTags
+                );
+                
+                foreach($crossword->getTags() as $tag) {
+                    if (!in_array($tag->getText(), $oldTagTexts)) {
+                        $result[] = $tag;
+                    }
+                }
             }
             
         } while(false);
@@ -123,7 +140,19 @@ class TagsSubscriber implements EventSubscriber
             }
             
             if ($args->hasChangedField('tags')) {//если кроссворд были изменены теги
-                $result = array_diff((array)$args->getOldValue('tags'), $crossword->getTags());
+                $oldTags = $args->getOldValue('tags');
+                if(is_null($oldTags)) {
+                    $oldTags = array();
+                } else {
+                    $oldTags = $oldTags->toArray();
+                }
+                
+                $newTags = $crossword->getTagsTexts();
+                foreach ($oldTags as $oldTag) {
+                    if (!in_array($oldTag->getText(), $newTags)) {
+                        $result[] = $oldTag;
+                    }
+                }
             }
             
         } while(false);

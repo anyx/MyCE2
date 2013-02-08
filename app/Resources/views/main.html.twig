@@ -28,7 +28,14 @@
         <meta name="description" content="{{ description }}, {% block page_description %}{% endblock %}" />
         <meta name="keywords" content="{{ 'site.keywords' | trans }}, {% block page_keywords %}{% endblock %}" />           
             
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            {% javascripts
+                '@AnyxCrosswordBundle/Resources/public/js/jquery.min.js'
+                '@AnyxCrosswordBundle/Resources/public/js/jquery.tagcloud.js'
+            %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+        {% endblock %}
             
         <!-- For progressively larger displays -->
         <link rel="stylesheet" media="only all and (min-width: 480px)" href="/css/480.css?v=1">
@@ -94,9 +101,10 @@
             <nav role="navigation">
                 {{ knp_menu_render('AnyxCrosswordBundle:Builder:topMenu', {'template' : 'AnyxCrosswordBundle:Default:menu.html.twig', 'rootClass' : 'top-menu' }) }}
                 
-                    <form action="{{ path('search_crosswords') }}" method="GET" class="header-form">
+                    <form action="{{ path('search_crosswords') }}" method="GET" class="header-form j-top-search-form">
                     <input class="input search-input" name="form[term]" placeholder="{{ 'Find crosswords' | trans }}"/>
                     <button type="submit" class="button icon-search compact blue-gradient" title="{{ 'Search' | trans }}"></button>
+                    <input class="j-top-tags-input" name="form[tags]" type="hidden"/>
                     </form>
                     <div class="relative nav-right user-menu">
                     {% if app.user %}

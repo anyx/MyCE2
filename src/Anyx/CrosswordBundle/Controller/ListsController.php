@@ -18,26 +18,26 @@ class ListsController extends Controller
 {
 
     /**
-     * @Route("/new", name="new_crosswords")
-     * @Template("AnyxCrosswordBundle:Lists:new.html.twig")
+     * @Route("/crosswords", name="list_crosswords")
+     * @Template
      */
-    public function listNewAction()
+    public function listAction(Request $request)
     {
-        $crosswordsRepository = $this->get('anyx.dm')->getRepository('Anyx\CrosswordBundle\Document\Crossword');
-        return array(
-            'result' => $this->getPaginator($crosswordsRepository->getNewCrosswordsQueryBuilder())
-        );
-    }
+        $sort = $request->get('sort', 'publishedAt');
+        $page = $request->get('page', 1);
+        
+        $query = $this->buildListQuery($sort);
+        $result = $this->get('foq_elastica.finder.website.crossword')->findPaginated($query);
+        $result->setMaxPerPage(25);
 
-    /**
-     * @Route("/popular", name="popular_crosswords")
-     * @Template("AnyxCrosswordBundle:Lists:popular.html.twig")
-     */
-    public function listPopularAction()
-    {
-        $crosswordsRepository = $this->get('anyx.dm')->getRepository('Anyx\CrosswordBundle\Document\Crossword');
+        if (!empty($page)) {
+            $result->setCurrentPage($page);
+        }
+        
         return array(
-            'result' => $this->getPaginator($crosswordsRepository->getPopularCrosswordsQueryBuilder())
+            'result'            => $result,
+            'currentSort'       => $sort,
+            'allowedSortFields' => $this->getAllowedSortFields()
         );
     }
 
@@ -52,13 +52,26 @@ class ListsController extends Controller
 
         $result = array();
         $isValid = $form->isValid();
+        
+        $sort = $request->get('sort', 'publishedAt');
         if ($isValid) {
 
             $data = $form->getData();
             $tags = explode(',', $data['tags']);
-            $query = $this->buildSearchQuery($data['term'], array_filter($tags, function($tag) { return !empty($tag); }));
+            
+            $query = $this->buildSearchQuery(
+                                $data['term'],
+                                array_filter($tags, function($tag) { return !empty($tag); })
+            );
 
-            $result = $this->get('foq_elastica.finder.website.crossword')->findPaginated($query);
+            $sortedQuery = new \Elastica_Query($query);
+            if (in_array($sort, $this->getAllowedSortFields())) {
+                $sortedQuery->setSort(array(
+                    $sort => 'desc'
+                ));
+            }
+                                
+            $result = $this->get('foq_elastica.finder.website.crossword')->findPaginated($sortedQuery);
             $result->setMaxPerPage(25);
 
             $page = (int) $request->get('page', 1);
@@ -68,9 +81,11 @@ class ListsController extends Controller
         }
 
         return array(
-            'form' => $form->createView(),
-            'result' => $result,
-            'isValid' => $isValid
+            'form'              => $form->createView(),
+            'result'            => $result,
+            'isValid'           => $isValid,
+            'allowedSortFields' => $this->getAllowedSortFields(),
+            'currentSort'       => $sort,
         );
     }
     
@@ -91,34 +106,45 @@ class ListsController extends Controller
      */
     protected function createSearchForm()
     {
-        $searchValidators = new Validator\Collection(
-                                    array(
-                                        'term' => array(
-                                            new Validator\MinLength(3),
-                                            new Validator\NotBlank(array('message' => ''))
-                                        ),
-                                        'tags'  => array()
-                                    )
-        );
-
         $formBuilder = $this->createFormBuilder(
                 null,
                 array(
                     'csrf_protection'       => false,
-                    'validation_constraint' => $searchValidators
                 )
         );
 
         $formBuilder->add('term', 'text', array('required' => false));
-        $formBuilder->add(
-                'tags',
-                'tags',
-                array('required' => false)
-        );
+        $formBuilder->add('tags', 'tags', array('required' => false));
         
         return $formBuilder->getForm();
     }
     
+    /**
+     * 
+     * @param string $sort
+     * @return \Elastica_Query
+     */
+    private function buildListQuery($sort)
+    {
+        $query = new \Elastica_Query();
+        if (in_array($sort, $this->getAllowedSortFields())) {
+            $query->setSort(array(
+                $sort => 'desc'
+            ));
+        }
+        
+        return $query;
+    }
+    
+    /**
+     * 
+     * @return array
+     */
+    private function getAllowedSortFields()
+    {
+        return array('publishedAt', 'rating', 'countSolvings');
+    }
+
     /**
      * 
      * @param string $text
@@ -126,33 +152,44 @@ class ListsController extends Controller
      */
     private function buildSearchQuery($text, $tags = array())
     {
-        $titleQuery = new \Elastica_Query_Text();
-        $titleQuery->setFieldQuery('title', $text);
-        $titleQuery->setFieldParam('title', 'analyzer', 'ru_snowball');
-
-        $descriptionQuery = new \Elastica_Query_Text();
-        $descriptionQuery->setFieldQuery('description', $text);
-        $descriptionQuery->setFieldParam('description', 'analyzer', 'ru_snowball');
-
-        $definitionsQuery = new \Elastica_Query_Text();
-        $definitionsQuery->setFieldQuery('words_definitions_as_string', $text);
-        $definitionsQuery->setFieldParam('words_definitions_as_string', 'analyzer', 'ru_snowball');
-
+        if (empty($text) && empty($tags)) {
+            return null;
+        }
+        
         $query = new \Elastica_Query_Bool();
-        $query->addShould($titleQuery);
-        $query->addShould($descriptionQuery);
-        $query->addShould($definitionsQuery);
+        
+        if (!empty($text)) {
+            $titleQuery = new \Elastica_Query_Text();
+            $titleQuery->setFieldQuery('title', $text);
+            $titleQuery->setFieldParam('title', 'analyzer', 'ru_snowball');
+        
+            $descriptionQuery = new \Elastica_Query_Text();
+            $descriptionQuery->setFieldQuery('description', $text);
+            $descriptionQuery->setFieldParam('description', 'analyzer', 'ru_snowball');
 
-        $tagsQuery = new \Elastica_Query_Terms();
-        if (empty($tags)) {
-            $tagsQuery->setTerms('tags', array(mb_strtolower($text)));            
-            $query->addShould($tagsQuery);
-        } else {
-            $tagsQuery->setTerms('tags', array_map(function($tag) {return mb_strtolower($tag);}, $tags));          
-            $tagsQuery->setMinimumMatch(count($tags));
-            $query->addMust($tagsQuery);
+            $definitionsQuery = new \Elastica_Query_Text();
+            $definitionsQuery->setFieldQuery('words_definitions_as_string', $text);
+            $definitionsQuery->setFieldParam('words_definitions_as_string', 'analyzer', 'ru_snowball');
+
+            $query->addShould($titleQuery);
+            $query->addShould($descriptionQuery);
+            $query->addShould($definitionsQuery);
         }
 
-        return $query;
+        $tagsQuery = new \Elastica_Query_Terms();
+        
+        if (empty($tags)) {
+            $tagsQuery->setTerms('tags_texts', array(mb_strtolower($text)));            
+            $query->addShould($tagsQuery);
+            $resultQuery = $query;
+        } else {
+            $tagsQuery->setTerms('tags_texts', array_map(function($tag) {return mb_strtolower($tag);}, $tags));          
+            $tagsQuery->setMinimumMatch(count($tags));
+            
+            $query->addMust($tagsQuery);
+            $resultQuery = $query;
+        }
+
+        return $resultQuery;
     }
 }

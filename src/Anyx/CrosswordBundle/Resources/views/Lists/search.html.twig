@@ -27,16 +27,9 @@
 
 {% block javascripts %}
 	{{ parent() }}
-
-	{% javascripts
-        '@AnyxCrosswordBundle/Resources/public/js/jquery.min.js'
-        '@AnyxCrosswordBundle/Resources/public/js/jquery.tagcloud.js'
-	%}
-	<script type="text/javascript" src="{{ asset_url }}"></script>
-	{% endjavascripts %}
     <script type="text/javascript">
         $(function(){
-            $('.j-tag').click(function() {
+            $('.j-tag, .j-tags-cloud a').click(function() {
                 var tag = $(this).text();
                 var selectedTags = $('.j-tags-input').val().split(',');
                 var newTags = [];
@@ -58,6 +51,13 @@
 
                 $('.j-tags-input').val(newTags.join(','));
                 $('.j-main-search-form').submit();
+                return false;
+            });
+            
+            $('.j-sort-link').click(function(){
+                $('.j-sort-value').val($(this).data('sort'));
+                $('.j-main-search-form').submit();
+                return false;
             });
         });
     </script>
@@ -76,12 +76,13 @@
                 {% endif %}
             {% else %}
                 <span class="results-info margin-bottom">{{ 'Total found crosswords' | trans }}: {{ result.count }}</span>
-                {% include 'AnyxCrosswordBundle:Lists:list.html.twig' with {'result': result}  %}
+                {% include 'AnyxCrosswordBundle:Lists:_list.html.twig' with {'result': result}  %}
             {% endif %}
         </div>
     </div>
     <div class="four-columns">
-        <h3>{{'Popular tags' | trans}}</h3>
+        <h3 class="thin">{{'Popular tags' | trans}}</h3>
+        <p style="margin-top: -20px">{{ 'Click on will clarify search query' | trans }}</p>
         {% render 'AnyxCrosswordBundle:Lists:tags' %}
     </div>
 </div>

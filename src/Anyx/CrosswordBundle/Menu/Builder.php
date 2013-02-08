@@ -10,8 +10,7 @@ class Builder extends ContainerAware
     public function crosswordsMenu(FactoryInterface $factory, array $options)
     {
         $items = array(
-            'New crosswords' => array('route' => 'new_crosswords'),
-            'Popular crosswords' => array('route' => 'popular_crosswords'),
+            'List crosswords' => array('route' => 'list_crosswords'),
             'Search' => array('route' => 'search_crosswords'),
             'Random crossword' => array('route' => 'random_crossword'),
         );
@@ -39,14 +38,14 @@ class Builder extends ContainerAware
     public function topMenu(FactoryInterface $factory, array $options)
     {
         $menu = $factory->createItem('root');
-        $menu->addChild('Crosswords', array('route' => 'new_crosswords'));
+        $menu->addChild('List crosswords', array('route' => 'list_crosswords'));
         return $menu;
     }
     
     public function bottomMenu(FactoryInterface $factory, array $options)
     {
         $menu = $factory->createItem('root');
-        $menu->addChild('Crosswords', array('route' => 'new_crosswords'));
+        $menu->addChild('List crosswords', array('route' => 'list_crosswords'));
         $menu->addChild('News', array('route' => 'page', 'routeParameters' => array('slug' => 'news')));
         $menu->addChild('About', array('route' => 'page', 'routeParameters' => array('slug' => 'about')));        
         $menu->addChild('Report a bug', array('route' => 'report'));        

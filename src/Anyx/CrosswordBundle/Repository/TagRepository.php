@@ -12,26 +12,53 @@ class TagRepository extends DocumentRepository
 {
     /**
      * 
-     * @param array $tags
+     * @param array $tagsTexts
+     * @param \Anyx\CrosswordBundle\Document\Tag $tag
+     * @return array
      */
-    public function incrementWeights(array $tags)
+    public function getOrCreateTagsByText(array $tagsTexts)
     {
-        $em = $this->getDocumentManager();
-        
-        $existTags = array();
-        $tagObjects = $this->getByText($tags);
+        $tagsTexts = array_map(
+                        function($tag) {
+                            return trim($tag);
+                        },
+                        $tagsTexts
+        );
 
-        foreach($tagObjects as $tag) {
-            $tag->incWeight();
-            $existTags[] = $tag->getText();
+        $foundTags = $this->getByText($tagsTexts)->toArray();
+        $dm = $this->getDocumentManager();
+        
+        $result = $foundTags;
+        
+        foreach($tagsTexts as $tagText) {
+            $tagExists = false;
+            
+            foreach($foundTags as $foundTag) {
+                if ($foundTag->getText() == $tagText) {
+                    $tagExists = true;
+                    break;
+                }
+            }
+
+            if (!$tagExists) {
+                $tag = new Document\Tag();
+                $tag->setText($tagText);
+                $result[] = $tag;
+            }
         }
         
-        foreach(array_diff($tags, $existTags) as $newTag) {
-            $tag = new Document\Tag();
-            $tag->setText($newTag);
+        return $result;
+    }
+
+
+    /**
+     * 
+     * @param array $tags
+     */
+    public function incrementWeights($tags)
+    {
+        foreach($tags as $tag) {
             $tag->incWeight();
-            
-            $em->persist($tag);
         }
     }
     
@@ -39,10 +66,9 @@ class TagRepository extends DocumentRepository
      * 
      * @param array $tags
      */
-    public function decrementWeights(array $tags)
+    public function decrementWeights($tags)
     {
-        $tagObjects = $this->getByText($tags);
-        foreach($tagObjects as $tag) {
+        foreach($tags as $tag) {
             $tag->decWeight();
         }
     }

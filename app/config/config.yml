@@ -149,8 +149,16 @@ foq_elastica:
                         words_definitions_as_string:
                             boost: 5,
                             analyzer: ru_snowball
-                        tags:
+                        tags_texts:
                             boost: 7
+                        publishedAt:
+                           boost: 5
+                        rating:
+                           boost: 5
+                        countSolvings:
+                           boost: 5
+
+                          
                     persistence:
                         driver: mongodb
                         model: Anyx\CrosswordBundle\Document\Crossword

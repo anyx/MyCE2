@@ -43,7 +43,7 @@
 			</li>
 		{% endfor %}
 		</ul>
-        <a href="{{path('popular_crosswords')}}" class="right-link">{% trans %}all{% endtrans %} ({{crosswords.popular.count}})</a>
+        <a href="{{path('list_crosswords', {'sort': 'countSolvings' })}}" class="right-link">{% trans %}all{% endtrans %} ({{crosswords.popular.count}})</a>
     </section>
 	{% endif %}
 
@@ -58,7 +58,7 @@
 			</li>
 		{% endfor %}
 		</ul>
-        <a href="{{path('new_crosswords')}}" class="right-link">{% trans %}all{% endtrans %} ({{crosswords.new.count}})</a>
+        <a href="{{path('list_crosswords')}}" class="right-link">{% trans %}all{% endtrans %} ({{crosswords.new.count}})</a>
 	</section>
 	{% endif %}
 </article>    

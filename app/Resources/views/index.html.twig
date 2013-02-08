@@ -84,7 +84,7 @@
             <a href="{{path('fos_user_security_login')}}" class="nav-right">{% trans %}Login{%endtrans%}</a>
             {% endif %}
             
-			<a href="{{ path('new_crosswords') }}" title="{{ 'Creation and solution crosswords' | trans }}" >{%trans%}Crosswords{%endtrans%}</a>
+			<a href="{{ path('list_crosswords') }}" title="{{ 'Creation and solution crosswords' | trans }}" >{%trans%}Crosswords{%endtrans%}</a>
 			<a href="{{ path('random_crossword') }}" title="{{ 'Random crossword' | trans }}">{{ 'Random crossword' | trans }}</a>
 			<a href="{{ path('page', {'slug' : 'about'}) }}" title="{{ 'About' | trans }}">{{ 'About' | trans }}</a>
 

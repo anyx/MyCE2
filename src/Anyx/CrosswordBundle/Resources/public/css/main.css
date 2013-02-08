@@ -368,7 +368,12 @@ div .pagerfanta .current {
 .b-tags-list .tag, .b-input-tags-list .tag {
     cursor: pointer;
 }
-
 .b-input-tags-list .tag {
     margin-right: 5px;
+}
+.b-sort-selected {
+    font-weight: bold;
+}
+.b-search-form-row {
+    padding-top: 5px;
 }

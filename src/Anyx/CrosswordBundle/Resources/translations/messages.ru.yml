@@ -284,3 +284,10 @@ Internal Server Error: Внутренняя ошибка сервера
 You regected authorization through: Вы отменили регистрацию через
 You may clarify your query with help tags: Вы можете уточнить ваш запрос с помощью тегов
 Popular tags: Популярные тэги
+Click on will clarify search query: Кликните по тегу чтобы уточнить запрос
+Sort by: Сортировать по
+sortBy_publishedAt: дате публикации
+sortBy_rating: рейтингу
+sortBy_countSolvings: количеству решений
+Published date: Дата публикации
+List crosswords: Все кроссворды
