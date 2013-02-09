@@ -18,6 +18,7 @@
 	{% javascripts
         'http://vkontakte.ru/js/api/share.js?9'
         '@AnyxCrosswordBundle/Resources/public/js/jquery.min.js'
+        '@AnyxCrosswordBundle/Resources/public/js/jquery-ui.min.js'
         '@AnyxCrosswordBundle/Resources/public/js/jquery.tagsinput.js'
 	%}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
@@ -29,7 +30,8 @@
                 inputClass  : 'input',
                 defaultText : '',
                 width       : null,
-                height      : null
+                height      : null,
+                autocomplete_url:'{{path('tags_autocomplete')}}'
             });
         });
     </script>
@@ -39,6 +41,8 @@
 	{{ parent() }}
 	{% stylesheets
 		'@AnyxCrosswordBundle/Resources/public/css/jquery.tagsinput.css'
+        '@AnyxCrosswordBundle/Resources/public/css/jquery.ui/jquery-ui.css'
+        '@AnyxCrosswordBundle/Resources/public/css/jquery.ui/jquery.ui.autocomplete.css'
 	%}
 	<link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
 	{% endstylesheets %}

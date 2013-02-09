@@ -382,3 +382,7 @@ div .pagerfanta .current {
     padding-bottom: 5px;
     border-bottom: 1px dashed #E4E4E4;
 }
+
+.b-tags-cloud a:hover {
+    text-decoration: underline;
+}

@@ -87,11 +87,27 @@ class TagRepository extends DocumentRepository
      * 
      * @param array $tags
      * @return array
+     * @return \Doctrine\MongoDB\LoggableCursor
      */
     public function getByText(array $tags)
     {
         return $this->createQueryBuilder()
                         ->field('text')->in($tags)
+                        ->getQuery()
+                        ->execute();
+    }
+    
+    /**
+     * 
+     * @param string $term
+     * @param int $limit
+     * @return \Doctrine\MongoDB\LoggableCursor
+     */
+    public function getTagsByTerm($term, $limit = 10)
+    {
+        return $this->createQueryBuilder()
+                        ->field('text')->equals(new \MongoRegex('/.*'.$term.'/i'))
+                        ->limit($limit)
                         ->getQuery()
                         ->execute();
     }

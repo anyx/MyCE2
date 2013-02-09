@@ -120,10 +120,20 @@ class CrosswordController extends Controller
         if (!$request->isXmlHttpRequest()) {
             return $this->createNotFoundException();
         }
+
+        $tagsTexts = array();
         
-        
-        $tags = array();
-        return new Response(json_encode($tags));
+        $term = $request->get('term', '');
+        if (mb_strlen($term) > 1) {
+            $tags = $this->get('anyx.dm')->getRepository('Anyx\CrosswordBundle\Document\Tag')->getTagsByTerm($term);
+            $tagsTexts = array_values(array_map(
+                    function($tag) {
+                        return $tag->getText();
+                    },
+                    $tags->toArray()
+            ));
+        }
+        return new Response(json_encode($tagsTexts));
     }
 
     /**
