@@ -377,3 +377,8 @@ div .pagerfanta .current {
 .b-search-form-row {
     padding-top: 5px;
 }
+
+.b-crosswords-list > li {
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #E4E4E4;
+}

@@ -1,6 +1,6 @@
 {% include 'AnyxCrosswordBundle:Lists:pagination.html.twig' with {'result': result}  %}
 
-<ul class="eight-columns bullets">
+<ul class="bullets b-crosswords-list">
 {% for crossword in result %}
 <li class="margin-bottom margin-top">
     <a href="{{path('crossword_solve', {'id' : crossword.id })}}">{{ crossword.title }}</a>
