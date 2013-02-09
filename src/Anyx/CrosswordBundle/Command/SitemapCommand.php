@@ -18,7 +18,7 @@ class SitemapCommand extends ContainerAwareCommand
         $this
             ->setName('site:sitemap:generate')
             ->setDescription('Generate sitemap')
-            ->addOption('host', null, InputOption::VALUE_REQUIRED, 'Http host', 'http://crosswords-editor.ru/')
+            ->addOption('host', null, InputOption::VALUE_REQUIRED, 'Http host', 'http://crosswords-editor.ru')
         ;
     }
     
@@ -40,6 +40,8 @@ class SitemapCommand extends ContainerAwareCommand
         foreach($this->getStaticPages($sitemap, $input) as $entry) {
             $urlSet->appendChild($entry);
         }
+        
+        $urlSet->appendChild($this->addListPage($sitemap, $input));
         
         $path = $this->getContainer()->get('kernel')->getRootDir() . '/../web/sitemap.xml';
         
@@ -106,6 +108,25 @@ class SitemapCommand extends ContainerAwareCommand
         return $result;
     }
     
+    /**
+     * 
+     * @param \DOMDocument $sitemap
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @return \DOMElement
+     */
+    protected function addListPage(\DOMDocument $sitemap, InputInterface $input)
+    {
+        $router = $this->getContainer()->get('router');
+        $lastMod = new \DateTime();
+        return $this->createEntry(
+                $sitemap,
+                $input->getOption('host') . $router->generate('list_crosswords'),
+                $lastMod->format('Y-m-d'),
+                'daily',
+                '0.8'
+        );
+    }
+
     /**
      * 
      * @param \DOMDocument $document
