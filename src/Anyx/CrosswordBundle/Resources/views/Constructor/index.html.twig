@@ -3,7 +3,7 @@
 {% block javascripts %}
 	{{ parent() }}
 
-	{% javascripts
+	{% javascripts filter='yui_js' filter='yui_js' output='js/compiled/editor.js'
 		'@AnyxCrosswordBundle/Resources/public/js/jquery.min.js'
 		'@AnyxCrosswordBundle/Resources/public/js/jquery-ui.min.js'
 	

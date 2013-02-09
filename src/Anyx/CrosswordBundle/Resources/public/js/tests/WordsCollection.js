@@ -269,6 +269,5 @@ describe('Words collection model', function() {
             }
         });
         expect(this.collection.addWord(word2)).toEqual(false, 'Touching word has been added');
-        console.log('!', this.collection);
     })
 });
