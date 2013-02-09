@@ -6,6 +6,7 @@ parameters:
         Solution: Anyx\CrosswordBundle\Document\Solution
         Answer: Anyx\CrosswordBundle\Document\Answer
         User: Anyx\CrosswordBundle\Document\User
+        CrosswordEstimate: Anyx\CrosswordBundle\Document\CrosswordEstimate
     anyx.exception.recipients: ['alx.devel@gmail.com']
     anyx.exception.template: 'AnyxCrosswordBundle:Exception:mail.html.twig'
     anyx.mapping.types:

@@ -97,16 +97,6 @@ class Crossword
     protected $rating;
 
     /**
-     * @MongoDB\Int
-     */
-    protected $ratesCount;
-
-    /**
-     * @MongoDB\Float
-     */
-    protected $estimatesCount;
-
-    /**
      * 
      */
     public function __construct()
@@ -527,26 +517,6 @@ class Crossword
     public function setRating($rating)
     {
         $this->rating = $rating;
-    }
-
-    public function getRatesCount()
-    {
-        return $this->ratesCount;
-    }
-
-    public function setRatesCount($ratesCount)
-    {
-        $this->ratesCount = $ratesCount;
-    }
-
-    public function getEstimatesCount()
-    {
-        return $this->estimatesCount;
-    }
-
-    public function setEstimatesCount($estimatesCount)
-    {
-        $this->estimatesCount = $estimatesCount;
     }
 
     /**

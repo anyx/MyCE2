@@ -75,7 +75,7 @@
                     <span class="results-info margin-bottom">{{ 'Unfortunately nothing found' | trans }}</span>
                 {% endif %}
             {% else %}
-                <span class="results-info margin-bottom">{{ 'Total found crosswords' | trans }}: {{ result.count }}</span>
+                <span class="results-info margin-bottom">{{ 'Found crosswords' | trans }}: {{ result.count }}</span>
                 {% include 'AnyxCrosswordBundle:Lists:_list.html.twig' with {'result': result}  %}
             {% endif %}
         </div>

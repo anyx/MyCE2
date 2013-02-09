@@ -44,3 +44,22 @@ TABLE.solver-word-table, .solver-word-table TD {
     top: -1px;
     z-index: 10;
 }
+
+.b-rating {
+    position: absolute;
+    right: 0px;
+    top: -5px;
+    font-size: 28px;
+    background: #fff;
+    padding: 0px 5px;
+}
+
+.b-total-rating {
+    margin: 0 auto;
+    width: 64px;
+    height: 64px;
+    background: url('/img/total-rating.png') no-repeat;
+    text-align: center;
+    line-height: 64px;
+    color: #000;
+}

@@ -5,23 +5,33 @@
 <li class="margin-bottom margin-top">
     <a href="{{path('crossword_solve', {'id' : crossword.id })}}">{{ crossword.title }}</a>
     <br>
-    <small>{{ crossword.description | truncate(300)}}</small>
+    {{ crossword.description | truncate(300)}}
 
     {% if (crossword.hasTags()) %}
     <div class="b-tags-list">
         {% for tag in crossword.tagsTexts %}
-            <span class="tag j-tag">{{tag}}</span>
+            <small><span class="tag j-tag">{{tag}}</span></small>
         {% endfor %}
     </div>                
     {% endif%}
     
-    <div class="crossword-info  blue-color">
+    <div class="crossword-info anthracite-color">
         <span class="count-solving icon-users icon-size1 color" title="{{ 'Count solvings' | trans }}">{{ crossword.countSolvings }}</span>
         <span class="icon-read margin-left icon-size1 color" title="{{ 'Count words' | trans }}">{{ crossword.countWords }}</span>
-        <small class="margin-left" title="{{ 'Published date' | trans }}">{{ crossword.publishedAt.format('d.m.Y') }}</small>
+        {% if crossword.rating > 0 %}
+        <span class="icon-star margin-left icon-size1 orange" title="{{ 'Rating' | trans }}"></span>
+        <span class="color" title="{{ 'Rating' | trans }}">{{crossword.rating}}</span>
+        {% endif %}
+        <span class="icon-clock color margin-left" title="{{ 'Published date' | trans }}">{{ crossword.publishedAt.format('d.m.Y') }}</span>
     </div>
 </li>
 {% endfor %}
 </ul>
+
+<script type="text/javascript">
+    $(function(){
+        $('.j-rating').rating();
+    });
+</script>
 
 {% include 'AnyxCrosswordBundle:Lists:pagination.html.twig' with {'result': result}  %}

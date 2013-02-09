@@ -2,6 +2,7 @@
 
 namespace Anyx\CrosswordBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Anyx\CrosswordBundle\Document;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -25,6 +26,7 @@ class SolvingController extends Controller
         $securityContext = $this->get('security.context');
 
         $serializedSolution = null;
+        $userEstimate = null;
 
         $serializer = $this->get('serializer');
 
@@ -33,6 +35,13 @@ class SolvingController extends Controller
             $documentManager = $this->get('anyx.dm');
             $solutionRepository = $documentManager->getRepository('Anyx\CrosswordBundle\Document\Solution');
             $solution = $solutionRepository->getUserSolution($user, $crossword);
+            
+            $estimateObject = $documentManager->getRepository('Anyx\CrosswordBundle\Document\CrosswordEstimate')
+                                                ->getUserEstimate($user, $crossword);
+            if (!empty($estimateObject)) {
+                $userEstimate = $estimateObject->getEstimate();
+            }
+            
         } else {
             $solution = $this->get('solution.session.repository')->findSolution($crossword);
         }
@@ -42,9 +51,11 @@ class SolvingController extends Controller
             $serializedSolution = $serializer->serialize($solution, 'json');            
         }
         
+        
         return array(
-            'crossword' => $crossword,
-            'solution'  => $serializedSolution,
+            'crossword'     => $crossword,
+            'solution'      => $serializedSolution,
+            'userEstimate'  => $userEstimate
         );
     }
 
@@ -107,4 +118,49 @@ class SolvingController extends Controller
         )));
     }
 
+    /**
+     * @ParamConverter("crossword", class="Anyx\CrosswordBundle\Document\Crossword")
+     * @Route("/solve/{id}/estimate", name="crossword_estimate")
+     * @Method({"POST"})
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function estimateAction(Document\Crossword $crossword, Request $request)
+    {
+        $estimate = (int) $request->get('estimate', 0);
+        $estimate = $estimate > 5 ? 5 : $estimate; 
+        $estimate = $estimate < 0 ? 0 : $estimate; 
+        
+        $result = array();
+        
+        $user = $this->getUser();
+        if ($user) {
+            
+            $dm = $this->get('anyx.dm');
+            $estimateObject = $dm->getRepository('Anyx\CrosswordBundle\Document\CrosswordEstimate')
+                                    ->getUserEstimate($user, $crossword);
+
+            if (empty($estimateObject)) {
+                $estimateObject = $this->get('anyx.document.factory')->create(
+                                                'CrosswordEstimate',
+                                                array(
+                                                    'crossword' => $crossword,
+                                                    'user'      => $user,
+                                                )
+                );
+            }
+            
+            if ($estimate == 0 && $estimateObject->getId()) {
+                $dm->remove($estimateObject);
+            }
+            
+            $estimateObject->setEstimate($estimate);
+            $dm->flush();
+        }
+        
+        $result = array(
+            'rating'    => $crossword->getRating()
+        );
+        return new Response(json_encode($result));
+    }
 }

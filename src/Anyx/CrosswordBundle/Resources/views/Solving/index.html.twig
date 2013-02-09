@@ -23,6 +23,7 @@
 		'@AnyxCrosswordBundle/Resources/public/js/presenters/Solver.js'
 
 		'@AnyxCrosswordBundle/Resources/public/js/theme/libs/modernizr.custom.js'
+        '@AnyxCrosswordBundle/Resources/public/js/jquery.rating.pack.js'
         'http://vkontakte.ru/js/api/share.js?9'
 	%}
 	<script type="text/javascript" src="{{ asset_url }}"></script>
@@ -62,6 +63,32 @@
                     congratulatons  : '{{ 'Congratulations!' | trans }}'
                 }
 			});
+            
+            $('.j-estimates :radio').rating({
+                cancel: '{{'Cancel rating' | trans}}',
+                cancelValue: '0',
+                callback: function(value, link) {
+                    if (_.isUndefined(value)) {
+                        value = 0;
+                    }
+                    $.ajax(
+                        '{{path('crossword_estimate', {'id' : crossword.id})}}',
+                        {
+                            type: 'post',
+                            data: {
+                                estimate: value
+                            },
+                            dataType: 'json'
+                        }
+                    ).success(function(result) {
+                            var ratingText = '?';
+                            if ('rating' in result && result.rating > 0) {
+                                ratingText = Math.round(result.rating * 10) / 10;
+                            }  
+                            $('.j-total-rating').text(ratingText);
+                    });
+                }
+            });
 		});	
 	</script>
 	
@@ -85,6 +112,7 @@
 	{% stylesheets
 		'@AnyxCrosswordBundle/Resources/public/css/solver.css'
         '@AnyxCrosswordBundle/Resources/public/css/styles/modal.css'
+        '@AnyxCrosswordBundle/Resources/public/css/jquery.rating.css'
 	%}
 		<link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
 	{% endstylesheets %}
@@ -102,6 +130,19 @@
 <meta property="og:url" content="{{url("crossword_solve", {'id' : crossword.id})}}" />
 <meta property="og:description" content="{{crossword.description}}" />
 <meta property="og:image" content="{{app.request.scheme}}://{{app.request.httpHost}}{{asset("img/og_logo.png")}}" />
+{% endblock %}
+
+{% block page_subtitle %}
+<div class="b-rating">
+    <div class="j-total-rating b-total-rating">{{crossword.rating > 0 ? crossword.rating : '?'}}</div>
+    {% if app.user %}
+    <div class="j-estimates b-estimates">
+        {% for value in [1,2,3,4,5] %}
+            <input name="estimate" type="radio" value="{{value}}" {% if userEstimate == value %}checked{% endif %}/>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
 {% endblock %}
 
 {% block body %}
