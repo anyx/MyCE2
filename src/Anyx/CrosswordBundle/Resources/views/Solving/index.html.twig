@@ -134,7 +134,7 @@
 
 {% block page_subtitle %}
 <div class="b-rating">
-    <div class="j-total-rating b-total-rating">{{crossword.rating > 0 ? crossword.rating : '?'}}</div>
+    <div class="j-total-rating b-total-rating">{{crossword.rating > 0 ? crossword.rating|number_format(1, '.', ',') : '?'}}</div>
     {% if app.user %}
     <div class="j-estimates b-estimates">
         {% for value in [1,2,3,4,5] %}
@@ -184,7 +184,7 @@
 </script>
 
 <script type="text/template" id="t-solver-word-definition">
-	<li><%=number+1%>. <span><%=definition%>.</span></li>
+    <strong><%=number+1%>.</strong> <span><%=definition%>.</span>
 </script>
 
 <div id="t-solver-saving-incorrect" style="display:none;">

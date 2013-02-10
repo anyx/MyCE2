@@ -36,6 +36,7 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
     views	: {},
 	
 	routes	: {
+        ":anything"         : "defaultRoute",
         "/*"                : "defaultRoute",
 		"/*action/:param"   : "defaultRoute"
 	},
@@ -160,7 +161,10 @@ Anyx.Profile.Workspace = Backbone.Router.extend({
 	 * 
 	 */
 	defaultRoute: function( action, params ) {
-		var action = action || this.defaultAction;
+        if (!(action in this.actions)) {
+            action = this.defaultAction
+		}
+		action = action || this.defaultAction;
 		this.callAction( action, params, this.getActionView( action ) );
 	}
 });

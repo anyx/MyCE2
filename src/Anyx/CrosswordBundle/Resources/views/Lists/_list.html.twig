@@ -20,7 +20,7 @@
         <span class="icon-read margin-left icon-size1 color" title="{{ 'Count words' | trans }}">{{ crossword.countWords }}</span>
         {% if crossword.rating > 0 %}
         <span class="icon-star margin-left icon-size1 orange" title="{{ 'Rating' | trans }}"></span>
-        <span class="color" title="{{ 'Rating' | trans }}">{{crossword.rating}}</span>
+        <span class="color" title="{{ 'Rating' | trans }}">{{crossword.rating|number_format(1, '.', ',')}}</span>
         {% endif %}
         <span class="icon-clock color margin-left" title="{{ 'Published date' | trans }}">{{ crossword.publishedAt.format('d.m.Y') }}</span>
     </div>

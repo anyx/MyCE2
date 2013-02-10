@@ -3,6 +3,8 @@
  */
 Constructor.View.WordForm = Backbone.Presenter.extend({
 	
+    activeWordModel: null,
+    
 	/**
 	 * 
 	 */
@@ -90,6 +92,8 @@ Constructor.View.WordForm = Backbone.Presenter.extend({
 		} else {
             this.getWidget( 'wordPreview' ).clear();
         }
+        
+        this.activeWordModel = word; 
 	},
 	
 	/**
@@ -97,21 +101,29 @@ Constructor.View.WordForm = Backbone.Presenter.extend({
 	 */
 	bindWord	: function( wordView ) {
 		this.clear();
-		this._setValues( wordView.model.attributes );
+		this._setWord( wordView );
 		this.getWidget( 'wordPreview' ).showWord( wordView.model );
 	},
 	
 	/**
 	 *
 	 */
-	_setValues	: function( values ) {
-		$( this.getWidget( 'wordInput' ).el ).val( values.text );
-		$( this.getWidget( 'definitionInput' ).el ).val( values.definition );
-		this.getWidget( 'directionChooser' ).setDirection( values.horizontal );
+	_setWord	: function( wordView ) {
+        this._setValues(wordView.model.attributes);
+        this.activeWordModel = wordView; 
 	},
 	
-    _checkWord  : function() {
-        
+    _setValues: function(values) {
+        $( this.getWidget( 'wordInput' ).el ).val( values.text );
+		$( this.getWidget( 'definitionInput' ).el ).val( values.definition );
+		this.getWidget( 'directionChooser' ).setDirection( values.horizontal );
+    },
+    
+    /**
+     *
+     */
+    getActiveWordModel: function() {
+        return this.activeWordModel;
     },
     
     /**

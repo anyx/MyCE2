@@ -365,11 +365,13 @@ div .pagerfanta .current {
 .b-tags-list {
     padding: 7px 0px;
 }
+
 .b-tags-list .tag, .b-input-tags-list .tag {
     cursor: pointer;
 }
 .b-input-tags-list .tag {
     margin-right: 5px;
+    padding-top: 1px;
 }
 .b-sort-selected {
     font-weight: bold;

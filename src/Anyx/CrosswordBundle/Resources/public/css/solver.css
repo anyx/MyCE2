@@ -63,3 +63,6 @@ TABLE.solver-word-table, .solver-word-table TD {
     line-height: 64px;
     color: #000;
 }
+.solver-word-table input {
+    color: #000;
+}

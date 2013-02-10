@@ -3,9 +3,12 @@
  */
 Anyx.View.WordDefinition = Anyx.View.extend({
     
+    tagName : 'li',
+    
     events  :   {
-        'mouseover li'  : 'highlightWord',
-        'mouseout li'   : 'dehighlightWords'
+        'mouseover'  : 'highlightWord',
+        'mouseout'   : 'dehighlightWords',
+        'click'      : 'focusOnWord'
     },
 
 	initialize	: function() {
@@ -31,6 +34,10 @@ Anyx.View.WordDefinition = Anyx.View.extend({
         _.each(this.getSolver().getWordsViews(), function(word) {
             word.highlight('#fff');
         });
+    },
+    
+    focusOnWord: function() {
+        this.options.word.getSolverInputs().get(0).focus();
     }
 });
 

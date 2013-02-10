@@ -200,9 +200,13 @@ Constructor.Presenter.Editor = Backbone.Presenter.extend({
 				
 				if ( activeCell != false && gridView.getWords().addWord( wordModel ) ) {
 					//adding
-					_this.getWidget( 'wordForm' ).clear();
-                    _this.getWidget( 'wordPreview' ).clear();
-                    _this.getWidget( 'statusBar' ).showMessage(_this.options.messages.wordAdded);
+                    var formWordModel = _this.getWidget( 'wordForm' ).getActiveWordModel();
+                    if (_.isEmpty(formWordModel) || formWordModel.cid == wordView.model.cid) {
+                        _this.getWidget( 'wordForm' ).clear();
+                        _this.getWidget( 'wordPreview' ).clear();
+                        _this.getWidget( 'statusBar' ).showMessage(_this.options.messages.wordAdded);
+                    }
+                    
 				} else {
 					_this.getWidget( 'wordForm' ).bindWord( wordView );
 					wordView.getElement().remove();
