@@ -158,7 +158,7 @@ foq_elastica:
                         rating:
                            boost: 5
                         countSolvings:
-                           boost: 5
+                           type: integer
 
                           
                     persistence:
