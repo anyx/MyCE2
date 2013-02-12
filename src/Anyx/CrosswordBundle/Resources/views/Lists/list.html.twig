@@ -4,7 +4,6 @@
 	{{ parent() }}
 	{% stylesheets
         '@WhiteOctoberPagerfantaBundle/Resources/public/css/pagerfantaDefault.css'
-        '@AnyxCrosswordBundle/Resources/public/css/jquery.rating.css'
 	%}
 		<link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
 	{% endstylesheets %}
@@ -28,12 +27,6 @@
         
 {% block javascripts %}
 	{{ parent() }}
-
-    {% javascripts
-        '@AnyxCrosswordBundle/Resources/public/js/jquery.rating.pack.js'
-    %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
 
     <script type="text/javascript">
         $(function(){
