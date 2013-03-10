@@ -1,0 +1,185 @@
+{% extends '::main.html.twig' %}
+
+{% set title = 'Statistic of crossword' | trans ~ ' &laquo;'~ crossword.title| escape ~ '&raquo;' %}
+
+{% block title %}{{title|raw}}{% endblock %}
+
+{% block page_title %}{{title|raw}}{% endblock %}
+
+{% block page_subtitle %}
+<div class="menu-subtitle">
+    <a href="{{ path('fos_user_profile_show')}}#/created/">{{'Profile' | trans}}</a>
+</div>
+{% endblock %}
+
+{% if solutionsCount > 0 %}
+
+{% block javascripts %}
+        {{ parent() }}
+
+        {% javascripts
+            '@AnyxCrosswordBundle/Resources/public/js/jquery.min.js'
+            '@AnyxCrosswordBundle/Resources/public/js/jquery-ui.min.js'
+
+            '@FOSJsRoutingBundle/Resources/public/js/router.js'
+
+            '@AnyxCrosswordBundle/Resources/public/js/json2.js'
+            '@AnyxCrosswordBundle/Resources/public/js/underscore.js'
+            '@AnyxCrosswordBundle/Resources/public/js/backbone.js'
+            '@AnyxCrosswordBundle/Resources/public/js/bootstrap-modal.js'
+
+            '@AnyxCrosswordBundle/Resources/public/js/views/View.js'
+            '@AnyxCrosswordBundle/Resources/public/js/utils/Translator.js'
+            '@AnyxCrosswordBundle/Resources/public/js/utils/Alert.js'
+
+            '@AnyxCrosswordBundle/Resources/public/js/models/Crossword.js'
+
+            '@AnyxUserBundle/Resources/public/js/models/Collection.js'
+
+            '@AnyxUserBundle/Resources/public/js/models/Crossword.js'
+            '@AnyxUserBundle/Resources/public/js/models/CrosswordCollection.js'
+
+            '@AnyxUserBundle/Resources/public/js/models/Solution.js'
+            '@AnyxUserBundle/Resources/public/js/models/SolutionCollection.js'
+
+            '@AnyxUserBundle/Resources/public/js/ProfileWorkspace.js'
+
+            '@AnyxUserBundle/Resources/public/js/views/ProfileMenu.js'
+            '@AnyxUserBundle/Resources/public/js/views/CollectionView.js'
+            '@AnyxUserBundle/Resources/public/js/views/SolutionsView.js'
+            '@AnyxUserBundle/Resources/public/js/views/CrosswordsView.js'
+
+            '@AnyxCrosswordBundle/Resources/public/js/theme/libs/modernizr.custom.js'
+        %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback" : "fos.Router.setData"}) }}"></script>
+
+        <script type="text/javascript">
+            $(function() {
+                var solutions = new Anyx.Collection.Solution([], {
+                    url : '{{path('crossword_solutions', {'id' : crossword.id})}}',
+                    success : function( collection, response ) {
+                        collection.trigger('reset', collection, response);
+                    },
+                });
+
+                var solutionsView = new Anyx.View.Solutions({
+                        el			: $('.j-solutions'),
+                        template	: 't-solutions'
+                });
+                solutionsView.model = solutions;
+
+                solutions.bind('reset', function(collection, response) {
+                    if (response.length == 0) {
+                        collection.setIsAll(true);
+                    }
+
+                    solutionsView.render({
+                        collection	: collection
+                    });
+                });
+                
+                solutions.load();
+            });
+        </script>			
+    {% endblock %}
+
+    {% block stylesheets %}
+        {{ parent() }}
+        {% stylesheets
+            '@AnyxCrosswordBundle/Resources/public/css/styles/table.css'
+            '@AnyxCrosswordBundle/Resources/public/css/styles/modal.css'
+        %}
+            <link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
+{% endif %}
+            
+{% block body %}
+<div class="columns">
+    <div class="four-columns">
+        <dl class="definition">
+            <dt>{{'Description' | trans}}</dt>
+            <dd>{{crossword.description}}</dd>
+            <dt>{{'Words count' | trans}}</dt>
+            <dd>{{crossword.words|length}}</dd>
+            <dt>{{'Date create' | trans}}</dt>
+            <dd>{{crossword.createdAt.format('d.m.Y')}}</dd>
+            {% if crossword.isAccessible %}
+            <dt>{{'Date public' | trans}}</dt>
+            <dd>{{crossword.publishedAt.format('d.m.Y')}}</dd>
+            {% endif %}
+        </dl>
+    </div>
+    <div class="four-columns">
+        <dl class="definition">
+            <dt>{{'Solvings count' | trans}}</dt>
+            <dd>{{solutionsCount}}</dd>
+            <dt>{{'Correct solvings count' | trans}}</dt>
+            <dd>{{correctSolutionsCount}}</dd>
+        </dl>
+    </div>
+</div>
+
+{% if solutionsCount > 0 %}
+
+<h3 class="thin">{{'Last solutions' | trans}}</h3>
+
+<div class="j-solutions"></div>
+
+<script type="text/template" id="t-solutions">
+    <table class="simple-table responsive-table responsive-table-on">
+    <thead>
+        <th>{{'Solution date' | trans}}</th>
+        <th>{{'User' | trans}}</th>
+        <th class="td-center">{%trans%}Correct{%endtrans%}</th>
+    </thead>
+    <tfoot>
+        <tr>
+            <td colspan="3">
+                <% if( !collection.isAll() ) { %>
+                <a class="i-more-link button margin-right compact" href="#">
+                    <span class="button-icon"><%=collection.getTotalCount() - collection.length%></span>
+                    {{'More'| trans }}
+                </a>
+                <% } %>
+            </td>
+        </tr>
+    </tfoot>
+    <tbody>
+    <% if ( !_.isEmpty(collection) ) { %>
+        <% _.each(collection.models, function(solution) { %>
+        <tr>
+            <td class="three-columns"><%=solution.get('updated_at')%></td>
+            <td>
+                <% if (solution.has('user')) { %>
+                    <%-solution.get('user').name%>
+                <% } else { %>
+                    <em>{{'Anonymous user' | trans}}</em>
+                <% } %>
+            </td>
+            <td class="two-columns td-center">
+                <% if(solution.get('is_correct')) { %>
+                <i class="icon-tick icon-size2" title="{{'Correct' | trans}}"></i>
+                <% } else { %>
+                <i class="icon-cross icon-size2" title="{{'Incorrect' | trans}}"></i>
+                <% } %>
+            </td>
+        </tr>
+        <% }); %>
+    <% } else { %>
+        <tr>
+            <td colspan="3">
+                {%trans%}Solutions not found{%endtrans%}
+                <a href="{{ path('list_crosswords')}}">{%trans%}Want now?{%endtrans%}</a>
+            </td>
+        </tr>
+    <% } %>
+    </tbody>
+    </table>
+</script>
+{% endif %}
+
+{% endblock %}

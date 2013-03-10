@@ -61,7 +61,6 @@ class ProfileController extends BaseController\ProfileController
      */
     public function solvedAction(Request $request)
     {
-
         $skip = (int) $request->get('skip', 0);
 
         $securityContext = $this->container->get('security.context');

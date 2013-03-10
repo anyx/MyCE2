@@ -17,7 +17,7 @@ Anyx.Collection = Backbone.Collection.extend({
 
     load       : function( options ) {
         var options = options || {};
-        var fetchOptions = _.extend( options, {
+        var fetchOptions = _.extend(options, {
                 add     : true,
 				data	: {
 					skip : this.models.length
@@ -45,5 +45,4 @@ Anyx.Collection = Backbone.Collection.extend({
         this.totalCount = parseInt( response.totalCount || 0 );
         return response.models
     }
-    
-})
+});
